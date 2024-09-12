@@ -1,0 +1,53 @@
+# Options -Indexes
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+
+Options -Indexes
+RewriteEngine On
+RewriteBase /eduportal/
+
+# Redirects all traffic to index.php, passing the rest of the URL as a parameter
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+
+
+# Options -Indexes
+
+# RewriteEngine On
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)$ index.php?/$1 [L]
+
+
+# <IfModule fcgid_module>
+#     <IfModule mime_module>
+#         AddHandler fcgid-script .php .php8 .phtml
+#         FcgidWrapper /usr/local/cpanel/cgi-sys/ea-php81 .php
+#         FcgidWrapper /usr/local/cpanel/cgi-sys/ea-php81 .php8
+#         FcgidWrapper /usr/local/cpanel/cgi-sys/ea-php81 .phtml
+#     </IfModule>
+# </IfModule>
+
+# # php -- END cPanel-generated handler, do not edit
+
+
+# # Options -Indexes
+# # RewriteEngine On
+# # RewriteCond %{REQUEST_FILENAME} !-d
+# # RewriteCond %{REQUEST_FILENAME} !-f
+# # RewriteRule ^(.+)$ index.php/$1 [L]
+# RewriteCond %{HTTP_HOST} ^prepr\.com\.ng$ [OR]
+# RewriteCond %{HTTP_HOST} ^www\.prepr\.com\.ng$
+# RewriteRule ^/?$ "https\:\/\/prepr\.com\.ng\/home" [R=301,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+# <IfModule mime_module>
+#   AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+# </IfModule>
+# php -- END cPanel-generated handler, do not edit

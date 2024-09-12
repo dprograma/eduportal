@@ -52,16 +52,16 @@
                            <div class="collapse d-lg-block" id="collapseLanding" data-bs-parent="#ft-links">
                               <ul class="list-unstyled mb-0 py-3 py-lg-0">
                                  <li class="mb-2">
-                                    <a href="index.html" class="text-decoration-none text-reset">Pubications</a>
+                                    <a href="#" class="text-decoration-none text-reset">Pubications</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="#!" class="text-decoration-none text-reset">Past Questions</a>
+                                    <a href="#" class="text-decoration-none text-reset">Past Questions</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="landing-finance.html" class="text-decoration-none text-reset">Ebooks</a>
+                                    <a href="#" class="text-decoration-none text-reset">Ebooks</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="landing-jamstack-agancy.html" class="text-decoration-none text-reset">CBT Tests</a>
+                                    <a href="#" class="text-decoration-none text-reset">CBT Tests</a>
                                  </li>
                               </ul>
                            </div>
@@ -83,16 +83,16 @@
                         <div class="collapse d-lg-block" id="collapseAccounts" data-bs-parent="#ft-links">
                            <ul class="list-unstyled mb-0 py-3 py-lg-0">
                               <li class="mb-2">
-                                 <a href="signup.html" class="text-decoration-none text-reset">Register</a>
+                                 <a href="signup" class="text-decoration-none text-reset">Register</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="signin.html" class="text-decoration-none text-reset">Login</a>
+                                 <a href="login" class="text-decoration-none text-reset">Login</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="forget-password.html" class="text-decoration-none text-reset">Forgot Password</a>
+                                 <a href="forget-password" class="text-decoration-none text-reset">Forgot Password</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="reset-password.html" class="text-decoration-none text-reset">Reset Password</a>
+                                 <a href="reset-password" class="text-decoration-none text-reset">Reset Password</a>
                               </li>
                               <li class="mb-2">
                                  <a href="#!" class="text-decoration-none text-reset">Profile</a>

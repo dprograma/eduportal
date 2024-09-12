@@ -12,11 +12,11 @@
                <div class="row justify-content-center">
                   <div class="w-100 align-self-end col-12">
                      <div class="text-center mb-7">
-                        <a href="landing.php"><h3 class="my-4"><span class="text-primary">Edu</span><span class="mb-3">Portal</span></h3></a>
+                        <a href="home"><h3 class="my-4"><span class="text-primary">Edu</span><span class="mb-3">Portal</span></h3></a>
                         <h1 class="mb-1">Welcome Back</h1>
                         <p class="mb-0">
                            Don’t have an account yet?
-                           <a href="signup.php" class="text-primary">Register here</a>
+                           <a href="signup" class="text-primary">Register here</a>
                         </p>
                      </div>
                      <form class="needs-validation mb-6" novalidate>
@@ -44,7 +44,7 @@
                                  <label class="form-check-label" for="rememberMeCheckbox">Remember me</label>
                               </div>
 
-                              <div><a href="forgot_password.php" class="text-primary">Forgot Password</a></div>
+                              <div><a href="forgot-password" class="text-primary">Forgot Password</a></div>
                            </div>
                         </div>
 

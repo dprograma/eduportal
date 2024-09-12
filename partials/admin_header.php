@@ -1,13 +1,13 @@
 <header>
         <nav class="navbar navbar-expand-lg navbar-light w-100">
             <div class="container px-3">
-            <a class="navbar-brand" href="landing.php"><h3><span class="text-primary">Edu</span><span>Portal</span></h3></a>
+            <a class="navbar-brand" href="home"><h3><span class="text-primary">Edu</span><span>Portal</span></h3></a>
                 <button class="navbar-toggler offcanvas-nav-btn" type="button">
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="offcanvas offcanvas-start offcanvas-nav" style="width: 20rem">
                     <div class="offcanvas-header">
-                        <a href="index.html" class="text-inverse"><img src="assets/images/logo/logo.svg"
+                        <a href="home" class="text-inverse"><img src="assets/images/logo/logo.svg"
                                 alt="EduPortal Logo" /></a>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
@@ -27,7 +27,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                    <li><a class="dropdown-item" href="logout">Logout</a></li>
                                 </ul>
                             </div>
                         </div>

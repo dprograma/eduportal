@@ -12,7 +12,7 @@
             <div class="row justify-content-center">
                <div class="w-100 align-self-end col-12">
                   <div class="text-center mb-7">
-                     <a href="landing.php"><h3><span class="text-primary">Edu</span><span>Portal</span></h3></a>
+                     <a href="home"><h3><span class="text-primary">Edu</span><span>Portal</span></h3></a>
                      <h1 class="mb-1">Forgot Password</h1>
                      <p class="mb-0">No worries, we will send you reset instruction.</p>
                   </div>
@@ -31,7 +31,7 @@
                      </div>
                   </form>
                   <div class="text-center">
-                     <a href="signin.php" class="icon-link icon-link-hover">
+                     <a href="login" class="icon-link icon-link-hover">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                            class="bi bi-arrow-left" viewBox="0 0 16 16">
                            <path fill-rule="evenodd"

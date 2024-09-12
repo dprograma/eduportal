@@ -33,7 +33,7 @@
                     <img src="assets/images/features/publications.svg" alt="Publications" class="img-fluid mb-3">
                     <h3>Publications</h3>
                     <p>Find the latest publications across various fields of study.</p>
-                    <a href="publications.html" class="btn btn-outline-primary">Explore Now</a>
+                    <a href="#" class="btn btn-outline-primary">Explore Now</a>
                 </figure>
 
             </div>
@@ -42,7 +42,7 @@
                     <img src="assets/images/features/ebooks.svg" alt="Ebooks" class="img-fluid mb-3">
                     <h3>Ebooks</h3>
                     <p>Download ebooks for your studies and research.</p>
-                    <a href="ebooks.html" class="btn btn-outline-primary">Download Now</a>
+                    <a href="#" class="btn btn-outline-primary">Download Now</a>
                 </figure>
             </div>
             <div class="col-md-4" data-cue="zoomIn">
@@ -50,7 +50,7 @@
                     <img src="assets/images/features/past-questions.svg" alt="Past Questions" class="img-fluid mb-3">
                     <h3>Past Questions</h3>
                     <p>Practice with past questions to prepare for your exams.</p>
-                    <a href="past-questions.html" class="btn btn-outline-primary">Practice Now</a>
+                    <a href="#" class="btn btn-outline-primary">Practice Now</a>
                 </figure>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <div class="col-lg-4 col-md-6 col-12">
                     <div data-cue="zoomIn">
                         <figure class="lift position-relative btn-arrow mb-4">
-                            <a href="portfolio-single.html">
+                            <a href="#">
                                 <img src="assets/images/portfolio/educational-platform.jpg" alt="Educational Platform" class="img-fluid rounded-3" />
                                 <div class="icon-shape icon-lg bg-white rounded-circle icon-arrow shadow-lg">
                                     <i class="bi bi-arrow-up-right"></i>
@@ -79,7 +79,7 @@
                             </a>
                         </figure>
                         <h2 class="lh-base h4">
-                            <a href="portfolio-single.html" class="text-reset">Interactive Learning Platform</a>
+                            <a href="#" class="text-reset">Interactive Learning Platform</a>
                         </h2>
                         <p class="mb-0 text-body-tertiary fw-medium">E-Learning Development</p>
                     </div>
@@ -87,7 +87,7 @@
                 <div class="col-lg-4 col-md-6 col-12">
                     <div data-cue="zoomIn">
                         <figure class="lift position-relative btn-arrow mb-4">
-                            <a href="portfolio-single.html">
+                            <a href="">
                                 <img src="assets/images/portfolio/cbt-system.jpg" alt="CBT System" class="img-fluid rounded-3" />
                                 <div class="icon-shape icon-lg bg-white rounded-circle icon-arrow shadow-lg">
                                     <i class="bi bi-arrow-up-right"></i>
@@ -95,7 +95,7 @@
                             </a>
                         </figure>
                         <h2 class="lh-base h4">
-                            <a href="portfolio-single.html" class="text-reset">CBT Exam System</a>
+                            <a href="" class="text-reset">CBT Exam System</a>
                         </h2>
                         <p class="mb-0 text-body-tertiary fw-medium">Software Development</p>
                     </div>
@@ -103,7 +103,7 @@
                 <div class="col-lg-4 col-md-6 col-12">
                     <div data-cue="zoomIn">
                         <figure class="lift position-relative btn-arrow mb-4">
-                            <a href="portfolio-single.html">
+                            <a href="">
                                 <img src="assets/images/portfolio/ebook-collection.jpg" alt="Ebook Collection" class="img-fluid rounded-3" />
                                 <div class="icon-shape icon-lg bg-white rounded-circle icon-arrow shadow-lg">
                                     <i class="bi bi-arrow-up-right"></i>
@@ -111,7 +111,7 @@
                             </a>
                         </figure>
                         <h2 class="lh-base h4">
-                            <a href="portfolio-single.html" class="text-reset">Comprehensive Ebook Collection</a>
+                            <a href="" class="text-reset">Comprehensive Ebook Collection</a>
                         </h2>
                         <p class="mb-0 text-body-tertiary fw-medium">Content Creation</p>
                     </div>
@@ -241,7 +241,7 @@
                         <p class="mb-0">Whether you’re looking to distribute educational materials, conduct online exams, or create a comprehensive e-learning environment, we are here to turn your vision into reality.</p>
                     </div>
 
-                    <a href="about.html" class="icon-link icon-link-hover">
+                    <a href="#" class="icon-link icon-link-hover">
                         More about us
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
                             class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -345,7 +345,7 @@
                 <div class="row g-5 flex-nowrap pb-4 pb-lg-0 me-5 me-lg-0">
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="blog-single.html">
+                            <a href="#">
                                 <img src="assets/images/blog/blog-img-3.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
@@ -353,7 +353,7 @@
                         <a href="#!"
                             class="badge bg-primary-subtle text-primary-emphasis rounded-pill text-uppercase">The Future of Digital Education</a>
                         <h3 class="my-3 lh-base h4">
-                            <a href="blog-single.html" class="text-reset">Explore how digital platforms are revolutionizing education, offering unprecedented access to resources and learning opportunities.</a>
+                            <a href="#" class="text-reset">Explore how digital platforms are revolutionizing education, offering unprecedented access to resources and learning opportunities.</a>
                         </h3>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
@@ -368,7 +368,7 @@
                     </article>
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="blog-single.html">
+                            <a href="#">
                                 <img src="assets/images/blog/blog-img-5.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
@@ -376,7 +376,7 @@
                         <a href="#!"
                             class="badge bg-warning-subtle text-warning-emphasis rounded-pill text-uppercase">Effective Strategies for Exam Preparation</a>
                         <h3 class="my-3 lh-base h4">
-                            <a href="blog-single.html" class="text-reset">Learn the best practices for acing exams with the help of modern educational tools and resources.</a>
+                            <a href="#" class="text-reset">Learn the best practices for acing exams with the help of modern educational tools and resources.</a>
                         </h3>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
@@ -391,7 +391,7 @@
                     </article>
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="blog-single.html">
+                            <a href="#">
                                 <img src="assets/images/blog/blog-img-4.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
@@ -399,7 +399,7 @@
                         <a href="#!"
                             class="badge bg-success-subtle text-success-emphasis rounded-pill text-uppercase">Why eBooks are the Future of Education</a>
                         <h4 class="my-3 lh-base">
-                            <a href="blog-single.html" class="text-reset">Discover why eBooks are becoming the preferred medium for students and educators alike.</a>
+                            <a href="#" class="text-reset">Discover why eBooks are becoming the preferred medium for students and educators alike.</a>
                         </h4>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
@@ -417,7 +417,7 @@
             <div class="row">
                 <div class="col-lg-12" data-cue="zoomIn">
                     <div class="mt-lg-8 mt-5">
-                        <a href="blog.html" class="icon-link icon-link-hover text-dark">
+                        <a href="#" class="icon-link icon-link-hover text-dark">
                             Read more news
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-arrow-right" viewBox="0 0 16 16">

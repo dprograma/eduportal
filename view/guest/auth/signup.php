@@ -13,11 +13,11 @@
             <div class="row justify-content-center">
                <div class="w-100 align-self-end col-12">
                   <div class="text-center mb-7">
-                     <a href="landing.php"><a href="landing.php"><h3 class="my-4"><span class="text-primary">Edu</span><span>Portal</span></h3></a></a>
+                     <a href="home"><h3 class="my-4"><span class="text-primary">Edu</span><span>Portal</span></h3></a>
                      <h1 class="mb-1">Create Account</h1>
                      <p class="mb-0">
                         Sign up now and get free account instant. Already
-                        <a href="signin.php" class="text-primary">Sign in</a>
+                        <a href="login" class="text-primary">Sign in</a>
                      </p>
                   </div>
 
@@ -94,7 +94,7 @@
                   <div class="text-center mt-7">
                   <div class="small mb-3 mb-lg-0 text-body-tertiary">
                            Copyright © <?=date('Y')?>
-                           <span class="text-primary"><a href="#">EduPortal Educational Platform</a></span>
+                           <span class="text-primary"><a href="home">EduPortal Educational Platform</a></span>
                            | All Rights Reserved
                         </div>
                   </div>
