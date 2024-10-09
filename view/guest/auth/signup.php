@@ -21,19 +21,42 @@
                      </p>
                   </div>
 
-                  <form class="needs-validation mb-6" novalidate>
+                  <?php if(isset($_GET['error'])): ?>
+                     <div class="alert alert-<?=$_GET['type']?> alert-dismissible fade show" role="alert">
+                        <?= htmlspecialchars($_GET['error']) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                     </div>
+                  <?php endif; ?>
+
+                  <form method="post" class="needs-validation mb-6" novalidate>
+                  <div class="mb-3">
+                        <label for="username" class="form-label">
+                           Username
+                           <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="username" id="username" required />
+                        <div class="invalid-feedback">Please enter username.</div>
+                     </div>
+                     <div class="mb-3">
+                        <label for="name" class="form-label">
+                           Full Name
+                           <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="name" id="name" required />
+                        <div class="invalid-feedback">Please enter Full name.</div>
+                     </div>
                      <div class="mb-3">
                         <label for="signupEmailInput" class="form-label">
                            Email
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" id="signupEmailInput" required />
+                        <input type="email" class="form-control" name="email" id="email" required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="mb-3">
                         <label for="formSignUpPassword" class="form-label">Password</label>
                         <div class="password-field position-relative">
-                           <input type="password" class="form-control fakePassword" id="formSignUpPassword" required />
+                           <input type="password" class="form-control fakePassword" name="password" id="password" required />
                            <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                            <div class="invalid-feedback">Please enter password.</div>
                         </div>
@@ -41,7 +64,7 @@
                      <div class="mb-3">
                         <label for="formSignUpConfirmPassword" class="form-label">Confirm Password</label>
                         <div class="password-field position-relative">
-                           <input type="password" class="form-control fakePassword" id="formSignUpConfirmPassword"
+                           <input type="password" class="form-control fakePassword" name="confirm-password" id="confirm-password"
                               required />
                            <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                            <div class="invalid-feedback">Please enter password.</div>
@@ -50,7 +73,7 @@
                      <div class="mb-3">
                         <div class="d-flex align-items-center justify-content-between">
                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="signupCheckTextCheckbox" />
+                              <input class="form-check-input" type="checkbox" name="terms-condition" id="terms-condition" />
                               <label class="form-check-label ms-2" for="signupCheckTextCheckbox">
                                  <a href="#">Terms of Use</a>
                                  &
@@ -61,7 +84,7 @@
                      </div>
 
                      <div class="d-grid">
-                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                        <button class="btn btn-primary" type="submit" name="register" >Sign Up</button>
                      </div>
                   </form>
 

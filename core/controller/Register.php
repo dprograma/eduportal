@@ -1,5 +1,4 @@
 <?php
-
 $title = 'User registration' . '|' . SITE_TITLE;
 
 if (isset($_POST['register'])) {
@@ -10,10 +9,8 @@ if (isset($_POST['register'])) {
     $fullname = sanitizeInput(ucwords($_POST['name']));
     $password = sanitizeInput($_POST['password']);
     $confirm = sanitizeInput($_POST['confirm-password']);
-    $verification = generateUniqueCode(6);
-    $profileimg = 'assets/avatars/money-avatar.png
-';
-
+    $verificationToken = generateRandomString(16); 
+    $profileimg = 'assets/avatars/money-avatar.png';
 
     $userData = [
         'UserName' => $userName,
@@ -27,27 +24,20 @@ if (isset($_POST['register'])) {
     $msg = isEmpty($userData);
 
     if ($msg != 1) {
-        // redirect('auth-register', $msg);
         redirect('signup', $msg);
     }
 
     if ($userData['password'] != $userData['Confirm']) {
-
-        // redirect('auth-register', "Password does not match.");
         redirect('signup', "Password does not match.");
-
     }
-
 
     $res = $pdo->select("SELECT * FROM users WHERE username=? or email=?", [$userData['UserName'], $userData['Email']])->fetchAll(PDO::FETCH_BOTH);
 
     if (!empty($res)) {
         foreach ($res as $user) {
             if ($user['email'] == $userData['Email']) {
-                // redirect('auth-register', "Email already exists");
                 redirect('signup', "Email already exists");
             } elseif ($user['username'] == $userData['UserName']) {
-                // redirect('auth-register', "Username already exists");
                 redirect('signup', "Username already exists");
             }
         }
@@ -55,74 +45,33 @@ if (isset($_POST['register'])) {
 
     $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
 
-    if (Session::exists('new-agent')) {
-        $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification, profileimg, is_agent, access) VALUES(?,?,?,?,?,?,?,?)', [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verification, $userData['ProfileImg'], true, 'secured']);
+    // Insert the user with a verification token and `is_verified` field set to false (0)
+    $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, profileimg, is_verified, access) 
+                  VALUES(?,?,?,?,?,?,?,?)', 
+                  [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, $userData['ProfileImg'], 0, 'secured']);
 
-        // $date = date('d-m-Y H:i:s');
-
-        // $pdo->insert('INSERT INTO `agents`(`agent_id`, `user_id`, `wallet_balance`, `created_at`, `updated_at`) VALUES (?,?,?,?)', [$currentUser->id, $currentUser->id, '', $date, $date]);
-        
-    } else {
-        $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification, profileimg, access) VALUES(?,?,?,?,?,?,?)', [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verification, $userData['ProfileImg'], 'secured']);
-    }
-
-
-
-
-    //     $_SESSION['email_verification_required'] = true;
-// header('Location: auth-two-steps'); 
-// exit;
     if ($pdo->status) {
-        // $pdo->update("UPDATE users SET access = 'secured' WHERE email = ?", [ $userData['Email']]);
-        // Session::exists('new-agent') ? redirect('auth-login', "registration Successful", 'success') : redirect('first-sub', 'Please Make Payment');
+        // Construct the verification link
+        $verificationLink = APP_URL . "verify?token=" . $verificationToken;
+        
+        // Send the verification email
+        $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify Your Email</title></head><body>
+            <h1>Welcome ' . $userData["UserName"] . ' to EduPortal</h1>
+            <p>Please click the link below to verify your email address:</p>
+            <a href="' . $verificationLink . '">Verify Email</a>
+            </body></html>';
 
-        //send a welcome email to the user
-        $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Document</title>
-</head><body>
-    <h1 style="color:skyblue;">Welcome' . $userData["UserName"] . ' to Trifty</h1>
-    <p style="line-height:1.6; text-align:justify">
-        Were Gossip and backbitting trends, Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius ea beatae nulla consectetur veritatis ut est minus, voluptate ullam sequi nam officiis! Atque voluptates recusandae qui! Dolor vero maxime labore?
-    </p>
-</body>
-</html>';
+        $to = $userData['Email'];
+        $mail->AddAddress($to);
+        $mail->Subject = 'Email Account Verification';
+        $mail->Body = $welcomeMsg;
+        $mail->isHTML(true);
+        $mail->send();
 
-
-        // try {
-
-        //     //Recipients
-        //     $mail->setFrom('owunnaizum@gmail.com', 'Trifty Support');
-        //     $mail->addAddress($userData['Email']); //Add a recipient
-        //     // $mail->addAddress('ellen@example.com'); //Name is optional
-        //     $mail->addReplyTo('owunnaizum@gmail.com', );
-        //     // $mail->addCC('cc@example.com');
-        //     // $mail->addBCC('bcc@example.com');
-
-        //     //Attachments
-        //     // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-        //     //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-        //     //Content
-        //     $mail->isHTML(true); //Set email format to HTML
-        //     $mail->Subject = 'Welcome';
-        //     // $mail->Body = "Welcome <b>".$userData['UserName']."</b> <br> You are welcomed to Trifty Blog were gossip and Back-biting are the order of the day";
-        //     $mail->Body = $welcomeMsg;
-
-
-        //     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-        //     $mail->send();
-        //     echo 'Message has been sent';
-        // } catch (Exception $e) {
-        //     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        // }
-
-        redirect('auth-login', "registration Successful", 'success');
+        // Redirect with success message
+        redirect("signup", "Registration successful. Please check your email for the verification link.", "success");
     }
-
-
-
     exit;
-
 }
 
 require_once 'view/guest/auth/signup.php';

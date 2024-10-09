@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<?php $title = "EduPortal | Dashboard"; ?>
+<?php $title = "EduPortal | Publications"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>
@@ -8,7 +8,7 @@
     <?php include "partials/customer_header.php"; ?>
 
     <main>
-        <!--Account home start-->
+        <!-- Account Publications start -->
         <section class="py-lg-7 py-5 bg-light-subtle">
             <div class="container">
                 <div class="row">
@@ -17,13 +17,13 @@
                     </div>
                     <div class="col-lg-9 col-md-8">
 
-                        <?php include 'partials/customer_content.php'; ?>
+                        <?php include 'partials/customer_publications_content.php'; ?>
 
                     </div>
                 </div>
             </div>
         </section>
-        <!--Account home end-->
+        <!-- Account Ebooks end -->
     </main>
 
     <?php include 'partials/footer.php'; ?>

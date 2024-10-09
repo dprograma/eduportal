@@ -85,5 +85,5 @@ class DB
 
 }
 
-$pdo = new DB('localhost', 'root', '', 'preprcom_preprcom');
+$pdo = new DB('localhost', 'root', '', 'eduportal_eduportal');
 // $pdo = new DB('localhost', 'preprcom_preprcom', 'preprcom_preprcom', 'preprcom_preprcom');

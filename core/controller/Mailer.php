@@ -15,8 +15,10 @@ $mail->SMTPAuth = true;
 $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 $mail->Host = 'smtp.gmail.com';
-$mail->Username = 'hiddentreaxure1@gmail.com';
-$mail->Password = 'Aboki12345$';
+// $mail->Username = 'hiddentreaxure1@gmail.com';
+$mail->Username = 'e4ddb8cd5d0f6e';
+// $mail->Password = 'Aboki12345$';
+$mail->Password = '7c789e78d8ef2a';
 
 // Set the recipient's email address, subject, and message
 $to = 'recipient@example.com'; // Replace with the recipient's email address

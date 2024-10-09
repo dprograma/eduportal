@@ -14,20 +14,20 @@
                     <div class="offcanvas-body pt-0 align-items-center">
                         <ul class="navbar-nav mx-auto align-items-lg-center">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Ebooks</a>
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"></a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Publications</a>
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"></a>
                             </li>
                             <li class="nav-item dropdown dropdown-fullwidth">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">Past Questions</a>
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"></a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">CBT Tests</a>
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"></a>
                             </li>
                         </ul>
                         <div class="mt-3 mt-lg-0 d-flex align-items-center">
@@ -37,7 +37,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="assets/images/avatar/avatar-1.jpg" alt="avatar"
                                         class="avatar avatar-sm rounded-circle" />
-                                    John Doe
+                                    <?= $currentUser->fullname ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="account-profile.html">Profile</a></li>

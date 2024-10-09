@@ -36,28 +36,6 @@ if (!empty(Session::get('loggedin'))) {
             WHERE publish = 1
             LIMIT 50")->fetchAll(PDO::FETCH_ASSOC);
     }
-// if (isset($_GET['questionsDetails'])) {
-//   // Assuming this is part of your assessment.php page
-
-// $examBody = isset($_GET['examBody']) ? sanitizeInput($_GET['examBody']) : '';
-// $examYear = isset($_GET['examYear']) ? sanitizeInput($_GET['examYear']) : '';
-// $subject = isset($_GET['subject']) ? sanitizeInput($_GET['subject']) : '';
-
-// // Now use $examBody, $examYear, $subject in a new query to fetch questions
-// $questions = $pdo->select("SELECT * FROM past_question WHERE exam_body = ? AND exam_year = ? AND subject = ? AND publish = 1", [$examBody, $examYear, $subject])->fetchAll(PDO::FETCH_ASSOC);
-
-// // var_dump($questions); die;
-
-//  if ($questions) {
-//         // Redirect to the appropriate page with question details
-//         header("Location: assessment?examBody={$examBody}&examYear={$examYear}&subject={$subject}");
-//         exit();
-//     } else {
-//         $error = "Questions not found. Please check the details and try again.";
-//     }
-
-
-// }
 
 if (isset($_GET['questionsDetails'])) {
     $examBody = isset($_GET['examBody']) ? sanitizeInput($_GET['examBody']) : '';
@@ -78,6 +56,5 @@ if (isset($_GET['questionsDetails'])) {
         $error = "Questions not found. Please check the details and try again.";
     }
 }
-    require_once 'view/loggedin/secured/past-question.php';
+    require_once 'view/loggedin/secured/dashboard.php';
 }
-?>

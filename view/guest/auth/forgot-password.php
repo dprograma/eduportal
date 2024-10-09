@@ -16,18 +16,24 @@
                      <h1 class="mb-1">Forgot Password</h1>
                      <p class="mb-0">No worries, we will send you reset instruction.</p>
                   </div>
-                  <form action="set_new_password.php" class="needs-validation mb-5" novalidate>
+                  <?php if(isset($_GET['error'])): ?>
+                     <div class="alert alert-<?=$_GET['type']?> alert-dismissible fade show" role="alert">
+                        <?= htmlspecialchars($_GET['error']) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                     </div>
+                  <?php endif; ?>
+                  <form method="post" class="needs-validation mb-5" novalidate>
                      <div class="mb-3">
-                        <label for="forgetEmailInput2" class="form-label">
+                        <label for="email" class="form-label">
                            Email
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" id="forgetEmailInput2" placeholder="Enter your email"
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email"
                            required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="d-grid">
-                        <button class="btn btn-primary" type="submit">Reset Password</button>
+                        <button class="btn btn-primary" type="submit" name="forgot-password">Reset Password</button>
                      </div>
                   </form>
                   <div class="text-center">

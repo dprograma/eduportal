@@ -7,17 +7,11 @@ use PHPMailer\PHPMailer\SMTP;
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
-
-//Server settings
-$mail->SMTPDebug = 0; //Enable verbose debug output
-$mail->isSMTP(); //Send using SMTP
-$mail->Host = 'smtp.gmail.com'; //Set the SMTP server to send through
-$mail->SMTPAuth = true; //Enable SMTP authentication
-$mail->Username = 'owunnaizum@gmail.com'; //SMTP username
-$mail->Password = 'emma2015'; //SMTP password
-$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
-$mail->Port = 465; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-
+// Looking to send emails in production? Check out our Email API/SMTP product!
+$mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host = 'sandbox.smtp.mailtrap.io';
+$mail->SMTPAuth = true;
+$mail->Port = 2525;
+$mail->Username = 'e4ddb8cd5d0f6e';
+$mail->Password = '7c789e78d8ef2a';

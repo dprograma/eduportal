@@ -7,12 +7,13 @@ $routes = [
 
     'signup' => 'core/controller/Register.php',
     'forgot-password' => 'core/controller/Forgot-Password.php',
-    'set-new-password' => 'core/controller/Set-New-Password.php',
+    'reset-password' => 'core/controller/Reset-Password.php',
     'auth-two-steps' => 'core/controller/Two-Steps.php',
     'auth-verify-email' => 'core/controller/Verify-Email.php',
     'login' => 'core/controller/Login.php',
+    'verify' => 'core/controller/Verify.php',
+    'reset' => 'core/controller/Reset.php',
     'dashboard' => 'core/controller/Dashboard.php',
-    'password-reset' => 'core/controller/PasswordReset.php',
     'create-post' => 'core/controller/Post.php',
     '404' => 'core/controller/404.php',
     'blogdetails' => 'core/controller/Blogdetail.php',
@@ -43,6 +44,9 @@ $routes = [
     'agent-dashboard' => 'core/controller/AgentDashboard.php',
     'view-agent-past-questions' => 'core/controller/View-Agent-Past-Questions.php',
     'edit-uploaded-past-question' => 'core/controller/Edit-Uploaded-Question.php',
+    'customer-ebooks' => 'core/controller/CustomerEbooks.php',
+    'customer-publications' => 'core/controller/CustomerPublications.php',
+    'customer-past-questions' => 'core/controller/CustomerPastQuestions.php',
     'logout' => 'core/controller/Logout.php',
 ];
 
@@ -51,9 +55,9 @@ $admin_pages = ['admin-dashboard', 'dashboard', 'purchases', '/', 'create-past-q
 
 $agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url'];
 
-$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub'];
+$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions'];
 
-$guest_pages = ['home', '/', 'first-sub', 'contact', 'about', 'checkout', 'signup', 'login', 'auth-agent-login', 'add-to-cart', 'cart', 'agent', 'forgot-password', 'auth-two-steps', 'auth-verify-email', 'blogdetails', 'news'];
+$guest_pages = ['home', '/', 'first-sub', 'contact', 'about', 'checkout', 'signup', 'login', 'auth-agent-login', 'add-to-cart', 'cart', 'agent', 'forgot-password', 'auth-two-steps', 'auth-verify-email', 'blogdetails', 'news', 'verify', 'reset', 'reset-password'];
 
 if (Session::exists('loggedin')) {
     $access_level = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC))->access;

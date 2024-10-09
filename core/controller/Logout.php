@@ -7,4 +7,3 @@ session_unset();
 session_destroy();
 
 redirect('home');exit();
-?>
