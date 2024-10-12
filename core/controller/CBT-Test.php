@@ -10,7 +10,8 @@ if (isset($_POST['logout'])) {
 if (!empty(Session::get('loggedin'))) {
     $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC));
 
-    if ($currentUser->access == 'secured' && $currentUser->amount >= 1000) {
+    // if ($currentUser->access == 'secured' && $currentUser->amount >= 1000) {
+    if ($currentUser->access == 'secured') {
         $data = json_decode(file_get_contents("php://input"));
 
         if ($data) {
@@ -24,8 +25,7 @@ if (!empty(Session::get('loggedin'))) {
             WHERE examBody = :exam_body
             AND subject = :`subject`
             AND examYear = :exam_year
-            AND publish = 1
-            LIMIT 50", [
+            AND publish = 1", [
                 'examBody' => $examBody,
                 'subject' => $subject,
                 'examYear' => $examYear
@@ -33,8 +33,7 @@ if (!empty(Session::get('loggedin'))) {
         } else {
             // If no parameters are selected, fetch all published questions
             $questions = $pdo->select("SELECT * FROM past_question
-            WHERE publish = 1
-            LIMIT 50")->fetchAll(PDO::FETCH_ASSOC);
+            WHERE publish = 1")->fetchAll(PDO::FETCH_ASSOC);
         }
 
         if (isset($_GET['questionsDetails'])) {
@@ -55,12 +54,11 @@ if (!empty(Session::get('loggedin'))) {
             } else {
                 $error = "Questions not found. Please check the details and try again.";
             }
-        } 
+        }
 
-    } else {
-        redirect('first-sub');
     }
-
+    // else {
+    //     redirect('first-sub');
+    // }
     require_once 'view/loggedin/secured/cbt-test.php';
 }
-?>

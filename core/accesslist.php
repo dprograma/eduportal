@@ -47,6 +47,7 @@ $routes = [
     'customer-ebooks' => 'core/controller/CustomerEbooks.php',
     'customer-publications' => 'core/controller/CustomerPublications.php',
     'customer-past-questions' => 'core/controller/CustomerPastQuestions.php',
+    'notifications' => 'core/controller/Notifications.php',
     'logout' => 'core/controller/Logout.php',
 ];
 
@@ -55,7 +56,7 @@ $admin_pages = ['admin-dashboard', 'dashboard', 'purchases', '/', 'create-past-q
 
 $agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url'];
 
-$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions'];
+$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions', 'notifications'];
 
 $guest_pages = ['home', '/', 'first-sub', 'contact', 'about', 'checkout', 'signup', 'login', 'auth-agent-login', 'add-to-cart', 'cart', 'agent', 'forgot-password', 'auth-two-steps', 'auth-verify-email', 'blogdetails', 'news', 'verify', 'reset', 'reset-password'];
 

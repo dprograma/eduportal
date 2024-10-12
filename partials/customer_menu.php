@@ -33,7 +33,7 @@
 <div class="collapse d-md-block" id="collapseAccountMenu">
     <ul class="nav flex-column nav-account">
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="dashboard">
                 <i class="align-bottom bx bx-home"></i>
                 <span class="ms-2">Dashboard</span>
             </a>
@@ -57,13 +57,13 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="account-cbt.html">
+            <a class="nav-link" href="cbt-test">
                 <i class="align-bottom bx bx-clipboard"></i>
                 <span class="ms-2">CBT Tests</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="account-notifications.html">
+            <a class="nav-link" href="notifications">
                 <i class="align-bottom bx bx-bell"></i>
                 <span class="ms-2">Notifications</span>
             </a>
