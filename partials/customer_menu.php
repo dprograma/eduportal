@@ -7,7 +7,7 @@
 </div>
 <!-- Navbar -->
 <div class="mb-4 text-center text-md-start">
-    <a href="#" class="text-reset">
+    <a href="profile" class="text-reset">
         <span>
             <span>View Profile</span>
         </span>

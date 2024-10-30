@@ -33,6 +33,11 @@
 
    <!-- Theme CSS -->
    <link rel="stylesheet" href="assets/css/theme.min.css" />
+
+   <!-- Bootstrap scripts -->
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+   
    <!-- Analytics Code -->
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
    <script>

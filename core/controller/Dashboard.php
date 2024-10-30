@@ -10,6 +10,21 @@ if(isset($_POST['logout'])){
 if (!empty(Session::get('loggedin'))) {
     $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC));
 
+    // Fetch count of all ebooks, publications and past questions 
+    $totallibrarycount = $pdo->select("SELECT COUNT(*) as count FROM transactionlogs WHERE user_id =?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC)['count'];
+
+    // Fetch total sum of transaction amounts from transactionlogs table
+    $totaltransactionamount = $pdo->select("SELECT SUM(amount) as total FROM transactionlogs WHERE user_id =?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC)['total'];
+    if ($totaltransactionamount == null) {
+        $totaltransactionamount = 0;
+    }
+
+    // Fetch score from the cbt test database
+    $scoreResult = $pdo->select("SELECT `score`, `subject` FROM `cbt_test` WHERE `user_id` = ? ORDER BY `score` DESC LIMIT 1", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC);
+
+    $score = isset($scoreResult['score']) ? $scoreResult['score'] : 0;
+    $cbtsubject = isset($scoreResult['subject']) ? $scoreResult['subject'] : '';
+
 
     $data = json_decode(file_get_contents("php://input"));
 

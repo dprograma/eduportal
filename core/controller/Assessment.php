@@ -8,14 +8,12 @@ if ($questions) {
     require_once 'view/loggedin/secured/past-question.php';
     header('Content-Type: application/json');
 
-// Return questions as JSON
-echo json_encode($questions);
-
-
-    var_dump($questions); die;
+    // Return questions as JSON
+    echo json_encode($questions);
+    exit();
 } else {
     // Handle case when there are no questions
     echo "No questions found.";
 }
 
-    require_once 'view/loggedin/secured/assessment.php';
+require_once 'view/loggedin/secured/assessment.php';
