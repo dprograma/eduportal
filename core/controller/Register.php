@@ -9,8 +9,8 @@ if (isset($_POST['register'])) {
     $fullname = sanitizeInput(ucwords($_POST['name']));
     $password = sanitizeInput($_POST['password']);
     $confirm = sanitizeInput($_POST['confirm-password']);
-    $verificationToken = generateRandomString(16); 
-    $profileimg = 'assets/avatars/money-avatar.png';
+    $verificationToken = generateRandomString(16);
+    $profileimg = '';
 
     $userData = [
         'UserName' => $userName,
@@ -47,13 +47,14 @@ if (isset($_POST['register'])) {
 
     // Insert the user with a verification token and `is_verified` field set to false (0)
     $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, profileimg, is_verified, access) 
-                  VALUES(?,?,?,?,?,?,?,?)', 
-                  [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, $userData['ProfileImg'], 0, 'secured']);
+                  VALUES(?,?,?,?,?,?,?,?)',
+        [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, $userData['ProfileImg'], 0, 'secured']
+    );
 
     if ($pdo->status) {
         // Construct the verification link
         $verificationLink = APP_URL . "verify?token=" . $verificationToken;
-        
+
         // Send the verification email
         $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify Your Email</title></head><body>
             <h1>Welcome ' . $userData["UserName"] . ' to EduPortal</h1>

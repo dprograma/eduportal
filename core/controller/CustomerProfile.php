@@ -14,51 +14,67 @@ if (!empty(Session::get('loggedin'))) {
 
         if (isset($_POST['profile'])) {
 
-            $userName = sanitizeInput($_POST['username']);
-            $email = sanitizeInput($_POST['email']);
-            $_SESSION['user_email'] = $email;
-            $fullname = sanitizeInput(ucwords($_POST['name']));
-            $password = sanitizeInput($_POST['password']);
-            $confirm = sanitizeInput($_POST['confirm-password']);
+
+            $old_password = sanitizeInput($_POST['old_password']);
+            $new_password = sanitizeInput($_POST['new_password']);
+            $confirm_new_password = sanitizeInput($_POST['confirm_new_password']);
             $verificationToken = generateRandomString(16);
+
 
             // Default profile image
             $profileimg = $currentUser->profileimg;
 
-            // Check if a new file was uploaded
-            if (!empty($_FILES['profileimg']['name'])) {
-                $profileimgUpload = fileUpload($_FILES['profileimg']);
-                if (is_array($profileimgUpload)) {
-                    // If there are errors during file upload, redirect with error
-                    redirect('profile', implode(', ', $profileimgUpload));
-                } else {
-                    $profileimg = $profileimgUpload;
-                }
+
+            // Check if the old password is correct
+
+            if (!empty($old_password) && !password_verify($old_password, $currentUser->password)) {
+                redirect('profile', 'Incorrect old password!');
+            }
+
+            // Check for password mismatch
+
+            if (!empty($new_password) && !empty($confirm_new_password) && $new_password != $confirm_new_password) {
+                redirect('profile', 'Password mismatch!');
+            }
+
+            // Check if password is already used
+            if (!empty($new_password) && password_verify($new_password, $currentUser->password)) {
+                redirect('profile', 'Password already used!');
             }
 
             $userData = [
-                'UserName' => $userName,
-                'Email' => $email,
-                'FullName' => $fullname,
-                'password' => $password,
-                'Confirm' => $confirm,
-                'ProfileImg' => $profileimg,
+                'password' => $new_password,
+                'Confirm' => $confirm_new_password,
             ];
 
-            $msg = isEmpty($userData);
-            if ($msg != 1) {
-                redirect('profile', $msg);
-            }
+            // $msg = isEmpty($userData);
+            // if ($msg != 1) {
+            //     redirect('profile', $msg);
+            // }
 
-            $res = $pdo->select("SELECT * FROM users WHERE username=? OR email=?", [$userData['UserName'], $userData['Email']])->fetchAll(PDO::FETCH_BOTH);
 
-            if (!empty($res)) {
+            if (!empty($currentUser)) {
+
+                // Check if a new file was uploaded
+                if (!empty($_FILES['profileimg']['name'])) {
+                    $profileimgUpload = fileUpload($_FILES['profileimg']);
+                    if (is_array($profileimgUpload)) {
+                        // If there are errors during file upload, redirect with error
+                        redirect('profile', implode(', ', $profileimgUpload));
+                    } else {
+                        $profileimg = $profileimgUpload;
+                        $userData['ProfileImg'] = $profileimg;
+                    }
+                }
+
+                echo "USER FORM DATA: " . print_r($userData);
+
                 $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
 
                 // Update the user information
                 $pdo->update(
-                    "UPDATE users SET username=?, email=?, fullname=?, `password`=?, verification_token=?, profileimg=? WHERE id=?",
-                    [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, $userData['ProfileImg'], Session::get('loggedin')]
+                    "UPDATE users SET `password`=?, verification_token=?, profileimg=? WHERE id=?",
+                    [$hashedPass, $verificationToken, $userData['ProfileImg'], Session::get('loggedin')]
                 );
 
                 if ($pdo->status) {

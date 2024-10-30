@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start">
-    <img src="assets/images/avatar/avatar-1.jpg" alt="avatar" class="avatar avatar-lg rounded-circle" />
+    <img src="<?= file_exists($currentUser->profileimg)? $currentUser->profileimg : 'assets/images/avatar/fallback.jpg' ?>" alt="avatar" class="avatar avatar-lg rounded-circle" />
     <div class="ms-3">
         <h5 class="mb-0"><?= $currentUser->fullname ?></h5>
         <small>Personal account</small>
