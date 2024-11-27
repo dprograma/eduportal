@@ -10,7 +10,7 @@ define('APP_URL', 'http://'.APP_SERVER_NAME.DS.ROOT);
 define('DESCRIPTION', 'JAMB, NECO and WAEC past questions and answers are available here for download!');
 define('FAVICON', 'assets/img/icons/logos/prepr_favicon.png');
 define('LOGO', 'assets/img/icons/logos/prepr_logo.png');
-define('CART', 'assets/img/icons/payments/cart.png');
+define('CART', 'assets/images/payments/cart.png');
 define('FACEBOOK', 'https://web.facebook.com/people/Prepr/61554297521186/');
 
 define('KEYWORDS', 'JAMB, NECO, WAEC, past questions , Blog, News, Schools, POST UTME');

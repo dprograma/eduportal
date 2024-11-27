@@ -56,7 +56,7 @@
       <!--Pageheader end-->
       <!--Forget password v2 start-->
       <div class="position-absolute end-0 bottom-0 m-4">
-         <div class="dropdown">
+         <!-- <div class="dropdown">
             <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button"
                aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
                <i class="bi theme-icon-active"></i>
@@ -85,7 +85,7 @@
                   </button>
                </li>
             </ul>
-         </div>
+         </div> -->
       </div>
       <!--Forget password v2 end-->
    </main>

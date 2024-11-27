@@ -30,7 +30,7 @@
         <div class="row border-top border-bottom">
             <div class="col-md-4 border-end-md border-bottom border-bottom-md-0" data-cue="zoomIn">
                 <figure class="text-center p-5">
-                    <img src="assets/images/features/publications.svg" alt="Publications" class="img-fluid mb-3">
+                    <!-- <img src="assets/images/features/publications.svg" alt="Publications" class="img-fluid mb-3"> -->
                     <h3>Publications</h3>
                     <p>Find the latest publications across various fields of study.</p>
                     <a href="#" class="btn btn-outline-primary">Explore Now</a>
@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-4 border-end-md border-bottom border-bottom-md-0" data-cue="zoomIn">
                 <figure class="text-center p-5">
-                    <img src="assets/images/features/ebooks.svg" alt="Ebooks" class="img-fluid mb-3">
+                    <!-- <img src="assets/images/features/ebooks.svg" alt="Ebooks" class="img-fluid mb-3"> -->
                     <h3>Ebooks</h3>
                     <p>Download ebooks for your studies and research.</p>
                     <a href="#" class="btn btn-outline-primary">Download Now</a>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-4" data-cue="zoomIn">
                 <figure class="text-center p-5">
-                    <img src="assets/images/features/past-questions.svg" alt="Past Questions" class="img-fluid mb-3">
+                    <!-- <img src="assets/images/features/past-questions.svg" alt="Past Questions" class="img-fluid mb-3"> -->
                     <h3>Past Questions</h3>
                     <p>Practice with past questions to prepare for your exams.</p>
                     <a href="#" class="btn btn-outline-primary">Practice Now</a>

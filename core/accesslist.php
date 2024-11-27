@@ -6,6 +6,7 @@ $routes = [
     'news' => 'core/controller/News.php',
 
     'signup' => 'core/controller/Register.php',
+    'affiliate-signup' => 'core/controller/Register.php',
     'forgot-password' => 'core/controller/Forgot-Password.php',
     'reset-password' => 'core/controller/Reset-Password.php',
     'auth-two-steps' => 'core/controller/Two-Steps.php',
@@ -23,7 +24,10 @@ $routes = [
     'first-sub' => 'core/controller/First-Sub.php',
     'admin-dashboard' => 'core/controller/Admin-Dashboard.php',
     'admin-settings' => 'core/controller/Admin-Settings.php',
-
+    'facebook-redirect' => 'core/controller/FacebookCallBack.php',
+    'facebook-login' => 'core/controller/FacebookLogin.php',
+    'redirect-url' => 'core/controller/GoogleCallBack.php',
+    'google-login' => 'core/controller/GoogleLogin.php',
     'create-past-question' => 'core/controller/Create-Past-Question.php',
     'edit-question' => 'core/controller/Edit-Question.php',
     'upload-past-question' => 'core/controller/Upload-Past-Question.php',
@@ -32,6 +36,7 @@ $routes = [
     'checkout' => 'core/controller/Checkout.php',
     'checkout-past-q' => 'core/controller/Checkout-Past-Q.php',
     'purchase-past-question' => 'core/controller/Purchase-Past-Question.php',
+    'past-questions' => 'core/controller/Past-Questions.php',
     'downloadfile' => 'core/controller/DownloadFile.php',
     'callback-url' => 'core/controller/CallBackURL.php',
     'q-callback-url' => 'core/controller/Q-CallBack-Url.php',
@@ -54,13 +59,13 @@ $routes = [
 ];
 
 
-$admin_pages = ['admin-dashboard', 'dashboard', 'purchases', '/', 'create-past-question', 'create-post', 'viewpost', 'view-past-questions', 'post-table', 'admin-settings', 'edit-post', 'payment-gateway', 'cart', 'checkout-past-q', 'edit-question', 'upload-past-question', 'view-agent-past-questions','edit-uploaded-past-question', 'logout', 'agent-dashboard', 'home', '/', 'blogdetails', 'contact', 'about', 'news', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'cbt-test'];
+$admin_pages = ['admin-dashboard', 'dashboard', 'purchases', '/', 'create-past-question', 'create-post', 'viewpost', 'view-past-questions', 'post-table', 'admin-settings', 'edit-post', 'payment-gateway', 'cart', 'checkout-past-q', 'edit-question', 'upload-past-question', 'view-agent-past-questions','edit-uploaded-past-question', 'logout', 'agent-dashboard', 'home', '/', 'blogdetails', 'contact', 'about', 'news', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'cbt-test', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login'];
 
-$agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url'];
+$agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login'];
 
-$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions', 'notifications', 'save-cbt-test-result', 'profile'];
+$secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions', 'notifications', 'save-cbt-test-result', 'profile', 'past-questions', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login'];
 
-$guest_pages = ['home', '/', 'first-sub', 'contact', 'about', 'checkout', 'signup', 'login', 'auth-agent-login', 'add-to-cart', 'cart', 'agent', 'forgot-password', 'auth-two-steps', 'auth-verify-email', 'blogdetails', 'news', 'verify', 'reset', 'reset-password'];
+$guest_pages = ['home', '/', 'first-sub', 'contact', 'about', 'checkout', 'signup', 'login', 'auth-agent-login', 'add-to-cart', 'cart', 'agent', 'forgot-password', 'auth-two-steps', 'auth-verify-email', 'blogdetails', 'news', 'verify', 'reset', 'reset-password', 'past-questions', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login'];
 
 if (Session::exists('loggedin')) {
     $access_level = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC))->access;

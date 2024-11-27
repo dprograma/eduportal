@@ -13,7 +13,9 @@
             <div class="row justify-content-center">
                <div class="w-100 align-self-end col-12">
                   <div class="text-center mb-7">
-                     <a href="home"><h3 class="my-4"><span class="text-primary">Edu</span><span>Portal</span></h3></a>
+                     <a href="home">
+                        <h3 class="my-4"><span class="text-primary">Edu</span><span>Portal</span></h3>
+                     </a>
                      <h1 class="mb-1">Create Account</h1>
                      <p class="mb-0">
                         Sign up now and get free account instant. Already
@@ -21,15 +23,15 @@
                      </p>
                   </div>
 
-                  <?php if(isset($_GET['error'])): ?>
-                     <div class="alert alert-<?=$_GET['type']?> alert-dismissible fade show" role="alert">
+                  <?php if (isset($_GET['error'])): ?>
+                     <div class="alert alert-<?= $_GET['type'] ?> alert-dismissible fade show" role="alert">
                         <?= htmlspecialchars($_GET['error']) ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                      </div>
                   <?php endif; ?>
 
                   <form method="post" class="needs-validation mb-6" novalidate>
-                  <div class="mb-3">
+                     <div class="mb-3">
                         <label for="username" class="form-label">
                            Username
                            <span class="text-danger">*</span>
@@ -56,7 +58,8 @@
                      <div class="mb-3">
                         <label for="formSignUpPassword" class="form-label">Password</label>
                         <div class="password-field position-relative">
-                           <input type="password" class="form-control fakePassword" name="password" id="password" required />
+                           <input type="password" class="form-control fakePassword" name="password" id="password"
+                              required />
                            <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                            <div class="invalid-feedback">Please enter password.</div>
                         </div>
@@ -64,8 +67,8 @@
                      <div class="mb-3">
                         <label for="formSignUpConfirmPassword" class="form-label">Confirm Password</label>
                         <div class="password-field position-relative">
-                           <input type="password" class="form-control fakePassword" name="confirm-password" id="confirm-password"
-                              required />
+                           <input type="password" class="form-control fakePassword" name="confirm-password"
+                              id="confirm-password" required />
                            <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                            <div class="invalid-feedback">Please enter password.</div>
                         </div>
@@ -73,7 +76,8 @@
                      <div class="mb-3">
                         <div class="d-flex align-items-center justify-content-between">
                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" name="terms-condition" id="terms-condition" />
+                              <input class="form-check-input" type="checkbox" name="terms-condition"
+                                 id="terms-condition" />
                               <label class="form-check-label ms-2" for="signupCheckTextCheckbox">
                                  <a href="#">Terms of Use</a>
                                  &
@@ -82,15 +86,24 @@
                            </div>
                         </div>
                      </div>
+                     <div class="mb-3">
+                        <div class="form-check">
+                           <input class="form-check-input" type="checkbox" name="affiliate" id="affiliate">
+                           <label class="form-check-label" for="affiliate">
+                              <span style="font-size: 12px; font-weight: 400; text-wrap: wrap;">Become an affiliate and get 65% return on your affiliation registration. T&C applies.</span>
+                           </label>
+                        </div>
+                     </div>
+
 
                      <div class="d-grid">
-                        <button class="btn btn-primary" type="submit" name="register" >Sign Up</button>
+                        <button class="btn btn-primary" type="submit" name="register">Sign Up</button>
                      </div>
                   </form>
 
                   <span>Sign up with your social network.</span>
                   <div class="d-grid mt-3">
-                     <a href="#" class="btn btn-google">
+                     <a href="google-login" class="btn btn-google">
                         <span class="me-3">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                               class="bi bi-google" viewBox="0 0 16 16">
@@ -102,7 +115,7 @@
                      </a>
                   </div>
                   <div class="d-grid mt-2">
-                     <a href="#" class="btn btn-facebook">
+                     <a href="facebook-login" class="btn btn-facebook">
                         <span class="me-3">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                               class="bi bi-facebook" viewBox="0 0 16 16">
@@ -115,11 +128,11 @@
                   </div>
 
                   <div class="text-center mt-7">
-                  <div class="small mb-3 mb-lg-0 text-body-tertiary">
-                           Copyright © <?=date('Y')?>
-                           <span class="text-primary"><a href="home">EduPortal Educational Platform</a></span>
-                           | All Rights Reserved
-                        </div>
+                     <div class="small mb-3 mb-lg-0 text-body-tertiary">
+                        Copyright © <?= date('Y') ?>
+                        <span class="text-primary"><a href="home">EduPortal Educational Platform</a></span>
+                        | All Rights Reserved
+                     </div>
                   </div>
                </div>
             </div>
@@ -131,7 +144,7 @@
       <!--Pageheader end-->
       <!--sign up v2-->
       <div class="position-absolute start-0 bottom-0 m-4">
-         <div class="dropdown">
+         <!-- <div class="dropdown">
             <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button"
                aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
                <i class="bi theme-icon-active"></i>
@@ -160,7 +173,7 @@
                   </button>
                </li>
             </ul>
-         </div>
+         </div> -->
       </div>
    </main>
    <?php include "partials/scripts.php"; ?>

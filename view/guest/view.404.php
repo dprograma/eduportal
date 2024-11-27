@@ -99,7 +99,7 @@
                   <h2>Oops page not found</h2>
                   <p>The page you are looking for is not available.</p>
 
-                  <a href="/eduportal/home" class="btn btn-primary">Go back to home</a>
+                  <a href="/home" class="btn btn-primary">Go back to home</a>
                </div>
             </div>
          </div>

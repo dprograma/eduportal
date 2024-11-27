@@ -151,7 +151,7 @@
                </div>
                <div class="col-md-3">
                   <div class="text-md-end d-flex align-items-center justify-content-md-end">
-                     <div class="dropdown">
+                     <!-- <div class="dropdown">
                         <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
                            <i class="bi theme-icon-active lh-1"></i>
                            <span class="visually-hidden bs-theme-text">Toggle theme</span>
@@ -176,7 +176,7 @@
                               </button>
                            </li>
                         </ul>
-                     </div>
+                     </div> -->
                      <div class="ms-3 d-flex gap-2">
                         <a href="#!" class="text-reset btn btn-instagram btn-icon">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">

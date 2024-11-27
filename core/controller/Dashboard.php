@@ -73,3 +73,6 @@ if (isset($_GET['questionsDetails'])) {
 }
     require_once 'view/loggedin/secured/dashboard.php';
 }
+else {
+    require_once 'view/guest/landing.php';
+}

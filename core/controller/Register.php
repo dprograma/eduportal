@@ -1,7 +1,9 @@
 <?php
-$title = 'User registration' . '|' . SITE_TITLE;
+use PHPMailer\PHPMailer\PHPMailer;
 
-if (isset($_POST['register'])) {
+$title = isset($_GET['ref']) == 'affiliate' ? 'Affiliate registration' . '|' . SITE_TITLE: 'User registration' . '|' . SITE_TITLE;
+
+if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
 
     $userName = sanitizeInput($_POST['username']);
     $email = sanitizeInput($_POST['email']);
@@ -10,7 +12,10 @@ if (isset($_POST['register'])) {
     $password = sanitizeInput($_POST['password']);
     $confirm = sanitizeInput($_POST['confirm-password']);
     $verificationToken = generateRandomString(16);
-    $profileimg = '';
+    // Check if the affiliate checkbox was selected
+    $affiliate = isset($_POST['affiliate']) ? 1 : 0;
+
+    // Validate the input data
 
     $userData = [
         'UserName' => $userName,
@@ -18,7 +23,7 @@ if (isset($_POST['register'])) {
         'FullName' => $fullname,
         'password' => $password,
         'Confirm' => $confirm,
-        'ProfileImg' => $profileimg,
+        'affiliate' => $affiliate
     ];
 
     $msg = isEmpty($userData);
@@ -46,9 +51,9 @@ if (isset($_POST['register'])) {
     $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
 
     // Insert the user with a verification token and `is_verified` field set to false (0)
-    $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, profileimg, is_verified, access) 
-                  VALUES(?,?,?,?,?,?,?,?)',
-        [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, $userData['ProfileImg'], 0, 'secured']
+    $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, is_verified, access, affiliate) 
+                  VALUES(?,?,?,?,?,?,?)',
+        [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, 0, 'secured', $userData['affiliate']]
     );
 
     if ($pdo->status) {
@@ -62,12 +67,25 @@ if (isset($_POST['register'])) {
             <a href="' . $verificationLink . '">Verify Email</a>
             </body></html>';
 
+
         $to = $userData['Email'];
-        $mail->AddAddress($to);
-        $mail->Subject = 'Email Account Verification';
-        $mail->Body = $welcomeMsg;
-        $mail->isHTML(true);
-        $mail->send();
+
+        try {
+            $mail->addAddress($to);
+            $mail->Subject = 'Email Account Verification';
+            $mail->Body = $welcomeMsg;
+
+            // Try to send using port 465
+            if (!$mail->send()) {
+                // If it fails, try TLS on port 587
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->send();
+            }
+
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
 
         // Redirect with success message
         redirect("signup", "Registration successful. Please check your email for the verification link.", "success");
@@ -75,4 +93,9 @@ if (isset($_POST['register'])) {
     exit;
 }
 
-require_once 'view/guest/auth/signup.php';
+if (isset($_GET['ref']) && $_GET['ref'] == 'affiliate') {
+    require_once 'view/guest/auth/affiliate_signup.php';
+}else{
+    require_once 'view/guest/auth/signup.php';
+
+}

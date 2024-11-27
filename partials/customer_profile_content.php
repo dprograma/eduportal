@@ -20,7 +20,7 @@
                     alt="avatar" class="avatar avatar-lg rounded-circle" />
                 <div class="ms-4">
                     <h5 class="mb-0">Your photo</h5>
-                    <small>Allowed *.jpeg, *.jpg, *.png, *.gif max size of 2 MB</small>
+                    <small>Allowed *.jpeg, *.jpg, *.png, *.gif max size of 1 MB</small>
                 </div>
 
             </div>
