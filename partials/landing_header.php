@@ -26,19 +26,16 @@ $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::g
              <div class="offcanvas-body pt-0 align-items-center">
                 <ul class="navbar-nav mx-auto align-items-lg-center">
                    <li class="nav-item dropdown">
-                      <a class="nav-link" href="#" role="button" aria-expanded="false">Home</a>
-                   </li>
-                   <li class="nav-item dropdown">
-                      <a class="nav-link" href="#" role="button" aria-expanded="false">Publications</a>
+                      <a class="nav-link" href="publications" role="button" aria-expanded="false">Publications</a>
                    </li>
                    <li class="nav-item dropdown dropdown-fullwidth">
-                      <a class="nav-link" href="#" role="button" aria-expanded="false">Ebooks</a>
+                      <a class="nav-link" href="ebooks" role="button" aria-expanded="false">Ebooks</a>
                    </li>
                    <li class="nav-item dropdown">
                       <a class="nav-link" href="past-questions" role="button" aria-expanded="false">Past Questions</a>
                    </li>
                    <li class="nav-item dropdown">
-                      <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">CBT Test</a>
+                      <a class="nav-link" href="cbt-test" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">CBT Test</a>
                    </li>
                    <li class="nav-item dropdown">
                       <a class="nav-link btn btn-primary" href="affiliate-signup?ref=affiliate" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Become an Affiliate</a>

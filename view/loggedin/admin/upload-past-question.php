@@ -13,7 +13,9 @@
             <div class="container">
                 <div class="row">
                     <?php include "partials/admin_menu.php"; ?>
-                    <?php include "partials/admin_dashboard_content.php"; ?>
+                    <div class="col-lg-9 col-md-8">
+                        <?php include "partials/upload_past_question_content.php"; ?>
+                    </div>
                 </div>
             </div>
         </section>

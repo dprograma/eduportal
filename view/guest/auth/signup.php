@@ -77,7 +77,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                            <div class="form-check">
                               <input class="form-check-input" type="checkbox" name="terms-condition"
-                                 id="terms-condition" />
+                                 id="terms-condition" required />
                               <label class="form-check-label ms-2" for="signupCheckTextCheckbox">
                                  <a href="#">Terms of Use</a>
                                  &

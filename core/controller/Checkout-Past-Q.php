@@ -16,7 +16,7 @@ $publicKey = "pk_test_dd190b038dc1059a96638e2f718bf40bdb127e70";
 
 // Paystack payment URL
 $payment_url = 'https://api.paystack.co/transaction/initialize';
-$callback_url = 'http://localhost/preprdotcom/q-callback-url'; // URL to xredirect after payment
+$callback_url = 'http://localhost/eduportal/q-callback-url'; // URL to xredirect after payment
 
 $postdata = array('email' => $customer_email, 'amount' => ($document_price * 100), 'callback_url' => $callback_url);
 

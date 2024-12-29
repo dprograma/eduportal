@@ -54,6 +54,9 @@ if (isset($_POST['login'])) {
             if ($_SESSION['guest-purchase']) {
                 redirect('checkout');
             }
+            if ($_SESSION['pre-cbt-test']) {
+                redirect('cbt-test');
+            }
             if ($res->is_agent) {
                 redirect('agent-dashboard');
             }

@@ -13,7 +13,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-4">
-                        <?php include 'partials/customer_menu.php'; ?>
+                        <?php
+                        if ($currentUser->is_affiliate) {
+                            include 'partials/affiliate_menu.php';
+                        } else {
+                            include 'partials/customer_menu.php';
+                        }
+                        ?>
                     </div>
                     <div class="col-lg-9 col-md-8">
 

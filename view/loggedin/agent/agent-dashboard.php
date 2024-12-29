@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<?php $title = "EduPortal | Admin Dashboard"; ?>
+<?php $title = "EduPortal | Agent Dashboard"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>

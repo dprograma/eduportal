@@ -17,9 +17,9 @@
                             <div class="dropdown ms-auto">
                                 <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/avatar/avatar-1.jpg" alt="avatar"
+                                        <img src="<?= file_exists($currentUser->profileimg)? $currentUser->profileimg : 'assets/images/avatar/fallback.jpg' ?>" alt="avatar"
                                         class="avatar avatar-sm rounded-circle" />
-                                    John Doe
+                                    <?=$currentUser->fullname; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="account-profile.html">Profile</a></li>

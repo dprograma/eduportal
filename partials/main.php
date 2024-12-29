@@ -16,7 +16,7 @@
                                     mock CBT tests to ace your exams.</p>
                             </div>
 
-                            <a href="#!" class="btn btn-primary">Browse Publications</a>
+                            <a href="publications" class="btn btn-primary">Browse Publications</a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <!-- <img src="assets/images/features/publications.svg" alt="Publications" class="img-fluid mb-3"> -->
                     <h3>Publications</h3>
                     <p>Find the latest publications across various fields of study.</p>
-                    <a href="#" class="btn btn-outline-primary">Explore Now</a>
+                    <a href="publications" class="btn btn-outline-primary">Explore Now</a>
                 </figure>
 
             </div>
@@ -42,7 +42,7 @@
                     <!-- <img src="assets/images/features/ebooks.svg" alt="Ebooks" class="img-fluid mb-3"> -->
                     <h3>Ebooks</h3>
                     <p>Download ebooks for your studies and research.</p>
-                    <a href="#" class="btn btn-outline-primary">Download Now</a>
+                    <a href="ebooks" class="btn btn-outline-primary">Download Now</a>
                 </figure>
             </div>
             <div class="col-md-4" data-cue="zoomIn">
@@ -50,7 +50,7 @@
                     <!-- <img src="assets/images/features/past-questions.svg" alt="Past Questions" class="img-fluid mb-3"> -->
                     <h3>Past Questions</h3>
                     <p>Practice with past questions to prepare for your exams.</p>
-                    <a href="#" class="btn btn-outline-primary">Practice Now</a>
+                    <a href="cbt-test" class="btn btn-outline-primary">Practice Now</a>
                 </figure>
             </div>
         </div>

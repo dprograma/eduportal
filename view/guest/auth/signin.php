@@ -66,7 +66,7 @@
 
                   <span>Sign in with your social network.</span>
                   <div class="d-grid mt-3">
-                     <a href="#" class="btn btn-google">
+                     <a href="google-login" class="btn btn-google">
                         <span class="me-3">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                               class="bi bi-google" viewBox="0 0 16 16">
@@ -78,7 +78,7 @@
                      </a>
                   </div>
                   <div class="d-grid mt-2">
-                     <a href="#" class="btn btn-facebook">
+                     <a href="facebook-login" class="btn btn-facebook">
                         <span class="me-3">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                               class="bi bi-facebook" viewBox="0 0 16 16">

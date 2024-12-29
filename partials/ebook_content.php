@@ -65,11 +65,11 @@
                 $offset = ($page - 1) * $limit; // Offset for the query
                 
                 try {
-                    $query = "SELECT * FROM document WHERE document_type='past_question' AND `published`= 1 LIMIT $limit OFFSET $offset";
-                    $search = "SELECT count(*) as total FROM document WHERE document_type='past_question' AND `published`= 1 LIMIT $limit";
+                    $query = "SELECT * FROM document WHERE document_type='ebook' AND `published`= 1 LIMIT $limit OFFSET $offset";
+                    $search = "SELECT count(*) as total FROM document WHERE document_type='ebook' AND `published`= 1 LIMIT $limit";
                     if (!empty($subject_name || $exam_body || $subject_year)) {
-                        $query = "SELECT * FROM document WHERE document_type='past_question' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1  LIMIT $limit";
-                        $search = "SELECT count(*) as total from document WHERE document_type='past_question' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1 LIMIT $limit";
+                        $query = "SELECT * FROM document WHERE document_type='ebook' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1  LIMIT $limit";
+                        $search = "SELECT count(*) as total from document WHERE document_type='ebook' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1 LIMIT $limit";
                     }
 
 

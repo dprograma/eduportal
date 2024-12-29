@@ -61,4 +61,7 @@ if (!empty(Session::get('loggedin'))) {
     //     redirect('first-sub');
     // }
     require_once 'view/loggedin/secured/cbt-test.php';
+}else{
+    $_SESSION['pre-cbt-test'] = "pre-cbt-test";
+    redirect('login');
 }

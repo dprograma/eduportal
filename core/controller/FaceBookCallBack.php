@@ -26,6 +26,10 @@ if (isset($_GET['code'])) {
     Session::put('loggedin', $userData['FullName']);
     Session::put('user_email', $userData['Email']);
 
+    //chek if cbt test was selected
+    if ($_SESSION['pre-cbt-test']) {
+        redirect('cbt-test');
+    }
     // Redirect to dashboard or desired page
     redirect('dashboard', 'You have successfully logged in.', 'success');
     exit;

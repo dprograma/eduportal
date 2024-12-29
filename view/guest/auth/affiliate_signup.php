@@ -76,7 +76,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                            <div class="form-check">
                               <input class="form-check-input" type="checkbox" name="terms-condition"
-                                 id="terms-condition" />
+                                 id="terms-condition" required />
                               <label class="form-check-label ms-2" for="signupCheckTextCheckbox">
                                  <a href="#">Terms of Use</a>
                                  &
@@ -85,14 +85,14 @@
                            </div>
                         </div>
                      </div>
-                     <input class="form-check-input" type="checkbox" name="affiliate"
-                                 id="affiliate" checked style="width:0;height:0;opacity:0;"/>
+                     <input type="hidden" name="affiliate"
+                                 id="affiliate" value="1"/>
                      <div class="d-grid">
                         <button class="btn btn-primary" type="submit" name="register_affiliate">Sign Up</button>
                      </div>
                   </form>
 
-                  <span>Sign up with your social network.</span>
+                  <!-- <span>Sign up with your social network.</span>
                   <div class="d-grid mt-3">
                      <a href="google-login" class="btn btn-google">
                         <span class="me-3">
@@ -116,7 +116,7 @@
                         </span>
                         Continue with Facebook
                      </a>
-                  </div>
+                  </div> -->
 
                   <div class="text-center mt-7">
                      <div class="small mb-3 mb-lg-0 text-body-tertiary">

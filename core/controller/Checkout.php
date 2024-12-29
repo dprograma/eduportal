@@ -29,5 +29,5 @@ if (!empty(Session::get('loggedin'))) {
 } else {
     $_SESSION['guest-purchase'] = true;
     $_SESSION['price'] = $_POST['total'];
-    redirect('auth-login');
+    redirect('login');
 }

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<?php $title = "EduPortal | Admin Dashboard"; ?>
+<?php $title = "EduPortal | Edit Questions"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>
@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <?php include "partials/admin_menu.php"; ?>
-                    <?php include "partials/admin_dashboard_content.php"; ?>
+                    <?php include "partials/edit_questions_content.php"; ?>
                 </div>
             </div>
         </section>
