@@ -30,7 +30,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Initialize DataTables -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $('#usersTable').DataTable({
                 "paging": true,
@@ -40,7 +40,7 @@
                 "retrieve": true
             });
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

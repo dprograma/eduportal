@@ -1,4 +1,8 @@
 <?php
+if (ob_get_level()) {
+    ob_end_clean();
+}
+
 // URL of the PDF or Word document
 $sku = $_GET['sku'];
 $document = $pdo->select("SELECT * FROM `document` WHERE `sku`= ?", [$sku]);
@@ -6,6 +10,9 @@ $document = $document->fetch(PDO::FETCH_ASSOC);
 $file_url = $document['filename'];
 $file_ext = pathinfo($file_url, PATHINFO_EXTENSION);
 $file_name = $document['subject'] . "_" . $document['exam_body'] . "_" . $document['year'] . "_Past_Question" . "." . $file_ext;
+
+// Get the correct MIME type
+$mimeType = mime_content_type($file_url); 
 
 // Function to download the file
 function downloadFile($url, $filename) {

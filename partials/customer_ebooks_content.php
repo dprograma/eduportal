@@ -18,7 +18,7 @@
                     <td><?= $ebook['author']; ?></td>
                     <td><?= $ebook['created_at']; ?></td>
                     <td><?= $ebook['document_type']; ?></td>
-                    <td><a href="#" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
+                    <td><a href="downloadfile?sku=<?=$ebook['sku']?>" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

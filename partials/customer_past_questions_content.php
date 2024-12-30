@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Author</th>
+                <th>Exam</th>
                 <th>Publish Date</th>
                 <th>Category</th>
                 <th>Download</th>
@@ -14,11 +14,11 @@
             <!-- Add PHP to dynamically fetch the ebooks from your database -->
             <?php foreach($pastquestions as $pastquestion): ?>
                 <tr>
-                    <td><?= $pastquestion['title']; ?></td>
-                    <td><?= $pastquestion['author']; ?></td>
-                    <td><?= $pastquestion['created_at']; ?></td>
+                    <td><?= $pastquestion['item']; ?></td>
+                    <td><?= $pastquestion['exambody']; ?></td>
+                    <td><?= $pastquestion['year']; ?></td>
                     <td><?= $pastquestion['document_type']; ?></td>
-                    <td><a href="#" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
+                    <td><a href="downloadfile?sku=<?=$pastquestion['sku']?>" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

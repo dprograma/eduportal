@@ -37,9 +37,9 @@ if(!empty(Session::get('loggedin'))){
 
     // $usersData = $pdo->select("SELECT id, username,fullname, email, created_date, access FROM users")->fetchAll(PDO::FETCH_ASSOC);
 
-    $usersData = $pdo->select("SELECT id, username, fullname, email, created_date, access FROM users WHERE fullname LIKE '%$full_name%' AND email LIKE '%$email%' AND access LIKE '%$access' AND created_date LIKE '%$year%' LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_ASSOC);
+    $usersData = $pdo->select("SELECT id, username, fullname, email, created_date, access FROM users WHERE fullname LIKE '%$full_name%' AND email LIKE '%$email%' AND access LIKE '%$access' AND created_date LIKE '%$year%' AND access != 'Admin' LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_ASSOC);
 
-    $search = "SELECT COUNT(*) AS total FROM users WHERE fullname LIKE '%$full_name%' AND email LIKE '%$email%' AND access LIKE '%$access' AND created_date LIKE '%$year%' LIMIT $limit";
+    $search = "SELECT COUNT(*) AS total FROM users WHERE fullname LIKE '%$full_name%' AND email LIKE '%$email%' AND access LIKE '%$access' AND created_date LIKE '%$year%' AND access != 'Admin' LIMIT $limit";
     
 
 

@@ -18,7 +18,7 @@
                     <td><?= $publication['author']; ?></td>
                     <td><?= $publication['created_at']; ?></td>
                     <td><?= $publication['document_type']; ?></td>
-                    <td><a href="#" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
+                    <td><a href="downloadfile?sku=<?=$publication['sku']?>" class="btn btn-primary btn-sm"><i class="bx bx-download"></i></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

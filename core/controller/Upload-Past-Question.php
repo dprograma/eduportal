@@ -12,6 +12,7 @@ if (!empty(Session::get('loggedin'))) {
         $target_dir = "uploads/past-questions/";
         $price = sanitizeInput($_POST["price"]);
         $subject = sanitizeInput($_POST["subject"]);
+        $documentType = sanitizeInput($_POST["documentType"]);
         $currentTime = date('Y-m-d H:i:s');
         $exambody = sanitizeInput($_POST["examBody"]);
         $year = sanitizeInput($_POST["examYear"]);
@@ -39,9 +40,9 @@ if (!empty(Session::get('loggedin'))) {
 
             try {
                 if ($currentUser->is_agent) {
-                    $stmt = $pdo->insert("INSERT INTO document (user_id, sku, `subject`, `filename`, exam_body, year, price, published, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [$currentUser->id, $sku, $subject, $target_file, $exambody, $year, $price, false, $currentTime]);
+                    $stmt = $pdo->insert("INSERT INTO document (user_id, sku, `subject`, `filename`, `document_type`, exam_body, year, price, published, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [$currentUser->id, $sku, $subject, $target_file, $documentType, $exambody, $year, $price, false, $currentTime]);
                 } else {
-                    $stmt = $pdo->insert("INSERT INTO document (user_id, sku, `subject`, `filename`, exam_body, year, price, published, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [$currentUser->id, $sku, $subject, $target_file, $exambody, $year, $price, true, $currentTime]);
+                    $stmt = $pdo->insert("INSERT INTO document (user_id, sku, `subject`, `filename`, `document_type`, exam_body, year, price, published, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [$currentUser->id, $sku, $subject, $target_file, $documentType, $exambody, $year, $price, true, $currentTime]);
                 }
 
             } catch (\PDOException $e) {

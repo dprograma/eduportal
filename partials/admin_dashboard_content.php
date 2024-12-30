@@ -11,7 +11,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Verified Users</span>
-                    <h3 class="mb-0 mt-4">1,245</h3>
+                    <h3 class="mb-0 mt-4"><?=formatNumber($totalVerifiedUsers, 0); ?></h3>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Unverified Users</span>
-                    <h3 class="mb-0 mt-4">256</h3>
+                    <h3 class="mb-0 mt-4"><?=formatNumber($totalUnverifiedUsers, 0); ?></h3>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Past Questions</span>
-                    <h3 class="mb-0 mt-4">1,015</h3>
+                    <h3 class="mb-0 mt-4"><?=formatNumber($totalQuestionsUploaded, 0); ?></h3>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Revenue</span>
-                    <h3 class="mb-0 mt-4">$10,540.00</h3>
+                    <h3 class="mb-0 mt-4">₦<?=formatNumber($totalAmount); ?></h3>
                 </div>
             </div>
         </div>
@@ -55,7 +55,6 @@
                             <th>Access Level</th>
                             <th>Year</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody class="fs-6">
@@ -71,14 +70,7 @@
                                     <button type="button"
                                         class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-primary"
                                         title="Publish">
-                                        Edit
-                                    </button>
-                                </td>
-                                <td>
-                                    <button type="button"
-                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
-                                        title="Delete">
-                                        Delete
+                                        View
                                     </button>
                                 </td>
                             </tr>

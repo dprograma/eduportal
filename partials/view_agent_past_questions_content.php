@@ -39,7 +39,7 @@
 
         </div>
         
-        <div>
+        <div class="table-responsive">
             <table id="usersTable" class="table table-striped" style="font-size: 12px;">
                 <thead>
                     <tr>
