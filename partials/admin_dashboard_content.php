@@ -11,7 +11,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Verified Users</span>
-                    <h3 class="mb-0 mt-4"><?=formatNumber($totalVerifiedUsers, 0); ?></h3>
+                    <h3 class="mb-0 mt-4"><?=$totalVerifiedUsers ? formatNumber($totalVerifiedUsers, 0): 0; ?></h3>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Unverified Users</span>
-                    <h3 class="mb-0 mt-4"><?=formatNumber($totalUnverifiedUsers, 0); ?></h3>
+                    <h3 class="mb-0 mt-4"><?=$totalUnverifiedUsers ? formatNumber($totalUnverifiedUsers, 0): 0; ?></h3>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Past Questions</span>
-                    <h3 class="mb-0 mt-4"><?=formatNumber($totalQuestionsUploaded, 0); ?></h3>
+                    <h3 class="mb-0 mt-4"><?=$totalQuestionsUploaded ? formatNumber($totalQuestionsUploaded, 0): 0; ?></h3>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Revenue<br/>&nbsp;</span>
-                    <h3 class="mb-0 mt-4">₦<?=formatNumber($totalAmount); ?></h3>
+                    <h3 class="mb-0 mt-4">₦<?=$totalAmount ? formatNumber($totalAmount, 2): formatNumber(0, 2); ?></h3>
                 </div>
             </div>
         </div>

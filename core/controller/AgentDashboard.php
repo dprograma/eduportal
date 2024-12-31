@@ -21,9 +21,15 @@ if(!empty(Session::get('loggedin'))){
 
     $pastQuestionsApproved = toJson($pdo->select("SELECT COUNT(*) as `approved` FROM `document` WHERE `user_id` = '$currentUser->id' AND `published` = ?", [1])->fetch(PDO::FETCH_ASSOC));
 
+    echo $pastQuestionsApproved->approved;
+
     $pastQuestionsUploaded = tojson($pdo->select("SELECT COUNT(*) as `total` FROM `document` WHERE `user_id` = '$currentUser->id'")->fetch(PDO::FETCH_ASSOC));
 
+    echo $pastQuestionsUploaded->total;
+
     $pastQuestionsPending = toJson($pdo->select("SELECT COUNT(*) `pending` FROM `document` WHERE `user_id` = '$currentUser->id' AND `published` = ?", [0])->fetch(PDO::FETCH_ASSOC));
+
+    echo $pastQuestionsPending->pending;
 
     if (isset($_GET['id'])) {
         $userId = $_GET['id'];

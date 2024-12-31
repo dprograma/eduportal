@@ -52,6 +52,7 @@ $routes = [
     'agent-dashboard' => 'core/controller/AgentDashboard.php',
     'view-agent-past-questions' => 'core/controller/View-Agent-Past-Questions.php',
     'view-affiliate-past-questions' => 'core/controller/View-Affiliate-Past-Questions.php',
+    'view-current-agent-past-questions' => 'core/controller/View-Current-Agent-Past-Questions.php',
     'edit-uploaded-past-question' => 'core/controller/Edit-Uploaded-Question.php',
     'customer-ebooks' => 'core/controller/CustomerEbooks.php',
     'customer-publications' => 'core/controller/CustomerPublications.php',
@@ -64,7 +65,7 @@ $routes = [
 
 $admin_pages = ['admin-dashboard', 'dashboard', 'purchases', '/', 'create-past-question', 'create-post', 'viewpost', 'view-past-questions', 'post-table', 'admin-settings', 'edit-post', 'payment-gateway', 'cart', 'checkout-past-q', 'edit-question', 'upload-past-question', 'view-agent-past-questions','edit-uploaded-past-question', 'logout', 'agent-dashboard', 'home', '/', 'blogdetails', 'contact', 'about', 'news', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'cbt-test', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login', 'view-affiliate-past-questions'];
 
-$agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login', 'view-affiliate-past-questions', 'ebooks', 'publications'];
+$agent_pages = ['agent-dashboard', '/', 'view-past-questions', 'viewpost', 'upload-past-question', 'logout', 'home', 'contact', 'about', 'news', 'view-agent-past-questions', 'edit-question', 'edit-uploaded-past-question', 'add-to-cart', 'checkout', 'checkout-past-q', 'q-callback-url', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login', 'view-affiliate-past-questions', 'ebooks', 'publications', 'view-current-agent-past-questions'];
 
 $secured_pages = ['dashboard', 'home', '/', 'reset-password', 'blog-detail', 'logout', 'news', 'assessment', 'login', 'auth-agent-login', 'checkout', 'add-to-cart', 'cart', 'auth-register', 'purchases', 'checkout-past-q', 'q-callback-url', 'downloadfile', 'agent', 'agent-dashboard', 'blogdetails', 'contact', 'about', 'purchase-past-question', 'cbt-test', 'first-sub', 'customer-ebooks', 'customer-publications', 'customer-past-questions', 'notifications', 'save-cbt-test-result', 'profile', 'past-questions', 'affiliate-signup', 'facebook-redirect', 'redirect-url', 'facebook-login', 'google-login', 'view-affiliate-past-questions', 'ebooks', 'publications'];
 
