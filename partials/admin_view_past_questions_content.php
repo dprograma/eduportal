@@ -44,125 +44,133 @@
       </form>
 
     </div>
-    <div>
-      <table id="usersTable" class="table table-striped" style="font-size: 12px;">
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">Exam Body</th>
-            <th scope="col">Subject</th>
-            <th scope="col">Exam Year</th>
-            <th scope="col">Date</th>
-            <th scope="col" class="text-center"></th>
-            <th scope="col" class="text-center"></th>
-            <th scope="col" class="text-center"></th>
-            <th scope="col" class="text-center"></th>
-          </tr>
-        </thead>
-        <?php $q = 0; ?>
-
-        <!-- post body for past questions                -->
-        <tbody class="post-body bg-white">
-          <?php if ($currentUser->is_agent): ?>
-            <?php if (empty($questions)): ?>
-            <?php else: ?>
-              <?php foreach ($questions as $ques => $question): ?>
-                <tr data-id="<?= $question->id ?>" class="bg-white">
-                  <th scope="row"><?= ++$rows ?></th>
-                  <td class="text-uppercase"><?= $question->exam_body ?></td>
-                  <td class="text-capitalize"><?= $question->subject ?></td>
-                  <td class="text-capitalize"><?= $question->year ?></td>
-                  <td class="text-capitalize"><?= $question->created_at ?></td>
-                  <?php if (!$currentUser->is_agent): ?>
-                    <td class="view-modal-trigger">
-                      <button type="button" class="button btn btn-info btn-view"
-                        data-modal-id="viewModal<?= $ques ?>">View</button>
-                    </td>
-
-                    <!-- Update your "EDIT" links with data attributes -->
-                    <td class="view-modal-trigger">
-                      <a href="edit-question?id=<?= $question->id ?>" class="button btn btn-warning btn-view edit-link"
-                        data-question-id="<?= $question->id ?>">EDIT</a>
-                    </td>
-                  <?php else: ?>
-                    <!-- Update your "EDIT" links with data attributes -->
-                    <td class="view-modal-trigger">
-                      <a href="edit-uploaded-past-question?id=<?= $question->id ?>"
-                        class="button btn btn-warning btn-view edit-link" data-question-id="<?= $question->id ?>">EDIT</a>
-                    </td>
-                  <?php endif; ?>
-                  <td class="text-center">
-                    <?php if ($currentUser->is_agent): ?>
-                      <button type="button"
-                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->published == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
-                        data-status="<?= $question->published ?>" style="cursor: text;">
-                        <?= $question->published == 1 ? 'Published' : 'Unpublished' ?>
-                      </button>
-                    <?php else: ?>
-
-                      <button disabled type="button"
-                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->published == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
-                        title="Publish" data-status="<?= $question->published ?>"
-                        onclick="confirmPublish(<?= $question->id ?>, '<?= $url ?>', this)">
-                        <?= $question->published == 1 ? 'Published' : 'Unpublished' ?>
-                      </button>
-                    <?php endif; ?>
-
-                  </td>
-                  <td class="text-center">
-                    <button type="button"
-                      class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
-                      title="Delete" onclick="return confirmDelete(<?= $question->id ?>, 'view-past-questions')">
-                      Delete
-                    </button>
-                  </td>
+    <div class="row my-3">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Past Questions</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="usersTable" class="table table-striped" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Exam Body</th>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Exam Year</th>
+                  <th scope="col">Date</th>
+                  <th scope="col" class="text-center"></th>
+                  <th scope="col" class="text-center"></th>
+                  <th scope="col" class="text-center"></th>
+                  <th scope="col" class="text-center"></th>
                 </tr>
-              <?php endforeach; ?>
-            <?php endif; ?>
+              </thead>
+              <?php $q = 0; ?>
 
-          <?php else: ?>
-            <?php foreach ($questions as $ques => $question): ?>
-              <tr data-id="<?= $question->id ?>" class="bg-white">
-                <th scope="row"><?= ++$rows ?></th>
-                <td class="text-uppercase"><?= $question->exam_body ?></td>
-                <td class="text-capitalize"><?= $question->subject ?></td>
-                <td class="text-capitalize"><?= $question->exam_year ?></td>
-                <td class="text-capitalize"><?= $question->created_at ?></td>
+              <!-- post body for past questions                -->
+              <tbody class="post-body bg-white">
+                <?php if ($currentUser->is_agent): ?>
+                  <?php if (empty($questions)): ?>
+                  <?php else: ?>
+                    <?php foreach ($questions as $ques => $question): ?>
+                      <tr data-id="<?= $question->id ?>" class="bg-white">
+                        <th scope="row"><?= ++$rows ?></th>
+                        <td class="text-uppercase"><?= $question->exam_body ?></td>
+                        <td class="text-capitalize"><?= $question->subject ?></td>
+                        <td class="text-capitalize"><?= $question->year ?></td>
+                        <td class="text-capitalize"><?= $question->created_at ?></td>
+                        <?php if (!$currentUser->is_agent): ?>
+                          <td class="view-modal-trigger">
+                            <button type="button" class="button btn btn-info btn-view"
+                              data-modal-id="viewModal<?= $ques ?>">View</button>
+                          </td>
 
-                <td class="view-modal-trigger">
-                  <button type="button" class="button btn btn-info btn-view"
-                    data-modal-id="viewModal<?= $ques ?>">View</button>
-                </td>
+                          <!-- Update your "EDIT" links with data attributes -->
+                          <td class="view-modal-trigger">
+                            <a href="edit-question?id=<?= $question->id ?>" class="button btn btn-warning btn-view edit-link"
+                              data-question-id="<?= $question->id ?>">EDIT</a>
+                          </td>
+                        <?php else: ?>
+                          <!-- Update your "EDIT" links with data attributes -->
+                          <td class="view-modal-trigger">
+                            <a href="edit-uploaded-past-question?id=<?= $question->id ?>"
+                              class="button btn btn-warning btn-view edit-link" data-question-id="<?= $question->id ?>">EDIT</a>
+                          </td>
+                        <?php endif; ?>
+                        <td class="text-center">
+                          <?php if ($currentUser->is_agent): ?>
+                            <button type="button"
+                              class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->published == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
+                              data-status="<?= $question->published ?>" style="cursor: text;">
+                              <?= $question->published == 1 ? 'Published' : 'Unpublished' ?>
+                            </button>
+                          <?php else: ?>
 
-                <!-- Update your "EDIT" links with data attributes -->
-                <td class="view-modal-trigger">
-                  <a href="edit-question?id=<?= $question->id ?>" class="button btn btn-warning btn-view edit-link"
-                    data-question-id="<?= $question->id ?>">EDIT</a>
-                </td>
-                <td class="text-center">
-                  <button type="button"
-                    class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->publish == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
-                    title="Publish" data-status="<?= $question->publish ?>"
-                    onclick="confirmPublish(<?= $question->id ?>, '<?= $url ?>', this)">
-                    <?= $question->publish == 1 ? 'Published' : 'Unpublished' ?>
-                  </button>
-                </td>
-                <td class="text-center">
-                  <button type="button"
-                    class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
-                    title="Delete" onclick="return confirmDelete(<?= $question->id ?>, 'view-past-questions')">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
+                            <button disabled type="button"
+                              class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->published == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
+                              title="Publish" data-status="<?= $question->published ?>"
+                              onclick="confirmPublish(<?= $question->id ?>, '<?= $url ?>', this)">
+                              <?= $question->published == 1 ? 'Published' : 'Unpublished' ?>
+                            </button>
+                          <?php endif; ?>
 
-        <!-- end of post body for past questions -->
+                        </td>
+                        <td class="text-center">
+                          <button type="button"
+                            class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
+                            title="Delete" onclick="return confirmDelete(<?= $question->id ?>, 'view-past-questions')">
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
 
+                <?php else: ?>
+                  <?php foreach ($questions as $ques => $question): ?>
+                    <tr data-id="<?= $question->id ?>" class="bg-white">
+                      <th scope="row"><?= ++$rows ?></th>
+                      <td class="text-uppercase"><?= $question->exam_body ?></td>
+                      <td class="text-capitalize"><?= $question->subject ?></td>
+                      <td class="text-capitalize"><?= $question->exam_year ?></td>
+                      <td class="text-capitalize"><?= $question->created_at ?></td>
 
-      </table>
+                      <td class="view-modal-trigger">
+                        <button type="button" class="button btn btn-info btn-view"
+                          data-modal-id="viewModal<?= $ques ?>">View</button>
+                      </td>
+
+                      <!-- Update your "EDIT" links with data attributes -->
+                      <td class="view-modal-trigger">
+                        <a href="edit-question?id=<?= $question->id ?>" class="button btn btn-warning btn-view edit-link"
+                          data-question-id="<?= $question->id ?>">EDIT</a>
+                      </td>
+                      <td class="text-center">
+                        <button type="button"
+                          class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $question->publish == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
+                          title="Publish" data-status="<?= $question->publish ?>"
+                          onclick="confirmPublish(<?= $question->id ?>, '<?= $url ?>', this)">
+                          <?= $question->publish == 1 ? 'Published' : 'Unpublished' ?>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button"
+                          class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
+                          title="Delete" onclick="return confirmDelete(<?= $question->id ?>, 'view-past-questions')">
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </tbody>
+
+              <!-- end of post body for past questions -->
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <nav aria-label="Page navigation" id="pagination-container">

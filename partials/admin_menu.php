@@ -44,13 +44,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="create-past-question" title="create past questions.">
                     <i class="align-bottom bx bx-plus"></i>
-                    <span class="ms-2 fs-6">Create Past Questions</span>
+                    <span class="ms-2 fs-6">Create CBT Questions</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="view-past-questions" title="view past questions">
                     <i class="align-bottom bx bx-book"></i>
-                    <span class="ms-2 fs-6">View Past Questions</span>
+                    <span class="ms-2 fs-6">View CBT Questions</span>
                 </a>
             </li>
             <li class="nav-item">

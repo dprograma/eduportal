@@ -58,4 +58,4 @@ if (!empty(Session::get('loggedin'))) {
 
 
 
-require_once 'view/loggedin/agent/view-agent-past-questions.php';
+require_once 'view/loggedin/agent/view-affiliate-past-questions.php';

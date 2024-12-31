@@ -39,63 +39,70 @@
         </form>
 
     </div>
-    <div>
-        <table id="usersTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Date</th>
-                    <th scope="col" class="text-center">Action</th>
-                    <th scope="col" class="text-center">Action</th>
-                    <th scope="col" class="text-center">Action</th>
-                </tr>
-            </thead>
-            <?php $q = 1; ?>
-            <tbody class="post-body bg-white">
-                <?php foreach ($posts as $pos => $post): ?>
-                    <tr data-id="<?= $post->id ?>" class="bg-white">
-                        <th scope="row"><?= $pos + 1 ?></th>
-                        <td class="text-uppercase"><?= $post->title ?></td>
-                        <td class="text-capitalize"><?= $post->category ?></td>
-                        <td class="text-capitalize"><?= $post->date_created ?></td>
+    <div class="row my-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">All Posts</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table id="usersTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Date</th>
+                            <th scope="col" class="text-center"></th>
+                            <th scope="col" class="text-center"></th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <?php $q = 1; ?>
+                    <tbody class="post-body bg-white">
+                        <?php foreach ($posts as $pos => $post): ?>
+                            <tr data-id="<?= $post->id ?>" class="bg-white">
+                                <th scope="row"><?= $pos + 1 ?></th>
+                                <td class="text-uppercase"><?= $post->title ?></td>
+                                <td class="text-capitalize"><?= $post->category ?></td>
+                                <td class="text-capitalize"><?= $post->date_created ?></td>
 
 
 
 
-                        <td class="text-center">
-                            <button type="button"
-                                class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $post->publish == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
-                                title="Publish" onclick="confirmPostPublish(<?= $post->id ?>, <?= $post->publish ?>, this)">
-                                <?= $post->publish == 1 ? 'Published' : 'Unpublished' ?>
-                            </button>
-                        </td>
+                                <td class="text-center">
+                                    <button type="button"
+                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white <?= $post->publish == 1 ? 'bg-success' : 'bg-secondary text-white' ?>"
+                                        title="Publish"
+                                        onclick="confirmPostPublish(<?= $post->id ?>, <?= $post->publish ?>, this)">
+                                        <?= $post->publish == 1 ? 'Published' : 'Unpublished' ?>
+                                    </button>
+                                </td>
 
 
-                        <td class="view-modal-trigger">
-                            <a href="edit-post?id=<?= $post->id ?>" class="button btn btn-warning btn-view edit-link"
-                                data-question-id="<?= $post->id ?>">EDIT</a>
-                        </td>
+                                <td class="view-modal-trigger">
+                                    <a href="edit-post?id=<?= $post->id ?>"
+                                        class="btn btn-warning btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white edit-link"
+                                        data-question-id="<?= $post->id ?>">Edit</a>
+                                </td>
 
-                        <td class="text-center">
-                            <button type="button"
-                                class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
-                                title="Delete" onclick="return confirmDelete(<?= $post->id ?>, 'viewpost')">
-                                Delete
-                            </button>
-                        </td>
+                                <td class="text-center">
+                                    <button type="button"
+                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-danger text-white"
+                                        title="Delete" onclick="return confirmDelete(<?= $post->id ?>, 'viewpost')">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
 
+                        <?php endforeach; ?>
+                    </tbody>
 
+                </table>
+                </div>
+            </div>
+        </div>
 
-
-
-                    </tr>
-
-                <?php endforeach; ?>
-            </tbody>
-
-        </table>
     </div>
     <nav aria-label="Page navigation" id="pagination-container">
         <ul class="pagination justify-content-center mt-5">

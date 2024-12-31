@@ -42,7 +42,7 @@
     <!-- Data Table for Users -->
     <div class="card border-0 shadow-sm mb-5">
         <div class="card-body">
-            <h5 class="card-title">All Agent Past Questions</h5>
+            <h5 class="card-title">All Affiliate Past Questions</h5>
             <div class="table-responsive">
                 <table id="usersTable" class="table table-hover table-bordered">
                     <thead class="table-light fs-6">

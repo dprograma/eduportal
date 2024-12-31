@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
-<?php $title = "EduPortal | View News"; ?>
+<?php $title = "EduPortal | View Agent Past Questions"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>
     <!-- Navbar -->
-    <?php include "partials/admin_header.php"; ?>
+<?php include "partials/admin_header.php"; ?>
 
     <main>
         <!--Dashboard home start-->
@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <?php include "partials/admin_menu.php"; ?>
-                    <?php include "partials/view_post_content.php"; ?>
+                    <?php include "partials/view_affiliate_past_questions_content.php"; ?>
                 </div>
             </div>
         </section>
