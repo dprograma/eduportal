@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<?php $title = "EduPortal | Signing"; ?>
+<?php $title = "EduPortal | Sign in"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>
@@ -42,7 +42,8 @@
                      <div class="mb-3">
                         <label for="formSignUpPassword" class="form-label">Password</label>
                         <div class="password-field position-relative">
-                           <input type="password" class="form-control fakePassword" name="password" id="password" required />
+                           <input type="password" class="form-control fakePassword" name="password" id="password"
+                              required />
                            <span><i class="bi bi-eye-slash passwordToggler"></i></span>
                            <div class="invalid-feedback">Please enter password.</div>
                         </div>

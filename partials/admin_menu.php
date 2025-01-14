@@ -54,6 +54,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="view-withdrawal-requests" title="view affiliate uploaded past questions, ebooks and publications.">
+                    <i class="align-bottom bx bx-file"></i>
+                    <span class="ms-2 fs-6">View Withdrawal Requests</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="create-post" title="Create news for ebooks, past questions and publications.">
                     <i class="align-bottom bx bx-news"></i>
                     <span class="ms-2 fs-6">Create News</span>

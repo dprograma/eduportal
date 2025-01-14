@@ -61,7 +61,7 @@ $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::g
                     </a>
                     <ul class="dropdown-menu"
                         style="360px; border-radius: 2px; transform: translate(-60px, 0px); padding-left: 10px; padding-right: 10px;">
-                        <li><a class="dropdown-item" href="dashboard">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="<?=$currentUser->access == 'admin' ? 'admin-dashboard' : ($currentUser->is_agent == '1' ? 'agent-dashboard': 'dashboard'); ?>">Dashboard</a></li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>

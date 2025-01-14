@@ -1,6 +1,6 @@
 <div class="container-fluid" style="position: static; margin-top: 100px;">
     <div class="row mx-auto justify-content-center align-content-center text-center" style="padding-bottom: 50px;">
-        <h1 class="h2 mb-0 sub-section-header">PAST QUESTION SHOP</h1>
+        <h1 class="h2 mb-0 sub-section-header">PUBLICATIONS SHOP</h1>
     </div>
 </div>
 

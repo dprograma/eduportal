@@ -17,6 +17,12 @@
     </div>
     <div class="collapse d-md-block" id="collapseAccountMenu">
         <ul class="nav flex-column nav-account">
+        <li class="nav-item">
+            <a class="nav-link" href="agent-dashboard">
+                <i class="align-bottom bx bx-home"></i>
+                <span class="ms-2">Dashboard</span>
+            </a>
+        </li>
             <li class="nav-item">
                 <a class="nav-link" href="upload-past-question">
                     <i class="align-bottom bx bx-upload"></i>

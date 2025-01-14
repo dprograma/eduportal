@@ -1,3 +1,4 @@
+<div class="col-lg-3 col-md-4">
 <div class="d-flex align-items-center mb-4 justify-content-center justify-content-md-start">
     <img src="<?= file_exists($currentUser->profileimg)? $currentUser->profileimg : 'assets/images/avatar/fallback.jpg' ?>" alt="avatar" class="avatar avatar-lg rounded-circle" />
     <div class="ms-3">
@@ -75,4 +76,5 @@
             </a>
         </li>
     </ul>
+</div>
 </div>

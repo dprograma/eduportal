@@ -5,20 +5,31 @@
 
 <body>
     <!-- Navbar -->
-    <?php include "partials/customer_header.php"; ?>
+    <?php
+    if ($currentUser->access == 'admin') {
+        include "partials/admin_header.php";
+    } else if ($currentUser->is_agent == '1') {
+        include "partials/agent_header.php";
+    } else {
+        include "partials/customer_header.php";
+    }
+    ?>
 
     <main>
         <!-- Account Publications start -->
         <section class="py-lg-7 py-5 bg-light-subtle">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-4">
-                        <?php include 'partials/customer_menu.php'; ?>
-                    </div>
-                    <div class="col-lg-9 col-md-8">
-
+                        <?php
+                        if ($currentUser->access == 'admin') {
+                            include "partials/admin_menu.php";
+                        } else if ($currentUser->is_agent == '1') {
+                            include "partials/agent_menu.php";
+                        } else {
+                            include "partials/customer_menu.php";
+                        }
+                        ?>
                         <?php include 'partials/customer_profile_content.php'; ?>
-
                     </div>
                 </div>
             </div>

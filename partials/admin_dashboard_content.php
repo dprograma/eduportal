@@ -1,6 +1,6 @@
 <div class="col-lg-9 col-md-8">
     <div class="mb-4">
-        <h1 class="mb-0 h3">Welcome to Your Dashboard, <?=explode(' ', $currentUser->fullname)[0]?>!</h1>
+        <h1 class="mb-0 h3">Welcome to Your Dashboard, <?= explode(' ', $currentUser->fullname)[0] ?>!</h1>
     </div>
     <div class="mb-5">
         <h4 class="mb-1">Dashboard Overview</h4>
@@ -11,7 +11,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Verified Users</span>
-                    <h3 class="mb-0 mt-4"><?=$totalVerifiedUsers ? formatNumber($totalVerifiedUsers, 0): 0; ?></h3>
+                    <h3 class="mb-0 mt-4"><?= $totalVerifiedUsers ? formatNumber($totalVerifiedUsers, 0) : 0; ?></h3>
                 </div>
             </div>
         </div>
@@ -19,7 +19,8 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Unverified Users</span>
-                    <h3 class="mb-0 mt-4"><?=$totalUnverifiedUsers ? formatNumber($totalUnverifiedUsers, 0): 0; ?></h3>
+                    <h3 class="mb-0 mt-4"><?= $totalUnverifiedUsers ? formatNumber($totalUnverifiedUsers, 0) : 0; ?>
+                    </h3>
                 </div>
             </div>
         </div>
@@ -27,15 +28,17 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <span>Total Past Questions</span>
-                    <h3 class="mb-0 mt-4"><?=$totalQuestionsUploaded ? formatNumber($totalQuestionsUploaded, 0): 0; ?></h3>
+                    <h3 class="mb-0 mt-4"><?= $totalQuestionsUploaded ? formatNumber($totalQuestionsUploaded, 0) : 0; ?>
+                    </h3>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <span>Total Revenue<br/>&nbsp;</span>
-                    <h3 class="mb-0 mt-4">₦<?=$totalAmount ? formatNumber($totalAmount, 2): formatNumber(0, 2); ?></h3>
+                    <span>Total Revenue<br />&nbsp;</span>
+                    <h3 class="mb-0 mt-4">₦<?= $totalAmount ? formatNumber($totalAmount, 2) : formatNumber(0, 2); ?>
+                    </h3>
                 </div>
             </div>
         </div>
@@ -68,8 +71,9 @@
                                 <td class="text-capitalize"><?= $userdata['created_date'] ?></td>
                                 <td class="text-center">
                                     <button type="button"
-                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-primary"
-                                        title="Publish">
+                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-primary view-user-btn"
+                                        data-id="<?= $userdata['id'] ?>" data-bs-toggle="modal"
+                                        data-bs-target="#userDetailsModal" title="View User Details">
                                         View
                                     </button>
                                 </td>
@@ -79,49 +83,111 @@
                 </table>
             </div>
         </div>
+        <!-- User Details Modal -->
+        <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userDetailsModalLabel">User Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong><img id="userImage" class="img-thumbnail" src="" alt=""/></strong></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Full Name:</strong></div>
+                                <div class="col-md-8" id="userFullName"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Email:</strong></div>
+                                <div class="col-md-8" id="userEmail"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Access Level:</strong></div>
+                                <div class="col-md-8" id="userAccessLevel"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4"><strong>Year Joined:</strong></div>
+                                <div class="col-md-8" id="userYear"></div>
+                            </div>
+                            <!-- Add more fields as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <nav aria-label="Page navigation" id="pagination-container">
-                <ul class="pagination justify-content-center mt-5">
-                    <?php
-                    $stmt = $pdo->select($search);
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $total_pages = isset($row['total']) ? ceil($row['total'] / $limit) : 1;
-                    $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-                    $delta = 2; // Number of pages to show around the current page
-                    
-                    if ($total_pages >= 1) {
-                        // Previous page link
-                        if ($current_page > 1) {
-                            echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . ($current_page - 1) . '">Previous</a></li>';
-                        }
+        <ul class="pagination justify-content-center mt-5">
+            <?php
+            $stmt = $pdo->select($search);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $total_pages = isset($row['total']) ? ceil($row['total'] / $limit) : 1;
+            $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+            $delta = 2; // Number of pages to show around the current page
+            
+            if ($total_pages >= 1) {
+                // Previous page link
+                if ($current_page > 1) {
+                    echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . ($current_page - 1) . '">Previous</a></li>';
+                }
 
-                        // First page link
-                        if ($current_page > $delta + 1) {
-                            echo '<li class="page-item"><a class="page-link pagination-link" href="?page=1">1</a></li>';
-                            if ($current_page > $delta + 2) {
-                                echo '<li class="page-item"><span class="page-link">...</span></li>';
-                            }
-                        }
-
-                        // Page links around the current page
-                        for ($i = max(1, $current_page - $delta); $i <= min($total_pages, $current_page + $delta); $i++) {
-                            echo '<li class="page-item ' . ($current_page == $i ? 'active' : '') . '"><a class="page-link pagination-link" href="?page=' . $i . '">' . $i . '</a></li>';
-                        }
-
-                        // Last page link
-                        if ($current_page < $total_pages - $delta) {
-                            if ($current_page < $total_pages - $delta - 1) {
-                                echo '<li class="page-item"><span class="page-link">...</span></li>';
-                            }
-                            echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . $total_pages . '">' . $total_pages . '</a></li>';
-                        }
-
-                        // Next page link
-                        if ($current_page < $total_pages) {
-                            echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . ($current_page + 1) . '">Next</a></li>';
-                        }
+                // First page link
+                if ($current_page > $delta + 1) {
+                    echo '<li class="page-item"><a class="page-link pagination-link" href="?page=1">1</a></li>';
+                    if ($current_page > $delta + 2) {
+                        echo '<li class="page-item"><span class="page-link">...</span></li>';
                     }
-                    ?>
-                </ul>
-            </nav>
+                }
+
+                // Page links around the current page
+                for ($i = max(1, $current_page - $delta); $i <= min($total_pages, $current_page + $delta); $i++) {
+                    echo '<li class="page-item ' . ($current_page == $i ? 'active' : '') . '"><a class="page-link pagination-link" href="?page=' . $i . '">' . $i . '</a></li>';
+                }
+
+                // Last page link
+                if ($current_page < $total_pages - $delta) {
+                    if ($current_page < $total_pages - $delta - 1) {
+                        echo '<li class="page-item"><span class="page-link">...</span></li>';
+                    }
+                    echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . $total_pages . '">' . $total_pages . '</a></li>';
+                }
+
+                // Next page link
+                if ($current_page < $total_pages) {
+                    echo '<li class="page-item"><a class="page-link pagination-link" href="?page=' . ($current_page + 1) . '">Next</a></li>';
+                }
+            }
+            ?>
+        </ul>
+    </nav>
 </div>
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.view-user-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                // Fetch user details via AJAX
+                fetch(`user-details?id=${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Populate modal with user details
+                            document.getElementById('userImage').src = data.user.profileimg;
+                            document.getElementById('userFullName').textContent = data.user.fullname;
+                            document.getElementById('userEmail').textContent = data.user.email;
+                            document.getElementById('userAccessLevel').textContent = data.user.access;
+                            document.getElementById('userYear').textContent = data.user.created_date;
+                        } else {
+                            alert('Error fetching user details.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>

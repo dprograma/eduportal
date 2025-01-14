@@ -1,0 +1,36 @@
+@import url('root.css');
+
+.prep-form {
+    width: 70%;
+    max-width: 70%;
+}
+
+.assessment-paper-group {
+    border-style: dashed;
+    border-color: var(--primary-colour);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.assessment{
+    border: 2px  dashed #347054; border-radius:12px 
+}
+
+@media (max-width: 768px) {
+
+    .prep-form {
+        width: 100%;
+        max-width: 100%;
+    }
+    .desktop-only{
+        display: none;
+    }
+
+}
+@media (min-width: 768px) {
+    .mobile-only{
+        display: none;
+    }
+
+}

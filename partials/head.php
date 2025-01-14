@@ -9,6 +9,10 @@
    <link rel="manifest" href="assets/images/favicon/site.html" />
    <link rel="mask-icon" href="assets/images/favicon/block-safari-pinned-tab.svg" color="#8b3dff" />
    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" />
+   <!-- <link rel="stylesheet" href="assets/css/prepare-assessment.css"> -->
+   <!-- <link rel="stylesheet" href="assets/vendor/libs/%40form-validation/umd/styles/index.min.css" /> -->
+   <!-- <link rel="stylesheet" href="assets/vendor/css/pages/page-auth.css"> -->
+
    <meta name="msapplication-TileColor" content="#8b3dff" />
    <meta name="msapplication-config" content="assets/images/favicon/tile.xml" />
 
@@ -37,7 +41,7 @@
    <!-- Bootstrap scripts -->
    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-   
+
    <!-- Analytics Code -->
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8S4MT3EYG"></script>
    <script>

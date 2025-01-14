@@ -23,8 +23,7 @@ if (isset($_POST['register'])) {
         'Email' => $email,
         'FullName' => $fullname,
         'password' => $password,
-        'Confirm' => $confirm,
-        'affiliate' => $affiliate
+        'Confirm' => $confirm
     ];
 
     $msg = isEmpty($userData);
@@ -32,6 +31,8 @@ if (isset($_POST['register'])) {
     if ($msg != 1) {
         redirect('signup', $msg);
     }
+
+    $userData['affiliate'] = $affiliate;
 
     if ($termsofuse != 1) {
         redirect('signup', "Please accept the terms and conditions.");
@@ -65,7 +66,7 @@ if (isset($_POST['register'])) {
 
     if ($pdo->status) {
         // Construct the verification link
-        $verificationLink = APP_URL . "verify?token=" . $verificationToken;
+        $verificationLink = APP_URL . "/verify?token=" . $verificationToken;
 
         // Send the verification email
         $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify Your Email</title></head><body>

@@ -1,0 +1,259 @@
+@media (max-width: 991px) {
+.popover,
+  .dropdown-menu {
+    position: fixed !important;
+    z-index: 50;
+    left: 5% !important;
+    top: 0 !important;
+    width: 20% !important;
+    transform: translateY(-50%) !important;
+    margin-top: -150px !important;
+  }
+ }
+
+ .btn-infos {
+    color: #fff;
+    background-color: #347054!important;
+    border-color: #347054!important;
+}
+
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    width: 24px;
+    height: 2px;
+    background-color:#347054!important;
+    border-radius: 10px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: .15s;
+    transition-timing-function: ease;
+}
+
+.app-sidebar__heading {
+    text-transform: uppercase;
+    font-size: .8rem;
+    margin: 0.75rem 0;
+    color: #434343!important;
+    white-space: nowrap;
+    position: relative;
+    font-weight: 800;
+}
+.user-link{
+  color: #347054!important;
+  text-decoration: none;
+}
+
+.user-link:hover, .user-buttons:hover, .fa-user:hover{
+  background-color: #34705400!important;
+  color: #94ebc2!important;
+  text-decoration: none;
+
+
+}
+
+.user-buttons{
+  border:none; 
+  background:none;
+   margin-left: 80px;
+}
+.user-button-width{
+  width: 30px;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.input-label {
+  width: 100px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.input-field {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: #347054;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.button:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.cancelbtn, .deletebtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add a color to the cancel button */
+.cancelbtn {
+  background-color: #ccc;
+  color: black;
+}
+
+/* Add a color to the delete button */
+.deletebtn {
+  background-color: #f44336;
+}
+
+/* Add padding and center-align text to the container */
+.button-container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+.hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+ 
+/* The Modal Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+@media screen and (max-width: 300px) {
+  .cancelbtn, .deletebtn {
+     width: 100%;
+  }
+}
+
+.form-view{
+ overflow-y: auto;
+  margin: auto; 
+ margin-bottom:200px
+}
+@media screen and (min-width: 780px){
+.modal-view-div{
+  margin:40px 120px;
+}
+
+.form-view{
+  width: 80%;
+   height:90vh;
+
+ }
+ .exam-div{
+  margin-top: 60px;
+ }
+}
+
+@media screen and (max-width: 780px) {
+  .modal-view-div{
+    margin-top:70px 0
+  }
+  .form-view{
+    width: 90%;
+     height:90vh;
+  
+   }
+   .exam-div{
+    margin-top: 60px;
+   }
+}
+.selectpicker option:checked {
+  text-transform: uppercase;
+}
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: white;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.modal-body {
+  font-size: 1rem;
+}
+
+.row {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+.bg-news {
+  background: linear-gradient(to right, #4c4c6d, #24243e);
+  color: white;
+}
+.text-white-75 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.card-title {
+  font-size: 1.1rem;
+}
+.card-text {
+  font-size: 0.95rem;
+}
+

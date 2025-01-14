@@ -1,8 +1,6 @@
-<div class="col-md-9 col-md-8">
+<div class="col-lg-9 col-md-8">
     <section class="content bg-white p-4 rounded pb-9 mb-8">
         <div>
-
-
             <div class="text-center fw-bolder text-uppercase m-4">Edit question</div>
             <?php if (isset($_GET['error'])): ?>
                 <div class="text-center alert alert-<?= $_GET['type'] ?>" role="alert"><?= $_GET['error'] ?><br />

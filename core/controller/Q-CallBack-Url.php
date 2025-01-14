@@ -63,21 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $log = json_encode($response->data->log);
             // echo "log: " . $log;
 
-
-            // Purchased item datax
-            // $subject = $_SESSION['subject'] . " Past Question";
-            // // echo $subject;
-            // $exam_body = $_SESSION['exam_body'];
-            // // echo $exam_body;
-            // $year = $_SESSION['year'];
-            // // echo $year;
-            // $sku = $_SESSION['sku'];
-
             $carts = isset($_COOKIE['cart']) ? unserialize($_COOKIE['cart']) : [];
 
             foreach ($carts as $sku => $cart) {
                 // Insert the transaction details into the database
                 $pdo->insert("INSERT INTO `transactionlogs` (`user_id`, `trxid`, `sku`, `item`, `exambody`, `year`, `domain`, `reference`, `receipt_number`, `amount`, `channel`, `currency`, `ip_address`, `paid_at`, `created_at`, `log`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$user_id, $trxid, $sku, $cart['subject'], $cart['exam_body'], $cart['year'], $domain, $reference, $receipt_no, $cart['price'], $channel, $currency, $ipaddress, $paid_at, $created_at, $log]);
+
+                // Update the agent balance
+                updateAgentBalance($user_id, $cart['price']);
             }
 
             if ($pdo->status) {
