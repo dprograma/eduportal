@@ -40,6 +40,9 @@ $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::g
                    <li class="nav-item dropdown">
                       <a class="nav-link btn btn-primary" href="affiliate-signup?ref=affiliate" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Become an Affiliate</a>
                    </li>
+                   <li class="nav-item dropdown">
+                      <a class="nav-link btn btn-primary" href="agent-signup" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Become an Agent</a>
+                   </li>
                 </ul>
                 <div class="navbar-nav ms-lg-4">
                 <a class="nav-item nav-link" href="cart"><img src="<?= CART ?>" class="cart-icon" alt="cart" style="width: 32px; height: 32px; margin-right: 5px;" /></a>

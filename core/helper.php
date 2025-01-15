@@ -155,7 +155,7 @@ function requestWithdrawal($userId, $amount)
 {
     global $pdo;
 
-    header('Content-Type: application/json'); 
+    header('Content-Type: application/json');
 
     try {
         // Start transaction
@@ -166,24 +166,24 @@ function requestWithdrawal($userId, $amount)
 
         if (!$agentData) {
             echo json_encode(["success" => false, "message" => "Invalid Agent ID"]);
-            exit; 
+            exit;
         }
 
-        $agent = json_decode(json_encode($agentData)); 
+        $agent = json_decode(json_encode($agentData));
 
         if ($amount <= 0) {
             echo json_encode(["success" => false, "message" => "Amount must be greater than zero"]);
-            exit; 
+            exit;
         }
 
         if ($agent->payable <= 0) {
             echo json_encode(["success" => false, "message" => "No funds available for withdrawal"]);
-            exit; 
+            exit;
         }
 
         if ($amount > $agent->payable) {
             echo json_encode(["success" => false, "message" => "Insufficient funds"]);
-            exit; 
+            exit;
         }
 
         // Deduct the amount from the agent's payable balance
@@ -206,14 +206,14 @@ function requestWithdrawal($userId, $amount)
 
         // Commit transaction
         $pdo->conn->commit();
-        
+
         // Send email notification to agent
         $message = "Dear " . $agentUser->fullname . ",\n\nYour withdrawal request of ₦ " . $amount . " has been sent. Your new payable balance when is ₦ " . $newPayableBalance . ".\n\nThank you for using Eduportal.";
         $subject = 'Withdrawal Request Notification';
         $from = "Eduportal<info@eduportal.com>";
         // $mail = new QserversMail($message, $subject, $from, $agentUser->email);
         // $mail->sendMail();   
-        
+
         // Send email notification to admin
         $message = "Dear " . $admin->fullname . ",\n\n" . $agentUser->fullname . " has requested a withdrawal of ₦ " . $amount . ". The new payable balance for the agent is ₦ " . $newPayableBalance . ".\n\nThank you for using Eduportal.";
         $subject = 'Withdrawal Request Notification';
@@ -222,17 +222,17 @@ function requestWithdrawal($userId, $amount)
         // $mail->sendMail(); 
 
         echo json_encode(['success' => true, "payable" => $newPayableBalance, "message" => "Transaction successful."]);
-        exit; 
+        exit;
     } catch (Exception $e) {
         $pdo->conn->rollBack();
         echo json_encode(['success' => false, "message" => "Transaction failed!"]);
-        exit; 
+        exit;
     }
 }
 
 
 
-function approveWithdrawal($userId)
+function approveWithdrawal($withdrawalId)
 {
     global $pdo;
 
@@ -241,24 +241,47 @@ function approveWithdrawal($userId)
         $pdo->conn->beginTransaction();
 
         // Fetch the withdrawal request
-        $sqlSelectRequest = "SELECT * FROM withdrawals WHERE user_id = :user_id FOR UPDATE";
-        $stmt = $pdo->select($sqlSelectRequest, ['user_id' => $userId]);
+        $sqlSelectRequest = "SELECT * FROM withdrawals WHERE id = :id FOR UPDATE";
+        $stmt = $pdo->select($sqlSelectRequest, ['id' => $withdrawalId]);
         $request = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$request) {
-            throw new Exception("Withdrawal request not found.");
+            echo json_encode(["success" => false, "message" => "Withdrawal request not found."]);
+            exit;
         }
 
         if ($request['status'] !== 'Pending') {
-            throw new Exception("This request is not pending.");
+            echo json_encode(["success" => false, "message" => "This request has already been processed."]);
+            exit;
         }
 
+        $agentRequest = json_decode(json_encode($request));
+
         // Update the withdrawal request status to 'Approved'
-        $sqlUpdateRequest = "UPDATE withdrawals SET status = 'Approved' WHERE user_id = :user_id";
-        $pdo->update($sqlUpdateRequest, ['user_id' => $userId]);
+        $sqlUpdateRequest = "UPDATE withdrawals SET status = 'Approved' WHERE id = :id";
+        $pdo->update($sqlUpdateRequest, ['id' => $withdrawalId]);
+
+        $agentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [$agentRequest->user_id])->fetch(PDO::FETCH_ASSOC));
+        $admin = toJson($pdo->select("SELECT * FROM users WHERE access = 'admin' ORDER BY id ASC LIMIT 1")->fetch(PDO::FETCH_ASSOC));
 
         // Commit transaction
         $pdo->conn->commit();
+
+        // Send email notification to agent
+        $message = "Dear " . $agentUser->fullname . ",\n\nYour withdrawal request of ₦ " . $agentRequest->amount . " has been approved and paid to your account successfully.\n\nThank you for using Eduportal.";
+        $subject = 'Withdrawal Payment Notification';
+        $from = "Eduportal<info@eduportal.com>";
+        // $mail = new QserversMail($message, $subject, $from, $agentUser->email);
+        // $mail->sendMail();   
+
+        // Send email notification to admin
+        $message = "Dear " . $admin->fullname . ",\n\n" . $agentUser->fullname . "'s account has been credited with ₦ " . $agentRequest->amount . ".\n\nThank you for using Eduportal.";
+        $subject = 'Withdrawal Payment Notification';
+        $from = "Eduportal<info@eduportal.com>";
+        // $mail = new QserversMail($message, $subject, $from, $admin->email);
+        // $mail->sendMail(); 
+        echo json_encode(['success' => true, "message" => "Withdrawal request approved successfully."]);
+        exit;
     } catch (Exception $e) {
         // Rollback transaction on error
         $pdo->conn->rollBack();
@@ -267,7 +290,7 @@ function approveWithdrawal($userId)
 }
 
 
-function declineWithdrawal($userId)
+function declineWithdrawal($withdrawalId)
 {
     global $pdo;
 
@@ -276,21 +299,25 @@ function declineWithdrawal($userId)
         $pdo->conn->beginTransaction();
 
         // Fetch the withdrawal request
-        $sqlSelectRequest = "SELECT * FROM withdrawals WHERE user_id = :user_id FOR UPDATE";
-        $stmt = $pdo->select($sqlSelectRequest, ['user_id' => $userId]);
+        $sqlSelectRequest = "SELECT * FROM withdrawals WHERE id = :id FOR UPDATE";
+        $stmt = $pdo->select($sqlSelectRequest, ['id' => $withdrawalId]);
         $request = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$request) {
-            throw new Exception("Withdrawal request not found.");
+            echo json_encode(["success" => false, "message" => "Withdrawal request not found."]);
+            exit;
         }
 
-        if ($request['status'] !== 'Pending') {
-            throw new Exception("This request is not pending.");
+        if ($request['status'] !== 'Approved') {
+            echo json_encode(["success" => false, "message" => "This request has already been processed."]);
+            exit;
         }
+
+        $agentRequest = json_decode(json_encode($request));
 
         // Fetch the associated agent
         $sqlSelectAgent = "SELECT * FROM deposit WHERE user_id = :user_id FOR UPDATE";
-        $stmt = $pdo->select($sqlSelectAgent, ['user_id' => $request['user_id']]);
+        $stmt = $pdo->select($sqlSelectAgent, ['user_id' => $agentRequest->user_id]);
         $agent = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$agent) {
@@ -298,19 +325,38 @@ function declineWithdrawal($userId)
         }
 
         // Refund the amount to the agent's payable balance
-        $newPayableBalance = $agent['payable_balance'] + $request['amount'];
+        $newPayableBalance = $agent['payable'] + $agentRequest->amount;
         $sqlUpdateAgent = "UPDATE deposit SET payable = :payable WHERE user_id = :user_id";
         $pdo->update($sqlUpdateAgent, [
             'payable' => $newPayableBalance,
-            'user_id' => $request['user_id']
+            'user_id' => $agentRequest->user_id
         ]);
 
         // Update the withdrawal request status to 'Declined'
-        $sqlUpdateRequest = "UPDATE withdrawals SET status = 'Declined' WHERE user_id = :user_id";
-        $pdo->update($sqlUpdateRequest, ['user_id' => $userId]);
+        $sqlUpdateRequest = "UPDATE withdrawals SET status = 'Pending' WHERE id = :id";
+        $pdo->update($sqlUpdateRequest, ['id' => $withdrawalId]);
+
+        $agentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [$agentRequest->user_id])->fetch(PDO::FETCH_ASSOC));
+        $admin = toJson($pdo->select("SELECT * FROM users WHERE access = 'admin' ORDER BY id ASC LIMIT 1")->fetch(PDO::FETCH_ASSOC));
 
         // Commit transaction
         $pdo->conn->commit();
+
+        // Send email notification to agent
+        $message = "Dear " . $agentUser->fullname . ",\n\nYour withdrawal request of ₦ " . $agentRequest->amount . " has been declined. Your payable balance is ₦ " . $newPayableBalance .". \n\nThank you for using Eduportal.";
+        $subject = 'Withdrawal Disapproval Notification';
+        $from = "Eduportal<info@eduportal.com>";
+        // $mail = new QserversMail($message, $subject, $from, $agentUser->email);
+        // $mail->sendMail();   
+
+        // Send email notification to admin
+        $message = "Dear " . $admin->fullname . ",\n\n" . $agentUser->fullname . "'s withdrawal request has been declined." . $agentRequest->amount . ".\n\nThank you for using Eduportal.";
+        $subject = 'Withdrawal Disapproval Notification';
+        $from = "Eduportal<info@eduportal.com>";
+        // $mail = new QserversMail($message, $subject, $from, $admin->email);
+        // $mail->sendMail(); 
+        echo json_encode(['success' => true, "message" => "Withdrawal request declined successfully."]);
+        exit;
     } catch (Exception $e) {
         $pdo->conn->rollBack();
     }

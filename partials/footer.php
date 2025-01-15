@@ -52,16 +52,16 @@
                            <div class="collapse d-lg-block" id="collapseLanding" data-bs-parent="#ft-links">
                               <ul class="list-unstyled mb-0 py-3 py-lg-0">
                                  <li class="mb-2">
-                                    <a href="#" class="text-decoration-none text-reset">Pubications</a>
+                                    <a href="publications" class="text-decoration-none text-reset">Pubications</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="#" class="text-decoration-none text-reset">Past Questions</a>
+                                    <a href="past-questions" class="text-decoration-none text-reset">Past Questions</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="#" class="text-decoration-none text-reset">Ebooks</a>
+                                    <a href="ebooks" class="text-decoration-none text-reset">Ebooks</a>
                                  </li>
                                  <li class="mb-2">
-                                    <a href="#" class="text-decoration-none text-reset">CBT Tests</a>
+                                    <a href="cbt-test" class="text-decoration-none text-reset">CBT Tests</a>
                                  </li>
                               </ul>
                            </div>
@@ -95,7 +95,7 @@
                                  <a href="reset-password" class="text-decoration-none text-reset">Reset Password</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="#!" class="text-decoration-none text-reset">Profile</a>
+                                 <a href="profile" class="text-decoration-none text-reset">Profile</a>
                               </li>
                            </ul>
                         </div>
@@ -116,22 +116,22 @@
                         <div class="collapse d-lg-block" id="collapseResources" data-bs-parent="#ft-links">
                            <ul class="list-unstyled mb-0 py-3 py-lg-0">
                               <li class="mb-2">
-                                 <a href="docs/index.html" class="text-decoration-none text-reset">Docs</a>
+                                 <a href="docs" class="text-decoration-none text-reset">Docs</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="#!" class="text-decoration-none text-reset">Support</a>
+                                 <a href="contact" class="text-decoration-none text-reset">Support</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="changelog.html" class="text-decoration-none text-reset">Changelog</a>
+                                 <a href="settings" class="text-decoration-none text-reset">Changelog</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="#!" class="text-decoration-none text-reset">Help Center</a>
+                                 <a href="contact" class="text-decoration-none text-reset">Help Center</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="#!" class="text-decoration-none text-reset">Community</a>
+                                 <a href="blog" class="text-decoration-none text-reset">Community</a>
                               </li>
                               <li class="mb-2">
-                                 <a href="#!" class="text-decoration-none text-reset">Webinars</a>
+                                 <a href="blog" class="text-decoration-none text-reset">Webinars</a>
                               </li>
                            </ul>
                         </div>
@@ -146,37 +146,11 @@
                   <div class="small mb-3 mb-md-0">
                      Copyright © <?=date('Y')?>
 
-                     <span class="text-primary"><a href="#">EduPortal</a></span>
+                     <span class="text-primary"><a href="">EduPortal</a></span>
                   </div>
                </div>
                <div class="col-md-3">
                   <div class="text-md-end d-flex align-items-center justify-content-md-end">
-                     <!-- <div class="dropdown">
-                        <button class="btn btn-light btn-icon rounded-circle d-flex align-items-center" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
-                           <i class="bi theme-icon-active lh-1"></i>
-                           <span class="visually-hidden bs-theme-text">Toggle theme</span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bs-theme-text">
-                           <li>
-                              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-                                 <i class="bi theme-icon bi-sun-fill"></i>
-                                 <span class="ms-2">Light</span>
-                              </button>
-                           </li>
-                           <li>
-                              <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-                                 <i class="bi theme-icon bi-moon-stars-fill"></i>
-                                 <span class="ms-2">Dark</span>
-                              </button>
-                           </li>
-                           <li>
-                              <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-                                 <i class="bi theme-icon bi-circle-half"></i>
-                                 <span class="ms-2">Auto</span>
-                              </button>
-                           </li>
-                        </ul>
-                     </div> -->
                      <div class="ms-3 d-flex gap-2">
                         <a href="#!" class="text-reset btn btn-instagram btn-icon">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">

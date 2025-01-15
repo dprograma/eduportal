@@ -22,7 +22,7 @@ if (!empty(Session::get('loggedin'))) {
     $rows = ($limit * ($page-1));
 
     // Fetch all withdrawals requests
-    $requests = toJson($pdo->select("SELECT u.fullname, u.email, u.is_agent, u.is_affiliate, u.access, w.amount, w.status, w.created_at FROM users u JOIN withdrawals w ON u.id=w.user_id WHERE u.fullname LIKE '%$full_name%' AND u.email LIKE '%$email%' AND w.created_at LIKE '%$year%' AND u.access != 'Admin' LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_ASSOC));
+    $requests = toJson($pdo->select("SELECT u.fullname, u.email, u.is_agent, u.is_affiliate, u.access, w.id, w.amount, w.status, w.created_at FROM users u JOIN withdrawals w ON u.id=w.user_id WHERE u.fullname LIKE '%$full_name%' AND u.email LIKE '%$email%' AND w.created_at LIKE '%$year%' AND u.access != 'Admin' LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_ASSOC));
 
     $search = "SELECT COUNT(*) AS total FROM users u JOIN withdrawals w ON u.id=w.user_id WHERE u.fullname LIKE '%$full_name%' AND u.email LIKE '%$email%' AND w.created_at LIKE '%$year%' AND u.access != 'Admin' LIMIT $limit";
 

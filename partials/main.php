@@ -166,7 +166,7 @@
                                         <p class="mb-0">We offer comprehensive test preparation services, including mock
                                             exams and past questions to help students succeed.</p>
                                     </div>
-                                    <a href="#!" class="icon-link icon-link-hover">
+                                    <a href="cbt-test" class="icon-link icon-link-hover">
                                         Learn More
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                             fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -197,7 +197,7 @@
                                         <p class="mb-0">Explore our vast collection of study materials, including past
                                             questions, eBooks, and more.</p>
                                     </div>
-                                    <a href="#!" class="icon-link icon-link-hover">
+                                    <a href="customer-ebooks" class="icon-link icon-link-hover">
                                         Learn More
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                             fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -234,7 +234,7 @@
                                         <p class="mb-0">We design and develop scalable e-learning platforms that support
                                             interactive content, assessments, and student management.</p>
                                     </div>
-                                    <a href="#!" class="icon-link icon-link-hover">
+                                    <a href="https://prepr.com.ng" class="icon-link icon-link-hover">
                                         Learn More
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                             fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -269,7 +269,7 @@
                             into reality.</p>
                     </div>
 
-                    <a href="#" class="icon-link icon-link-hover">
+                    <a href="about" class="icon-link icon-link-hover">
                         More about us
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
                             class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -377,77 +377,77 @@
                 <div class="row g-5 flex-nowrap pb-4 pb-lg-0 me-5 me-lg-0">
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="#">
+                            <a href="news">
                                 <img src="assets/images/blog/blog-img-3.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
 
-                        <a href="#!"
+                        <a href="news"
                             class="badge bg-primary-subtle text-primary-emphasis rounded-pill text-uppercase">The Future
                             of Digital Education</a>
                         <h3 class="my-3 lh-base h4">
-                            <a href="#" class="text-reset">Explore how digital platforms are revolutionizing education,
+                            <a href="news" class="text-reset">Explore how digital platforms are revolutionizing education,
                                 offering unprecedented access to resources and learning opportunities.</a>
                         </h3>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
-                                <img src="assets/images/avatar/avatar-8.jpg" alt="Avatar"
+                                <!-- <img src="assets/images/avatar/avatar-8.jpg" alt="Avatar"
                                     class="avatar avatar-xs rounded-circle" />
                                 <div class="ms-2">
                                     <a href="#" class="text-reset fs-6">John Doe</a>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="ms-3"><span class="fs-6">Aug 10, 2024</span></div>
+                            <!-- <div class="ms-3"><span class="fs-6">Aug 10, 2024</span></div> -->
                         </div>
                     </article>
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="#">
+                            <a href="news">
                                 <img src="assets/images/blog/blog-img-5.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
 
-                        <a href="#!"
+                        <a href="news"
                             class="badge bg-warning-subtle text-warning-emphasis rounded-pill text-uppercase">Effective
                             Strategies for Exam Preparation</a>
                         <h3 class="my-3 lh-base h4">
-                            <a href="#" class="text-reset">Learn the best practices for acing exams with the help of
+                            <a href="news" class="text-reset">Learn the best practices for acing exams with the help of
                                 modern educational tools and resources.</a>
                         </h3>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
-                                <img src="assets/images/avatar/avatar-6.jpg" alt="Avatar"
+                                <!-- <img src="assets/images/avatar/avatar-6.jpg" alt="Avatar"
                                     class="avatar avatar-xs rounded-circle" />
                                 <div class="ms-2">
-                                    <a href="#" class="text-reset fs-6">Jane Smith</a>
-                                </div>
+                                    <a href="news" class="text-reset fs-6">Jane Smith</a>
+                                </div> -->
                             </div>
-                            <div class="ms-3"><span class="fs-6">Aug 5, 2024</span></div>
+                            <!-- <div class="ms-3"><span class="fs-6">Aug 5, 2024</span></div> -->
                         </div>
                     </article>
                     <article class="col-lg-4 col-md-6 col-12" data-cue="zoomIn">
                         <figure class="mb-4 zoom-img">
-                            <a href="#">
+                            <a href="news">
                                 <img src="assets/images/blog/blog-img-4.jpg" alt="blog" class="img-fluid rounded-3" />
                             </a>
                         </figure>
 
-                        <a href="#!"
+                        <a href="news"
                             class="badge bg-success-subtle text-success-emphasis rounded-pill text-uppercase">Why eBooks
                             are the Future of Education</a>
                         <h4 class="my-3 lh-base">
-                            <a href="#" class="text-reset">Discover why eBooks are becoming the preferred medium for
+                            <a href="news" class="text-reset">Discover why eBooks are becoming the preferred medium for
                                 students and educators alike.</a>
                         </h4>
                         <div class="d-flex align-items-center justify-content-between mb-3 mb-md-0">
                             <div class="d-flex align-items-center">
-                                <img src="assets/images/avatar/avatar-4.jpg" alt="Avatar"
+                                <!-- <img src="assets/images/avatar/avatar-4.jpg" alt="Avatar"
                                     class="avatar avatar-xs rounded-circle" />
                                 <div class="ms-2">
-                                    <a href="#" class="text-reset fs-6">Alex Brown</a>
-                                </div>
+                                    <a href="news" class="text-reset fs-6">Alex Brown</a>
+                                </div> -->
                             </div>
-                            <div class="ms-3"><span class="fs-6">Aug 3, 2024</span></div>
+                            <!-- <div class="ms-3"><span class="fs-6">Aug 3, 2024</span></div> -->
                         </div>
                     </article>
                 </div>
@@ -455,7 +455,7 @@
             <div class="row">
                 <div class="col-lg-12" data-cue="zoomIn">
                     <div class="mt-lg-8 mt-5">
-                        <a href="#" class="icon-link icon-link-hover text-dark">
+                        <a href="news" class="icon-link icon-link-hover text-dark">
                             Read more news
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-arrow-right" viewBox="0 0 16 16">
