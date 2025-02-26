@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<?php $title = "EduPortal | View Agent Past Questions"; ?>
+<?php $title = "EduPortal | Agent Dashboard"; ?>
 <?php include "partials/head.php"; ?>
 
 <body>
@@ -12,8 +12,12 @@
         <section class="py-lg-7 py-5 bg-light-subtle">
             <div class="container">
                 <div class="row">
-                    <?php include "partials/admin_menu.php"; ?>
-                    <?php include "partials/view_agent_past_questions_content.php"; ?>
+                    <div class="col-lg-3 col-md-4">
+                        <?php include "partials/affiliate_menu.php"; ?>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <?php include "partials/affiliate_upload_past_question_content.php"; ?>
+                    </div>
                 </div>
             </div>
         </section>
@@ -30,7 +34,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Initialize DataTables -->
-    <!-- <script>
+    <script>
         $(document).ready(function () {
             $('#usersTable').DataTable({
                 "paging": true,
@@ -40,7 +44,7 @@
                 "retrieve": true
             });
         });
-    </script> -->
+    </script>
 </body>
 
 </html>

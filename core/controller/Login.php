@@ -46,16 +46,20 @@ if (isset($_POST['login'])) {
 
         if ($res->access === 'admin') {
             if ($_SESSION['guest-purchase']) {
+                unset($_SESSION['guest-purchase']);
                 redirect('checkout');
             }
 
             redirect('admin-dashboard');
         } else if ($res->access === 'secured') {
             if ($_SESSION['guest-purchase']) {
+                unset($_SESSION['guest-purchase']);
                 redirect('checkout');
+                
             }
             if ($_SESSION['pre-cbt-test']) {
-                redirect('cbt-test');
+                unset($_SESSION['pre-cbt-test']);
+                redirect('cbt-test');              
             }
             if ($res->is_agent) {
                 redirect('agent-dashboard');

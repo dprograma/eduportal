@@ -2,7 +2,11 @@
 <html lang="en">
 
 <?php $title = "EduPortal | Affiliate Signup"; ?>
-<?php include "partials/head.php" ?>
+<?php include "partials/head.php"?>
+<?php
+    $old = $_SESSION['old_values'] ?? [];
+    unset($_SESSION['old_values']);
+?>
 
 <body>
    <main>
@@ -17,25 +21,56 @@
                         <h3 class="my-4"><span class="text-primary">Edu</span><span>Portal</span></h3>
                      </a>
                      <h1 class="mb-1">Join Our Affiliate Program</h1>
-                     <p class="mb-0">Earn commissions on your referrals. 
+                     <p class="mb-0">Earn commissions on your referrals.
                         <a href="login" class="text-primary">Sign in</a>
                      </p>
                   </div>
 
+                  <?php
+                  session_start(); // Ensure sessions are started
+
+                  // Check for a flash message in the session
+                  if (isset($_SESSION['flash_message'])) {
+                     $flashMessage = $_SESSION['flash_message']['message'];
+                     $flashType    = $_SESSION['flash_message']['type'];
+
+                     // Display the Bootstrap alert
+                     $alertClass = 'alert-' . ($flashType === 'success' ? 'success' : 'danger');
+                     echo "<div class='alert $alertClass alert-dismissible fade show' role='alert'>
+                              $flashMessage
+                              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                           </div>";
+
+                     // Clear the flash message from the session
+                     unset($_SESSION['flash_message']);
+                  }
+                  ?>
+
                   <?php if (isset($_GET['error'])): ?>
-                     <div class="alert alert-<?= $_GET['type'] ?> alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_GET['error']) ?>
+                     <?php
+                        $alertClass = 'alert-' . ($_GET['type'] === 'success' ? 'success' : 'danger');
+                        $message    = htmlspecialchars($_GET['error']);
+                     ?>
+                     <div class="alert <?php echo $alertClass?> alert-dismissible fade show" role="alert">
+                        <?php echo $message?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                      </div>
+
+                     <?php if ($_GET['type'] === 'success' && strpos($_GET['error'], 'affiliate link') !== false): ?>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                           <p class="mb-0">Share this link with others to earn commissions!</p>
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                     <?php endif; ?>
                   <?php endif; ?>
 
-                  <form method="post" action='signup' class="needs-validation mb-6" novalidate>
+                  <form method="post" action='affiliate-signup' class="needs-validation mb-6" novalidate>
                      <div class="mb-3">
                         <label for="username" class="form-label">
                            Username
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="username" id="username" required />
+                        <input type="text" class="form-control" name="username" id="username" value="<?php echo isset($old['UserName']) ? htmlspecialchars($old['UserName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter username.</div>
                      </div>
                      <div class="mb-3">
@@ -43,7 +78,7 @@
                            Full Name
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="name" id="name" required />
+                        <input type="text" class="form-control" name="name" id="name" value="<?php echo isset($old['FullName']) ? htmlspecialchars($old['FullName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter Full name.</div>
                      </div>
                      <div class="mb-3">
@@ -51,7 +86,7 @@
                            Email
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" name="email" id="email" required />
+                        <input type="email" class="form-control" name="email" id="email" value="<?php echo isset($old['Email']) ? htmlspecialchars($old['Email']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="mb-3">
@@ -120,7 +155,7 @@
 
                   <div class="text-center mt-7">
                      <div class="small mb-3 mb-lg-0 text-body-tertiary">
-                        Copyright © <?= date('Y') ?>
+                        Copyright ©                                     <?php echo date('Y') ?>
                         <span class="text-primary"><a href="home">EduPortal Educational Platform</a></span>
                         | All Rights Reserved
                      </div>

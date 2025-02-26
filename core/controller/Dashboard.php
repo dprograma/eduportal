@@ -5,7 +5,7 @@ $title = 'Dashboard' . '|' . SITE_TITLE;
 if(isset($_POST['logout'])){
     Session::unset('loggedin');
     session_destroy();
-    redirect('auth-login');
+    redirect('login');
 }
 if (!empty(Session::get('loggedin'))) {
     $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC));
@@ -74,5 +74,5 @@ if (isset($_GET['questionsDetails'])) {
     require_once 'view/loggedin/secured/dashboard.php';
 }
 else {
-    require_once 'view/guest/landing.php';
+    require_once 'view/guest/auth/signin.php';
 }

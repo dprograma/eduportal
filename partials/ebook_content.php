@@ -8,12 +8,12 @@
     <form method="get">
         <div class="row g-3 pe-1 ps-1">
             <div class="col-12 col-md-3">
-                <input type="text" name="subject" class="form-control rounded-0 p-md-2" placeholder="Subject"
-                    aria-label="Subject">
+                <input type="text" name="title" class="form-control rounded-0 p-md-2" placeholder="Title"
+                    aria-label="Title">
             </div>
             <div class="col-12 col-md-3">
-                <input type="text" name="exam_body" class="form-control rounded-0 p-md-2" placeholder="Exam Body"
-                    aria-label="Exam Body">
+                <input type="text" name="author" class="form-control rounded-0 p-md-2" placeholder="Author"
+                    aria-label="Author">
             </div>
 
             <div class="col-12 col-md-3">

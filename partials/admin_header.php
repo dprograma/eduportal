@@ -9,8 +9,7 @@
             </button>
             <div class="offcanvas offcanvas-start offcanvas-nav" style="width: 20rem">
                 <div class="offcanvas-header">
-                    <a href="home" class="text-inverse"><img src="assets/images/logo/logo.svg"
-                            alt="EduPortal Logo" /></a>
+                    <a href="home" class="text-inverse"><h3><span class="text-primary">Edu</span><span>Portal</span></h3></a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body pt-0 float-end align-items-center ms-auto">

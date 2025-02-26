@@ -12,8 +12,14 @@
         <section class="py-lg-7 py-5 bg-light-subtle">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-3 col-md-4">
-                        <?php include 'partials/customer_menu.php'; ?>
+                <div class="col-lg-3 col-md-4">
+                    <?php
+                        if ($currentUser->is_affiliate) {
+                            include 'partials/affiliate_menu.php';
+                        } else {
+                            include 'partials/customer_menu.php';
+                        }
+                        ?>
                     </div>
                     <div class="col-lg-9 col-md-8">
                         <?php include 'partials/customer_cbt_test_select.php'; ?>

@@ -14,7 +14,7 @@
                      <p class="mb-5">At EduPortal, we specialize in providing top-notch educational resources, including publications, past questions, and ebooks, tailored for students.</p>
 
 
-                     <form class="needs-validation" novalidate>
+                     <!-- <form class="needs-validation" novalidate>
                      <h5 class="mb-3">Stay Updated!</h5>
                      <p>Subscribe to our newsletter to receive the latest updates.</p>
 
@@ -30,7 +30,7 @@
                               </div>
                            </div>
                         </div>
-                     </form>
+                     </form> -->
                   </div>
                </div>
                <div class="offset-xxl-1 col-xxl-6 col-lg-6 offset-md-1 col-md-4">

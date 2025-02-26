@@ -8,12 +8,12 @@
     <form method="get">
         <div class="row g-3 pe-1 ps-1">
             <div class="col-12 col-md-3">
-                <input type="text" name="subject" class="form-control rounded-0 p-md-2" placeholder="Subject"
-                    aria-label="Subject">
+                <input type="text" name="title" class="form-control rounded-0 p-md-2" placeholder="title"
+                    aria-label="Title">
             </div>
             <div class="col-12 col-md-3">
-                <input type="text" name="exam_body" class="form-control rounded-0 p-md-2" placeholder="Exam Body"
-                    aria-label="Exam Body">
+                <input type="text" name="author" class="form-control rounded-0 p-md-2" placeholder="Author"
+                    aria-label="Author">
             </div>
 
             <div class="col-12 col-md-3">
@@ -31,19 +31,16 @@
             </div>
         </div>
     </form>
-
 </div>
-
 <div id="items-section" class="container text-center">
     <div class="row">
         <div class="col-md-12">
             <div class="list-group rounded-0">
                 <?php
-
                 // Retrieve search parameters from the form
                 $cart_list = [];
-                $subject_name = $_GET['subject'] ?? '';
-                $exam_body = $_GET['exam_body'] ?? '';
+                $title = $_GET['title'] ?? '';
+                $author = $_GET['author'] ?? '';
                 $subject_year = $_GET['year'] ?? '';
                 // $carts = $_SESSION['cart'] ?? '';
                 if (isset($_COOKIE['cart'])) {
@@ -60,21 +57,19 @@
                 $add_style = "color: #fff; background-color: #781515; border-color: #781515;font-size: 12px; padding: 5px;";
                 $added_style = "color: #fff; background-color: #347054; border-color: #347054;font-size: 12px; padding: 5px;";
                 // Pagination
-                $limit = 6; // Number of items per page
-                $page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
-                $offset = ($page - 1) * $limit; // Offset for the query
+                $limit = 6; 
+                $page = isset($_GET['page']) ? $_GET['page'] : 1; 
+                $offset = ($page - 1) * $limit; 
                 
                 try {
                     $query = "SELECT * FROM document WHERE document_type='publication' AND `published`= 1 LIMIT $limit OFFSET $offset";
                     $search = "SELECT count(*) as total FROM document WHERE document_type='publication' AND `published`= 1 LIMIT $limit";
-                    if (!empty($subject_name || $exam_body || $subject_year)) {
-                        $query = "SELECT * FROM document WHERE document_type='publication' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1  LIMIT $limit";
-                        $search = "SELECT count(*) as total from document WHERE document_type='publication' AND `subject` LIKE '%$subject_name%' AND `exam_body` LIKE '%$exam_body%' AND `year` LIKE '%$subject_year%' AND `published` = 1 LIMIT $limit";
+                    if (!empty($title || $author || $subject_year)) {
+                        $query = "SELECT * FROM document WHERE document_type='publication' AND `title` LIKE '%$title%' AND `author` LIKE '%$author%' AND `year` LIKE '%$subject_year%' AND `published` = 1  LIMIT $limit";
+                        $search = "SELECT count(*) as total from document WHERE document_type='publication' AND `title` LIKE '%$title%' AND `author` LIKE '%$author%' AND `year` LIKE '%$subject_year%' AND `published` = 1 LIMIT $limit";
                     }
 
-
                     $documents = $pdo->select($query)->fetchAll(PDO::FETCH_ASSOC);
-
                     // Loop through the documents and display them in cards
                     foreach ($documents as $document) {
                         ?>
@@ -84,9 +79,9 @@
                                 style="height: 50px; width: 50px;">
                             <div class="ms-4 text-start">
                                 <!-- Past Question name -->
-                                <h6 class="mb-1"><?= ucwords($document['subject']); ?> Past Question</h6>
+                                <h6 class="mb-1"><?= ucwords($document['title']); ?></h6>
                                 <!-- Exam body and year -->
-                                <p class="mb-1"><?= $document['exam_body']; ?> (<?= $document['year']; ?>)</p>
+                                <p class="mb-1"><?= $document['author']; ?> (<?= $document['year']; ?>)</p>
                                 <!-- Price in bold -->
                                 <h6 class="font-weight-bold text-success">₦<?= $document['price']; ?></h6>
                             </div>
@@ -95,8 +90,8 @@
                                 <form action="add-to-cart" method="post">
                                     <input type="hidden" name="sku" value="<?= $document['sku']; ?>">
                                     <input type="hidden" name="price" value="<?= $document['price']; ?>">
-                                    <input type="hidden" name="subject" value="<?= $document['subject']; ?>">
-                                    <input type="hidden" name="exam_body" value="<?= $document['exam_body']; ?>">
+                                    <input type="hidden" name="title" value="<?= $document['title']; ?>">
+                                    <input type="hidden" name="author" value="<?= $document['author']; ?>">
                                     <input type="hidden" name="year" value="<?= $document['year']; ?>">
                                     <input type="hidden" name="coverpage" value="<?= $document['coverpage']; ?>">
                                     <input type="hidden" name="quantity" value="1">
@@ -123,7 +118,7 @@
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     $total_pages = isset($row['total']) ? ceil($row['total'] / $limit) : 1;
                     $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-                    $delta = 2; // Number of pages to show around the current page
+                    $delta = 2; 
                     
                     if ($total_pages >= 1) {
                         // Previous page link
@@ -160,8 +155,6 @@
                     ?>
                 </ul>
             </nav>
-
-
         </div>
     </div>
 </div>

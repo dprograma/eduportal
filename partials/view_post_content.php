@@ -77,13 +77,10 @@
                                         onclick="confirmPostPublish(<?= $post->id ?>, <?= $post->publish ?>, this)">
                                         <?= $post->publish == 1 ? 'Published' : 'Unpublished' ?>
                                     </button>
-                                </td>
-
+                                </td>A
 
                                 <td class="view-modal-trigger">
-                                    <a href="edit-post?id=<?= $post->id ?>"
-                                        class="btn btn-warning btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white edit-link"
-                                        data-question-id="<?= $post->id ?>">Edit</a>
+                                    <a href="edit-post?id=<?= $post->id ?>" class="btn btn-warning btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white edit-link" data-question-id="<?= $post->id ?>">Edit</a>
                                 </td>
 
                                 <td class="text-center">

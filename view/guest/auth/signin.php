@@ -24,8 +24,12 @@
                   </div>
 
                   <?php if (isset($_GET['error'])): ?>
-                     <div class="alert alert-<?= $_GET['type'] ?> alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_GET['error']) ?>
+                     <?php
+                     $alertClass = 'alert-' . ($_GET['type'] === 'success' ? 'success' : 'danger');
+                     $message = htmlspecialchars($_GET['error']);
+                     ?>
+                     <div class="alert <?php echo $alertClass ?> alert-dismissible fade show" role="alert">
+                        <?php echo $message ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                      </div>
                   <?php endif; ?>
@@ -93,7 +97,7 @@
 
                   <div class="text-center mt-7">
                      <div class="small mb-3 mb-lg-0 text-body-tertiary">
-                        Copyright © <?= date('Y') ?>
+                        Copyright © <?php echo date('Y') ?>
                         <span class="text-primary"><a href="#">EduPortal Educational Platform</a></span>
                         | All Rights Reserved
                      </div>

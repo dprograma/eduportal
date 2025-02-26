@@ -2,9 +2,10 @@
     <img src="<?= file_exists($currentUser->profileimg)? $currentUser->profileimg : 'assets/images/avatar/fallback.jpg' ?>" alt="avatar" class="avatar avatar-lg rounded-circle" />
     <div class="ms-3">
         <h5 class="mb-0"><?= $currentUser->fullname ?></h5>
-        <small>Personal account</small>
+        <small>Affiliate account</small>
     </div>
 </div>
+
 <!-- Navbar -->
 <div class="mb-4 text-center text-md-start">
     <a href="profile" class="text-reset">
@@ -75,11 +76,17 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view-affiliate-past-questions" title="view agent uploaded past questions, ebooks and publications.">
+                <a class="nav-link" href="view-affiliate-documents" title="view agent uploaded past questions, ebooks and publications.">
                     <i class="align-bottom bx bx-file"></i>
-                    <span class="ms-2 fs-6">View Affiliate Past Questions</span>
+                    <span class="ms-2 fs-6">View Affiliate Documents</span>
                 </a>
             </li>
+        <li class="nav-item">
+            <a class="nav-link" href="affiliate-earnings">
+                <i class="align-bottom bx bx-money"></i>
+                <span class="ms-2">My Earnings</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="logout">
                 <i class="align-bottom bx bx-log-out"></i>

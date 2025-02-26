@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <?php include "partials/admin_menu.php"; ?>
-                    <?php include "partials/view_affiliate_past_questions_content.php"; ?>
+                    <?php include "partials/view_agent_documents_content.php"; ?>
                 </div>
             </div>
         </section>

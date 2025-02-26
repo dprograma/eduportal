@@ -128,7 +128,7 @@
             if (!data) return;
 
             const output = `
-                <h3 class="quiz__question">
+                <h3 class="quiz__question" style="background-color: #007bff; padding: 20px; border-radius: 10px;">
                     <span class="quiz__number">Question ${index + 1}</span><br>
                     <p style="margin-top:20px;color:#fff; font-size:24px; font-weight: 600;">
                         ${stripHTML(data.question)}
@@ -304,7 +304,7 @@
             const percentage = (quizScore / totalQuestions) * 100;
             console.log("complete test button clicked!")
             // Send the score to the server
-            fetch('http://localhost/eduportal/core/controller/SaveCBTScore.php', {
+            fetch('https://eduportal.prepr.com.ng/core/controller/SaveCBTScore.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -317,7 +317,6 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("data: ", data)
                     if (data.success) {
                         showAlert("Your test score has been saved successfully.", "success");
                         // Redirect the user to a result page

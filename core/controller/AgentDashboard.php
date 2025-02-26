@@ -1,4 +1,5 @@
 <?php
+require_once 'core/utils.php';
 
 $title = 'Agent Dashboard' . '|' . SITE_TITLE;
 

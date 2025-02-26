@@ -23,7 +23,7 @@ if (!empty(Session::get('loggedin'))) {
     $offset = ($page - 1) * $limit; // Offset for the query
     $rows = ($limit * ($page - 1));
 
-    $posts = $pdo->select("SELECT * FROM posts WHERE `title` LIKE '%$title%' AND `category` LIKE '%$category%' AND `date_created` LIKE '%$year%' AND `publish` LIKE '%$status%' LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_OBJ);
+    $posts = $pdo->select("SELECT * FROM posts WHERE `title` LIKE '%$title%' AND `category` LIKE '%$category%' AND `date_created` LIKE '%$year%' AND `publish` LIKE '%$status%' ORDER BY `date_edited` DESC LIMIT $limit OFFSET $offset")->fetchAll(PDO::FETCH_OBJ);
 
     $search = "SELECT COUNT(*) AS total FROM posts WHERE `title` LIKE '%$title%' AND `category` LIKE '%$category%' AND `date_created` LIKE '%$year%' AND `publish` LIKE '%$status%' LIMIT $limit";
 
@@ -40,7 +40,7 @@ if (!empty(Session::get('loggedin'))) {
 
     if (isset($_POST['publish'])) {
         $id = $_POST['postId'];
-
+        echo "POST ID: " . $id;
         $currentPost = $pdo->select("SELECT * FROM posts WHERE id=?", [$id])->fetch(PDO::FETCH_ASSOC);
 
         $status = $currentPost['publish'] == 1 ? 0 : 1;

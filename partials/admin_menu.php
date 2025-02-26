@@ -30,15 +30,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view-agent-past-questions" title="view agent uploaded past questions, ebooks and publications.">
+                <a class="nav-link" href="view-agent-documents" title="view agent uploaded past questions, ebooks and publications.">
                     <i class="align-bottom bx bx-file"></i>
-                    <span class="ms-2 fs-6">View Agent Past Questions</span>
+                    <span class="ms-2 fs-6">View Agent Documents</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="view-affiliate-past-questions" title="view affiliate uploaded past questions, ebooks and publications.">
+                <a class="nav-link" href="view-affiliate-documents" title="view affiliate uploaded past questions, ebooks and publications.">
                     <i class="align-bottom bx bx-file"></i>
-                    <span class="ms-2 fs-6">View Affiliate Past Questions</span>
+                    <span class="ms-2 fs-6">View Affiliate Documents</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -15,8 +15,9 @@ if (!empty($data['user_id']) && !empty($data['score']) && !empty($data['subject'
     ]);
     // Return a JSON response indicating success
     echo json_encode(['success' => true, 'message' => 'Score saved successfully', 'data' => $data]);
-
+    exit;
 } else {
     // Return an error message for missing data
     echo json_encode(['success' => false, 'message' => 'Invalid data']);
+    exit;
 }

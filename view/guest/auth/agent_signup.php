@@ -3,6 +3,10 @@
 
 <?php $title = "EduPortal | Agent Signup"; ?>
 <?php include "partials/head.php" ?>
+<?php 
+$old = $_SESSION['old_values'] ?? []; 
+unset($_SESSION['old_values']);
+?>
 
 <body>
    <main>
@@ -29,13 +33,13 @@
                      </div>
                   <?php endif; ?>
 
-                  <form method="post" action='signup' class="needs-validation mb-6" novalidate>
+                  <form method="post" action='agent-signup' class="needs-validation mb-6" novalidate>
                      <div class="mb-3">
                         <label for="username" class="form-label">
                            Username
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="username" id="username" required />
+                        <input type="text" class="form-control" name="username" id="username"   value="<?= isset($old['UserName']) ? htmlspecialchars($old['UserName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter username.</div>
                      </div>
                      <div class="mb-3">
@@ -43,7 +47,7 @@
                            Full Name
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="name" id="name" required />
+                        <input type="text" class="form-control" name="name" id="name"  value="<?= isset($old['FullName']) ? htmlspecialchars($old['FullName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter Full name.</div>
                      </div>
                      <div class="mb-3">
@@ -51,7 +55,7 @@
                            Email
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" name="email" id="email" required />
+                        <input type="email" class="form-control" name="email" id="email"  value="<?= isset($old['Email']) ? htmlspecialchars($old['Email']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="mb-3">

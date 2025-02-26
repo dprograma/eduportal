@@ -33,6 +33,15 @@ if (!empty(Session::get('loggedin'))) {
                     );
 
                     if ($pdo->status) {
+                        // Create security notification
+                        Notifications::create(
+                            Session::get('loggedin'),
+                            'security',
+                            'Password Changed',
+                            "Your account password was changed successfully. If you didn't make this change, please contact support immediately.",
+                            "settings"
+                        );
+
                         redirect('logout', 'Password Changed Successfully', 'success');
                     } else {
                         redirect('reset-password', 'Please check your password input', 'danger');

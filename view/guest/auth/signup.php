@@ -2,7 +2,11 @@
 <html lang="en">
 
 <?php $title = "EduPortal | Signup"; ?>
-<?php include "partials/head.php" ?>
+<?php include "partials/head.php"?>
+<?php
+    $old = $_SESSION['old_values'] ?? [];
+    unset($_SESSION['old_values']);
+?>
 
 <body>
    <main>
@@ -24,19 +28,43 @@
                   </div>
 
                   <?php if (isset($_GET['error'])): ?>
-                     <div class="alert alert-<?= $_GET['type'] ?> alert-dismissible fade show" role="alert">
-                        <?= htmlspecialchars($_GET['error']) ?>
+                  <?php
+                     $alertClass = 'alert-' . ($_GET['type'] === 'success' ? 'success' : 'danger');
+                     $message    = htmlspecialchars($_GET['error']);
+                  ?>
+                     <div class="alert <?php echo $alertClass ?> alert-dismissible fade show" role="alert">
+                        <?php echo $message ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                      </div>
                   <?php endif; ?>
 
+                     <?php
+
+                     // Check for a flash message in the session
+                     if (isset($_SESSION['flash_message'])) {
+                        $flashMessage = $_SESSION['flash_message']['message'];
+                        $flashType    = $_SESSION['flash_message']['type'];
+
+                        // Display the Bootstrap alert
+                        $alertClass = 'alert-' . ($flashType === 'success' ? 'success' : 'danger');
+                        echo "<div class='alert $alertClass alert-dismissible fade show' role='alert'>
+                                 $flashMessage
+                                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                              </div>";
+
+                        // Clear the flash message from the session
+                        unset($_SESSION['flash_message']);
+                     }
+                     ?>
+
                   <form method="post" class="needs-validation mb-6" novalidate>
                      <div class="mb-3">
-                        <label for="username" class="form-label">
+                        <label for="username" class="form-label"></label></label>
                            Username
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="username" id="username" required />
+                        <input type="text" class="form-control" name="username" id="username"
+                               value="<?= $old['UserName'] ? htmlspecialchars($old['UserName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter username.</div>
                      </div>
                      <div class="mb-3">
@@ -44,7 +72,8 @@
                            Full Name
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="name" id="name" required />
+                        <input type="text" class="form-control" name="name" id="name"
+                               value="<?= $old['FullName'] ? htmlspecialchars($old['FullName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter Full name.</div>
                      </div>
                      <div class="mb-3">
@@ -52,7 +81,8 @@
                            Email
                            <span class="text-danger">*</span>
                         </label>
-                        <input type="email" class="form-control" name="email" id="email" required />
+                        <input type="email" class="form-control" name="email" id="email"
+                               value="<?= $old['Email'] ? htmlspecialchars($old['Email']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="mb-3">
@@ -86,15 +116,25 @@
                            </div>
                         </div>
                      </div>
+                     <?php if (isset($_GET['ref']) && $_GET['ref'] == 'affiliate' || $old['affiliate']): ?>
+                        <div class="alert alert-info">
+                           <p><strong>Affiliate Registration Fee:</strong> ₦3,000 (one-time payment)</p>
+                           <p class="small mb-0">
+                              Become an affiliate and earn:
+                              <br>- 65% commission on all purchases made by your referrals for 3 months
+                              <br>- Additional commissions from your uploaded materials
+                           </p>
+                        </div>
+                     <?php endif; ?>
                      <div class="mb-3">
                         <div class="form-check">
-                           <input class="form-check-input" type="checkbox" name="affiliate" id="affiliate">
+                           <input class="form-check-input" type="checkbox" name="affiliate" id="affiliate"
+                                  <?php echo(isset($_GET['ref']) && $_GET['ref'] == 'affiliate' ||  $old['affiliate']) ? 'checked' : ''; ?>>
                            <label class="form-check-label" for="affiliate">
-                              <span style="font-size: 12px; font-weight: 400; text-wrap: wrap;">Become an affiliate and get 65% return on your affiliation registration. T&C applies.</span>
+                              Register as an Affiliate (₦3,000 one-time fee + 65% referral commission)
                            </label>
                         </div>
                      </div>
-
 
                      <div class="d-grid">
                         <button class="btn btn-primary" type="submit" name="register">Sign Up</button>
@@ -129,7 +169,7 @@
 
                   <div class="text-center mt-7">
                      <div class="small mb-3 mb-lg-0 text-body-tertiary">
-                        Copyright © <?= date('Y') ?>
+                        Copyright ©                                                                                                                                                 <?php echo date('Y') ?>
                         <span class="text-primary"><a href="home">EduPortal Educational Platform</a></span>
                         | All Rights Reserved
                      </div>

@@ -1,5 +1,5 @@
 <?php
-$title = 'View Uploaded Past Questions' . '|' . SITE_TITLE;
+$title = 'View Uploaded Agent Documents' . '|' . SITE_TITLE;
 
 if (isset($_POST['logout'])) {
     Session::unset('loggedin');
@@ -20,7 +20,11 @@ if (!empty(Session::get('loggedin'))) {
     $offset = ($page - 1) * $limit; // Offset for the query
     $rows = ($limit * ($page - 1));
 
-    $questions = toJson($pdo->select("SELECT `d`.*, `u`.fullname FROM `document` `d`, `users` `u` WHERE `d`.`user_id`= `u`.`id` AND `d`.`user_id` IN (SELECT `id` FROM `users` WHERE `is_agent` = ? AND `id` = ?) AND `u`.`fullname` LIKE '%$full_name%' AND `d`.`exam_body` LIKE '%$subject%' AND `d`.`year` LIKE '%$year%' AND `d`.`published` LIKE '%$status%' LIMIT $limit OFFSET $offset", [1, Session::get('loggedin')])->fetchAll(PDO::FETCH_ASSOC));
+    $questions = toJson($pdo->select("SELECT `d`.*, `u`.fullname FROM `document` `d`, `users` `u` WHERE `d`.`user_id`= `u`.`id` AND `d`.`document_type` = 'past question' AND `d`.`user_id` IN (SELECT `id` FROM `users` WHERE `is_agent` = ? AND `id` = ?) AND `u`.`fullname` LIKE '%$full_name%' AND `d`.`exam_body` LIKE '%$subject%' AND `d`.`year` LIKE '%$year%' AND `d`.`published` LIKE '%$status%' LIMIT $limit OFFSET $offset", [1, Session::get('loggedin')])->fetchAll(PDO::FETCH_ASSOC));
+
+    $ebooks = toJson($pdo->select("SELECT `d`.*, `u`.fullname FROM `document` `d`, `users` `u` WHERE `d`.`user_id`= `u`.`id` AND `d`.`document_type` = 'ebook' AND `d`.`user_id` IN (SELECT `id` FROM `users` WHERE `is_agent` = ? AND `id` = ?) AND `u`.`fullname` LIKE '%$full_name%' AND `d`.`exam_body` LIKE '%$subject%' AND `d`.`year` LIKE '%$year%' AND `d`.`published` LIKE '%$status%' LIMIT $limit OFFSET $offset", [1, Session::get('loggedin')])->fetchAll(PDO::FETCH_ASSOC));
+
+    $publications = toJson($pdo->select("SELECT `d`.*, `u`.fullname FROM `document` `d`, `users` `u` WHERE `d`.`user_id`= `u`.`id` AND `d`.`document_type` = 'publication' AND `d`.`user_id` IN (SELECT `id` FROM `users` WHERE `is_agent` = ? AND `id` = ?) AND `u`.`fullname` LIKE '%$full_name%' AND `d`.`exam_body` LIKE '%$subject%' AND `d`.`year` LIKE '%$year%' AND `d`.`published` LIKE '%$status%' LIMIT $limit OFFSET $offset", [1, Session::get('loggedin')])->fetchAll(PDO::FETCH_ASSOC));
 
     $search = "SELECT `d`.*, `u`.fullname FROM `document` `d`, `users` `u` WHERE `d`.`user_id`= `u`.`id` AND `d`.`user_id` IN (SELECT `id` FROM `users` WHERE `is_agent` = 1 AND `id` = $currentUser->id)AND `u`.`fullname` LIKE '%$full_name%' AND `d`.`exam_body` LIKE '%$subject%' AND `d`.`year` LIKE '%$year%' AND `d`.`published` LIKE '%$status%' LIMIT $limit";
 

@@ -5,9 +5,13 @@ if (isset($_GET['code'])) {
     $googleAuth = new GoogleAuth();
     $token = $googleAuth->getAccessToken($_GET['code']);
     $userData = $googleAuth->getUserData($token);
+    echo '<br>';
+    echo '<pre>';
+    print_r($userData['email']);
+    echo '</pre>';
     
     // Process user data (e.g., store in your database or log them in)
-    $res = $pdo->select("SELECT * FROM users WHERE email=?", [$userData['Email']])->fetchAll(PDO::FETCH_BOTH);
+    $res = $pdo->select("SELECT * FROM users WHERE email=?", [$userData['email']])->fetchAll(PDO::FETCH_BOTH);
 
     if (!empty($res)) {
         foreach ($res as $user) {

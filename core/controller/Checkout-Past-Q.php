@@ -1,4 +1,8 @@
 <?php
+require 'vendor/autoload.php';
+
+require_once 'ENVLoader.php';
+
 $title = 'Checkout' . '|' . SITE_TITLE;
 
 
@@ -10,13 +14,13 @@ $document_price = Session::get('price') ?? '';
 // exit;
 $reference = uniqid();
 // $secretKey =  $priceTag['secretKey'];
-$secretKey = "sk_test_0342e36d66f55580bb0ddad382062eed99f41608";
+$secretKey = $_ENV['PAYSTACK_SECRET_KEY'];
 // $publicKey =  $priceTag['publicKey'];
-$publicKey = "pk_test_dd190b038dc1059a96638e2f718bf40bdb127e70";
+$publicKey = $_ENV['PAYSTACK_PUBLIC_KEY'];
 
 // Paystack payment URL
-$payment_url = 'https://api.paystack.co/transaction/initialize';
-$callback_url = 'http://localhost/eduportal/q-callback-url'; // URL to xredirect after payment
+$payment_url = $_ENV['PAYSTACK_INITIALIZE_TRANSACTION_URL'];
+$callback_url = $_ENV['PAYSTACK_CALLBACK_URL']; // URL to xredirect after payment
 
 $postdata = array('email' => $customer_email, 'amount' => ($document_price * 100), 'callback_url' => $callback_url);
 

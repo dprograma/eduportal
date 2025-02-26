@@ -1,5 +1,12 @@
 <?php
+require 'vendor/autoload.php';
 
+require_once 'ENVLoader.php';
+
+$host = $_ENV['DB_HOST'];
+$database = $_ENV['DB_NAME'];
+$username = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASS'];
 
 class DB
 {
@@ -83,7 +90,13 @@ class DB
         }
     }
 
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
+    }
+
 }
 
+
 $pdo = new DB('localhost', 'root', '', 'eduportal_eduportal');
-// $pdo = new DB('localhost', 'preprcom_preprcom', 'preprcom_preprcom', 'preprcom_preprcom');
+// $pdo = new DB('$host', '$username', '$password', '$database');

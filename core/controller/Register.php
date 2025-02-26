@@ -1,199 +1,158 @@
 <?php
+require 'vendor/autoload.php';
+require_once 'ENVLoader.php';
+require_once 'core/utils.php';
+// ini_set("include_path", '/home/preprcom/php:' . ini_get("include_path") );
+// require_once 'qservers_mail.php';
+use GuzzleHttp\Client;
 use PHPMailer\PHPMailer\PHPMailer;
+require 'core/Mailer.php';
 
-$title = isset($_GET['ref']) == 'affiliate' ? 'Affiliate registration' . '|' . SITE_TITLE: 'User registration' . '|' . SITE_TITLE;
+// Determine registration type and set appropriate title and view
+$isAffiliate      = isset($_GET['ref']) && $_GET['ref'] == 'affiliate';
+$title            = $isAffiliate ? 'Affiliate registration' . '|' . SITE_TITLE : 'User registration' . '|' . SITE_TITLE;
+$registrationType = $isAffiliate ? 'affiliate-signup' : 'signup';
 
-
-if (isset($_POST['register'])) {
-    $userName = sanitizeInput($_POST['username']);
-    $email = sanitizeInput($_POST['email']);
-    $_SESSION['user_email'] = $email;
-    $fullname = sanitizeInput(ucwords($_POST['name']));
-    $password = sanitizeInput($_POST['password']);
-    $confirm = sanitizeInput($_POST['confirm-password']);
-    $verificationToken = generateRandomString(16);
-    // Check if the affiliate checkbox was selected
-    $affiliate = isset($_POST['affiliate']) ? 1 : 0;
-    $termsofuse = isset($_POST['terms-condition']) ? 1 : 0;
-
-    // Validate the input data
-
+if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
+    // Store registration data
     $userData = [
-        'UserName' => $userName,
-        'Email' => $email,
-        'FullName' => $fullname,
-        'password' => $password,
-        'Confirm' => $confirm
+        'UserName'   => sanitizeInput($_POST['username']),
+        'Email'      => sanitizeInput($_POST['email']),
+        'FullName'   => sanitizeInput(ucwords($_POST['name'])),
+        'password'   => sanitizeInput($_POST['password']),
+        'Confirm'    => sanitizeInput($_POST['confirm-password']),
+        'termsofuse' => isset($_POST['terms-condition']) ? 1 : 0,
     ];
 
-    $msg = isEmpty($userData);
+    // Validation with proper redirects
+    $redirectUrl = $userData['affiliate'] == 1 ? 'affiliate-signup?ref=affiliate' : 'signup';
 
-    if ($msg != 1) {
-        redirect('signup', $msg);
-    }
+    // Check if email already exists - Do this first
+    $existingUser = $pdo->select(
+        "SELECT id, email, username FROM users WHERE email = ? OR username = ?",
+        [$userData['Email'], $userData['UserName']]
+    )->fetch(PDO::FETCH_ASSOC);
 
-    $userData['affiliate'] = $affiliate;
-
-    if ($termsofuse != 1) {
-        redirect('signup', "Please accept the terms and conditions.");
-    } else {
-        $userData['terms-condition'] = $_POST['terms-condition'];
-    }
-
-    if ($userData['password'] != $userData['Confirm']) {
-        redirect('signup', "Password does not match.");
-    }
-
-    $res = $pdo->select("SELECT * FROM users WHERE username=? or email=?", [$userData['UserName'], $userData['Email']])->fetchAll(PDO::FETCH_BOTH);
-
-    if (!empty($res)) {
-        foreach ($res as $user) {
-            if ($user['email'] == $userData['Email']) {
-                redirect('signup', "Email already exists");
-            } elseif ($user['username'] == $userData['UserName']) {
-                redirect('signup', "Username already exists");
-            }
+    if ($existingUser) {
+        if ($existingUser['email'] === $userData['Email']) {
+            redirect($redirectUrl, "Email address already exists.", 'error');
+            exit;
+        }
+        if ($existingUser['username'] === $userData['UserName']) {
+            redirect($redirectUrl, "Username already exists.", 'error');
+            exit;
         }
     }
 
-    $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
+    // Validate the input data
+    $msg = isEmpty($userData);
+    if ($msg != 1) {
+        $_SESSION['old_values'] = $userData;
+        // If it is only affiliate field that is missing in $userData, do nothing
+        redirect($redirectUrl, $msg, 'error');
+        exit;
+    }
 
-    // Insert the user with a verification token and `is_verified` field set to false (0)
-    $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, is_verified, access, affiliate, termsofuse) 
-                  VALUES(?,?,?,?,?,?,?,?,?)',
-        [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, 0, 'secured', $userData['affiliate'], $userData['terms-condition']]
-    );
+    $userData['affiliate'] = isset($_POST['affiliate']) ? 1 : 0;
 
-    if ($pdo->status) {
-        // Construct the verification link
-        $verificationLink = APP_URL . "/verify?token=" . $verificationToken;
+    if (! $userData['termsofuse']) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Please accept the terms and conditions.", 'error');
+        exit;
+    }
 
-        // Send the verification email
-        $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify Your Email</title></head><body>
-            <h1>Welcome ' . $userData["UserName"] . ' to EduPortal</h1>
-            <p>Please click the link below to verify your email address:</p>
-            <a href="' . $verificationLink . '">Verify Email</a>
-            </body></html>';
+    if ($userData['password'] != $userData['Confirm']) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Password does not match.", 'error');
+        exit;
+    }
 
+    if (! filter_var($userData['Email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Invalid email address.", 'error');
+        exit;
+    }
 
-        $to = $userData['Email'];
+    if (! preg_match("/^[a-zA-Z0-9]*$/", $userData['UserName'])) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Invalid username. Only letters and numbers are allowed.", 'error');
+        exit;
+    }
+
+    if (strlen($userData['UserName']) < 6) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Username must be at least 6 characters.", 'error');
+        exit;
+    }
+
+    if (strlen($userData['password']) < 8) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Password must be at least 8 characters.", 'error');
+        exit;
+    }
+
+    // Check if password contains at least one capital letter and one number character
+    if (! preg_match('/[A-Z]/', $userData['password']) || ! preg_match('/[0-9]/', $userData['password'])) {
+        $_SESSION['old_values'] = $userData;
+        redirect($redirectUrl, "Password must contain at least one capital letter and one number.", 'error');
+        exit;
+    }
+
+    // Store registration data for after payment verification
+    $_SESSION['pending_registration'] = $userData;
+    // Handle affiliate registration (both checkbox and direct affiliate signup)
+    if ($userData['affiliate']) {
+        $paymentRef              = 'AFF_REG_' . time() . '_' . rand(1000, 9999);
+        $_SESSION['payment_ref'] = $paymentRef;
+
+                                                         // Store registration data with a more unique key
+        $_SESSION['affiliate_registration'] = $userData; // Changed from pending_registration
 
         try {
-            $mail->addAddress($to);
-            $mail->Subject = 'Email Account Verification';
-            $mail->Body = $welcomeMsg;
+            $client   = new Client();
+            $response = $client->post($_ENV['PAYSTACK_INITIALIZE_TRANSACTION_URL'], [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $_ENV['PAYSTACK_SECRET_KEY'],
+                    'Content-Type'  => 'application/json',
+                ],
+                'json'    => [
+                    'email'        => $userData['Email'],
+                    'amount'       => 300000,
+                    'reference'    => $paymentRef,
+                    'callback_url' => $_ENV['PAYSTACK_CALLBACK_URL'],
+                    'metadata'     => [
+                        'registration_type' => 'affiliate', // Changed to be explicit
+                        'user_email'        => $userData['Email'],
+                        'payment_for'       => 'affiliate_registration', // Added to be explicit
+                    ],
+                ],
+            ]);
 
-            // Try to send using port 465
-            if (!$mail->send()) {
-                // If it fails, try TLS on port 587
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
-                $mail->send();
+            $result = json_decode($response->getBody(), true);
+
+            if ($result['status']) {
+                header('Location: ' . $result['data']['authorization_url']);
+                exit;
             }
-
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        }
-
-        // Redirect with success message
-        redirect("signup", "Registration successful. Please check your email for the verification link.", "success");
-    }
-    exit;
-} elseif (isset($_POST['register_affiliate'])) {
-    $userName = sanitizeInput($_POST['username']);
-    $email = sanitizeInput($_POST['email']);
-    $_SESSION['user_email'] = $email;
-    $fullname = sanitizeInput(ucwords($_POST['name']));
-    $password = sanitizeInput($_POST['password']);
-    $confirm = sanitizeInput($_POST['confirm-password']);
-    $verificationToken = generateRandomString(16);
-    // Check if the affiliate checkbox was selected
-    $affiliate = isset($_POST['affiliate']) ? 1 : 0;
-    $termsofuse = isset($_POST['terms-condition']) ? 1 : 0;
-
-    // Validate the input data
-
-    $userData = [
-        'UserName' => $userName,
-        'Email' => $email,
-        'FullName' => $fullname,
-        'password' => $password,
-        'Confirm' => $confirm,
-        'affiliate' => $affiliate
-    ];
-
-    $msg = isEmpty($userData);
-
-    if ($msg != 1) {
-        redirect('affiliate-signup', $msg);
-    }
-
-    if ($termsofuse != 1) {
-        redirect('affiliate-signup', "Please accept the terms and conditions.");
-    } else {
-        $userData['terms-condition'] = $_POST['terms-condition'];
-    }
-
-    if ($userData['password'] != $userData['Confirm']) {
-        redirect('affiliate-signup', "Password does not match.");
-    }
-
-    $res = $pdo->select("SELECT * FROM users WHERE username=? or email=?", [$userData['UserName'], $userData['Email']])->fetchAll(PDO::FETCH_BOTH);
-
-    if (!empty($res)) {
-        $user = $res[0];
-        if ($user['email'] == $userData['Email']) {
-            $pdo->update('UPDATE users SET affiliate = ' . $userData['affiliate'] . ', termsofuse = ' . $userData['terms-condition'] . ' WHERE email = ' . $userData['Email'] . '');
+            error_log("Payment Error: " . $e->getMessage());
+            redirect($redirectUrl, 'Payment initialization failed. Please try again.', 'error');
+            exit;
         }
     } else {
-        $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
-
-        // Insert the user with a verification token and `is_verified` field set to false (0)
-        $pdo->insert('INSERT INTO users(username,email, fullname, `password`, verification_token, is_verified, access, affiliate, termsofuse) 
-              VALUES(?,?,?,?,?,?,?,?)',
-            [$userData['UserName'], $userData['Email'], $userData['FullName'], $hashedPass, $verificationToken, 0, 'secured', $userData['affiliate'], $userData['terms-condition']]
-        );
-
-        if ($pdo->status) {
-            // Construct the verification link
-            $verificationLink = APP_URL . "verify?token=" . $verificationToken;
-
-            // Send the verification email
-            $welcomeMsg = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify Your Email</title></head><body>
-        <h1>Welcome ' . $userData["UserName"] . ' to EduPortal</h1>
-        <p>Please click the link below to verify your email address:</p>
-        <a href="' . $verificationLink . '">Verify Email</a>
-        </body></html>';
-
-
-            $to = $userData['Email'];
-
-            try {
-                $mail->addAddress($to);
-                $mail->Subject = 'Affiliate Email Account Verification';
-                $mail->Body = $welcomeMsg;
-
-                // Try to send using port 465
-                if (!$mail->send()) {
-                    // If it fails, try TLS on port 587
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port = 587;
-                    $mail->send();
-                }
-
-            } catch (Exception $e) {
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-            }
-
-            // Redirect with success message
-            redirect("signup", "Registration successful. Please check your email for the verification link.", "success");
-        }
+        // Regular user registration
+        completeRegistration($userData, $pdo);
     }
 }
 
-if (isset($_GET['ref']) && $_GET['ref'] == 'affiliate') {
+$url = parse_url($_SERVER['REQUEST_URI']);
+$affiliate = strpos($url['query'], 'ref=') !== false;
+// Determine which view to load based on URL and registration type
+if ($isAffiliate || (isset($_SESSION['old_values']['affiliate']) && $_SESSION['old_values']['affiliate'] == 1)) {
+    require_once 'view/guest/auth/affiliate_signup.php';
+}elseif (isset($affiliate) && !empty($affiliate)){
     require_once 'view/guest/auth/affiliate_signup.php';
 } else {
     require_once 'view/guest/auth/signup.php';
-
 }
+

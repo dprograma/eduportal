@@ -1,7 +1,8 @@
 <?php
 // ini_set("include_path", '/home/preprcom/php:' . ini_get("include_path") );
 // require_once 'qservers_mail.php';
-use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\PHPMailer;
+require 'core/Mailer.php';
 
 $title = 'Agent registration' . '|' . SITE_TITLE;
 
@@ -29,17 +30,46 @@ if (isset($_POST['register_agent'])) {
     $msg = isEmpty($userData);
 
     if ($msg != 1) {
+        $_SESSION['old_values'] = $userData;
         redirect('signup', $msg);
     }
 
     if ($termsofuse != 1) {
-        redirect('signup', "Please accept the terms and conditions.");
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Please accept the terms and conditions.");
     } else {
         $userData['terms-condition'] = $_POST['terms-condition'];
     }
 
     if ($userData['password'] != $userData['Confirm']) {
-        redirect('signup', "Password does not match.");
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Password does not match.");
+    }
+
+    if (!filter_var($userData['Email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Invalid email address.");
+    }
+
+    if (!preg_match("/^[a-zA-Z0-9]*$/", $userData['UserName'])) {
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Invalid username. Only letters and numbers are allowed.");
+    }
+
+    if (strlen($userData['UserName']) < 6) {
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Username must be at least 6 characters.");
+    }
+
+    if (strlen($userData['password']) < 8) {
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Password must be at least 8 characters.");
+    }
+
+    // Check if password contains at least one capital letter and one number character
+    if (!preg_match('/[A-Z]/', $userData['password']) || !preg_match('/[0-9]/', $userData['password'])) {
+        $_SESSION['old_values'] = $userData;
+        redirect('agent-signup', "Password must contain at least one capital letter and one number.");
     }
 
     $res = $pdo->select("SELECT * FROM users WHERE username=? or email=?", [$userData['UserName'], $userData['Email']])->fetchAll(PDO::FETCH_BOTH);
@@ -47,9 +77,9 @@ if (isset($_POST['register_agent'])) {
     if (!empty($res)) {
         foreach ($res as $user) {
             if ($user['email'] == $userData['Email']) {
-                redirect('signup', "Email already exists");
+                redirect('agent-signup', "Email already exists");
             } elseif ($user['username'] == $userData['UserName']) {
-                redirect('signup', "Username already exists");
+                redirect('agent-signup', "Username already exists");
             }
         }
     }
@@ -98,9 +128,14 @@ if (isset($_POST['register_agent'])) {
         }
 
         // Redirect with success message
-        redirect("signup", "Registration successful. Please check your email for the verification link.", "success");
+        redirect("agent-signup", "Registration successful. Please check your email for the verification link.", "success");
     }
     exit;
-} 
+}else{
+    $userName = "";
+    $email = "";
+    $fullname = "";
+}
+
 require_once 'view/guest/auth/agent_signup.php';
 

@@ -1,4 +1,7 @@
 <?php
+// ini_set("include_path", '/home/preprcom/php:' . ini_get("include_path") );
+// require_once 'qservers_mail.php';
+use PHPMailer\PHPMailer\PHPMailer;
 
 $title = 'Forget Password' . '|' . SITE_TITLE;
 
@@ -14,7 +17,7 @@ if (isset($_POST['forgot-password'])) {
         if ($user) {
             $token = rand(999999, 111111);
             $pdo->update("UPDATE users SET reset_code=? WHERE email = ?", [$token, $email]);
-            $resetLink = APP_URL . "reset?token=" . $token;
+            $resetLink = APP_URL . "/reset?token=" . $token;
             $to = $email;
             $mail->AddAddress($to);
             $mail->Subject = "Password Reset Request";
@@ -27,6 +30,13 @@ if (isset($_POST['forgot-password'])) {
                 redirect('forgot-password', 'Error sending the reset email. Please try again.');
 
             }
+
+        // $mail = new QserversMail($welcomeMsg, $subject, $from, $to);
+        // if ($mail->sendMail()) {
+        //     redirect('forgot-password', 'Password reset email sent. Please check your inbox.', 'success');
+        // } else {
+        //     redirect('forgot-password', 'Error sending the reset email. Please try again.');
+        // }
         } else {
             redirect('forgot-password', 'Email Does Not Exist', 'danger');
 

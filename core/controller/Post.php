@@ -43,13 +43,24 @@ if(!empty(Session::get('loggedin'))){
         }
 
    
-
         $pdo->insert('INSERT INTO posts(title,body,author,category,img) VALUES(?,?,?,?,?)', [$postData['Title'],$postData['Body'],$currentUser->id,$postData['Category'],$path]);
-
+        $lastInsertId = $pdo->lastInsertId(); 
+        
         if ($pdo->status) {
-    //send a welcome email to the user
-    redirect('create-post', "Post created Successfully", 'success');
-}
+            require_once __DIR__. '/Notifications.php';
+            // Notify all users about new post
+            $users = $pdo->select("SELECT id FROM users WHERE is_verified = '1'")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($users as $user) {
+                Notifications::create(
+                    $user['id'],
+                    'news',
+                    'New Post Published',
+                    "New post: {$title}",
+                    "viewpost?id=" . $lastInsertId
+                );
+            }
+            redirect('create-post', "Post created Successfully", 'success');
+        }
 
 
     }
@@ -65,6 +76,16 @@ if(!empty(Session::get('loggedin'))){
         $pdo->update('UPDATE posts SET publish =? WHERE id=?', [$status,$id]);
 
         if($pdo->status){
+            require_once __DIR__. '/Notifications.php';
+            // Notify admin and post author
+            Notifications::create(
+                $currentPost->author,
+                'post_status',
+                $status ? 'Post Published' : 'Post Unpublished',
+                "Your post '{$currentPost->title}' has been " . ($status ? 'published' : 'unpublished'),
+                "viewpost?id=" . $id
+            );
+
             $resp = json_encode(['status'=>'success']);
             echo $resp; die;
 
@@ -97,18 +118,8 @@ if(!empty(Session::get('loggedin'))){
     if(isset($_POST['edit-post'])){
         
     }
-
-  
-
-
-
-
-
-
     
     require_once 'view/loggedin/admin/create-post.php';
-
-
 }
 
 
