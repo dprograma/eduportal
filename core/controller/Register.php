@@ -9,18 +9,29 @@ use PHPMailer\PHPMailer\PHPMailer;
 require 'core/Mailer.php';
 
 // Determine registration type and set appropriate title and view
-$isAffiliate      = isset($_GET['ref']) && $_GET['ref'] == 'affiliate';
-$title            = $isAffiliate ? 'Affiliate registration' . '|' . SITE_TITLE : 'User registration' . '|' . SITE_TITLE;
+$isAffiliate = isset($_GET['ref']) && $_GET['ref'] == 'affiliate';
+$title = $isAffiliate ? 'Affiliate registration' . '|' . SITE_TITLE : 'User registration' . '|' . SITE_TITLE;
 $registrationType = $isAffiliate ? 'affiliate-signup' : 'signup';
+
+// Check if affiliate link was used to access the page
+if (isset($_GET['ref']) && $_GET['ref'] != 'affiliate') {
+    $affiliateId = $_GET['ref'];
+    $referrerInstance = $pdo->select("SELECT id FROM users WHERE affiliate_code = ?", [$affiliateId])->fetchColumn();
+    if ($referrerInstance) {
+        $_SESSION['referrer_instance'] = $referrerInstance;
+        $earningdata = ["ownerId" => $referrerInstance, "amount" => 3000];
+        $_SESSION['affiliate_earnings'] = $earningdata;
+    }
+}
 
 if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
     // Store registration data
     $userData = [
-        'UserName'   => sanitizeInput($_POST['username']),
-        'Email'      => sanitizeInput($_POST['email']),
-        'FullName'   => sanitizeInput(ucwords($_POST['name'])),
-        'password'   => sanitizeInput($_POST['password']),
-        'Confirm'    => sanitizeInput($_POST['confirm-password']),
+        'UserName' => sanitizeInput($_POST['username']),
+        'Email' => sanitizeInput($_POST['email']),
+        'FullName' => sanitizeInput(ucwords($_POST['name'])),
+        'password' => sanitizeInput($_POST['password']),
+        'Confirm' => sanitizeInput($_POST['confirm-password']),
         'termsofuse' => isset($_POST['terms-condition']) ? 1 : 0,
     ];
 
@@ -55,7 +66,7 @@ if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
 
     $userData['affiliate'] = isset($_POST['affiliate']) ? 1 : 0;
 
-    if (! $userData['termsofuse']) {
+    if (!$userData['termsofuse']) {
         $_SESSION['old_values'] = $userData;
         redirect($redirectUrl, "Please accept the terms and conditions.", 'error');
         exit;
@@ -67,13 +78,13 @@ if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
         exit;
     }
 
-    if (! filter_var($userData['Email'], FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($userData['Email'], FILTER_VALIDATE_EMAIL)) {
         $_SESSION['old_values'] = $userData;
         redirect($redirectUrl, "Invalid email address.", 'error');
         exit;
     }
 
-    if (! preg_match("/^[a-zA-Z0-9]*$/", $userData['UserName'])) {
+    if (!preg_match("/^[a-zA-Z0-9]*$/", $userData['UserName'])) {
         $_SESSION['old_values'] = $userData;
         redirect($redirectUrl, "Invalid username. Only letters and numbers are allowed.", 'error');
         exit;
@@ -91,8 +102,14 @@ if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
         exit;
     }
 
+    // Check if affiliate ID is set in the session
+    if (isset($_SESSION['referrer_instance'])) {
+        $userData['referred_by'] = $_SESSION['referrer_instance'];
+        unset($_SESSION['referrer_instance']);
+    }
+
     // Check if password contains at least one capital letter and one number character
-    if (! preg_match('/[A-Z]/', $userData['password']) || ! preg_match('/[0-9]/', $userData['password'])) {
+    if (!preg_match('/[A-Z]/', $userData['password']) || !preg_match('/[0-9]/', $userData['password'])) {
         $_SESSION['old_values'] = $userData;
         redirect($redirectUrl, "Password must contain at least one capital letter and one number.", 'error');
         exit;
@@ -102,28 +119,28 @@ if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
     $_SESSION['pending_registration'] = $userData;
     // Handle affiliate registration (both checkbox and direct affiliate signup)
     if ($userData['affiliate']) {
-        $paymentRef              = 'AFF_REG_' . time() . '_' . rand(1000, 9999);
+        $paymentRef = 'AFF_REG_' . time() . '_' . rand(1000, 9999);
         $_SESSION['payment_ref'] = $paymentRef;
 
-                                                         // Store registration data with a more unique key
-        $_SESSION['affiliate_registration'] = $userData; // Changed from pending_registration
+        // Store registration data with a more unique key
+        $_SESSION['affiliate_registration'] = $userData; 
 
         try {
-            $client   = new Client();
+            $client = new Client();
             $response = $client->post($_ENV['PAYSTACK_INITIALIZE_TRANSACTION_URL'], [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $_ENV['PAYSTACK_SECRET_KEY'],
-                    'Content-Type'  => 'application/json',
+                    'Content-Type' => 'application/json',
                 ],
-                'json'    => [
-                    'email'        => $userData['Email'],
-                    'amount'       => 300000,
-                    'reference'    => $paymentRef,
+                'json' => [
+                    'email' => $userData['Email'],
+                    'amount' => 300000,
+                    'reference' => $paymentRef,
                     'callback_url' => $_ENV['PAYSTACK_CALLBACK_URL'],
-                    'metadata'     => [
-                        'registration_type' => 'affiliate', // Changed to be explicit
-                        'user_email'        => $userData['Email'],
-                        'payment_for'       => 'affiliate_registration', // Added to be explicit
+                    'metadata' => [
+                        'registration_type' => 'affiliate', 
+                        'user_email' => $userData['Email'],
+                        'payment_for' => 'affiliate_registration', 
                     ],
                 ],
             ]);
@@ -146,13 +163,12 @@ if (isset($_POST['register']) || isset($_POST['register_affiliate'])) {
 }
 
 $url = parse_url($_SERVER['REQUEST_URI']);
-$affiliate = strpos($url['query'], 'ref=') !== false;
+$affiliate = strpos(isset($url['query']), 'ref=') != false;
 // Determine which view to load based on URL and registration type
 if ($isAffiliate || (isset($_SESSION['old_values']['affiliate']) && $_SESSION['old_values']['affiliate'] == 1)) {
     require_once 'view/guest/auth/affiliate_signup.php';
-}elseif (isset($affiliate) && !empty($affiliate)){
-    require_once 'view/guest/auth/affiliate_signup.php';
+} elseif (isset($affiliate) && !empty($affiliate)) {
+    require_once 'view/guest/auth/signup.php';
 } else {
     require_once 'view/guest/auth/signup.php';
 }
-

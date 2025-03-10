@@ -1,7 +1,7 @@
 <?php
 // ini_set("include_path", '/home/preprcom/php:' . ini_get("include_path") );
 // require_once 'qservers_mail.php';
-// use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\PHPMailer;
 require 'core/Mailer.php';
 
 $title = 'Agent registration' . '|' . SITE_TITLE;

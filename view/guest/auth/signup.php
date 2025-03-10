@@ -64,7 +64,7 @@
                            <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" name="username" id="username"
-                               value="<?= $old['UserName'] ? htmlspecialchars($old['UserName']) : ''; ?>" required />
+                               value="<?= isset($old['UserName']) ? htmlspecialchars($old['UserName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter username.</div>
                      </div>
                      <div class="mb-3">
@@ -73,7 +73,7 @@
                            <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" name="name" id="name"
-                               value="<?= $old['FullName'] ? htmlspecialchars($old['FullName']) : ''; ?>" required />
+                               value="<?= isset($old['FullName']) ? htmlspecialchars($old['FullName']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter Full name.</div>
                      </div>
                      <div class="mb-3">
@@ -82,7 +82,7 @@
                            <span class="text-danger">*</span>
                         </label>
                         <input type="email" class="form-control" name="email" id="email"
-                               value="<?= $old['Email'] ? htmlspecialchars($old['Email']) : ''; ?>" required />
+                               value="<?= isset($old['Email']) ? htmlspecialchars($old['Email']) : ''; ?>" required />
                         <div class="invalid-feedback">Please enter email.</div>
                      </div>
                      <div class="mb-3">
@@ -116,7 +116,7 @@
                            </div>
                         </div>
                      </div>
-                     <?php if (isset($_GET['ref']) && $_GET['ref'] == 'affiliate' || $old['affiliate']): ?>
+                     <?php if (isset($_GET['ref']) && $_GET['ref'] == 'affiliate' || isset($old['affiliate'])): ?>
                         <div class="alert alert-info">
                            <p><strong>Affiliate Registration Fee:</strong> ₦3,000 (one-time payment)</p>
                            <p class="small mb-0">
@@ -129,7 +129,7 @@
                      <div class="mb-3">
                         <div class="form-check">
                            <input class="form-check-input" type="checkbox" name="affiliate" id="affiliate"
-                                  <?php echo(isset($_GET['ref']) && $_GET['ref'] == 'affiliate' ||  $old['affiliate']) ? 'checked' : ''; ?>>
+                                  <?php echo(isset($_GET['ref']) && $_GET['ref'] == 'affiliate' ||  isset($old['affiliate'])) ? 'checked' : ''; ?>>
                            <label class="form-check-label" for="affiliate">
                               Register as an Affiliate (₦3,000 one-time fee + 65% referral commission)
                            </label>

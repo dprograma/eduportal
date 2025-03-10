@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Notifications.php';
+require_once 'core/utils.php';
 // Initialize the cart array
 $cart = [];
 
@@ -50,7 +50,7 @@ if (Session::get('loggedin')) {
     )->fetch(PDO::FETCH_ASSOC);
 
     if ($documentOwner) {
-        Notifications::create(
+        create(
             $documentOwner['user_id'],
             'cart_add',
             'Item Added to Cart',

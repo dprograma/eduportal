@@ -46,11 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 try {
                     // Complete the registration
                     completeRegistration($userData, $pdo);
-
                     // Clear session data
                     unset($_SESSION['affiliate_registration']);
                     unset($_SESSION['payment_ref']);
-
+                    unset($_SESSION['affiliate_earnings']);
                     redirect('login', 'Registration successful! Please check your email to verify your account.', 'success');
                     exit;
                 } catch (Exception $e) {
@@ -111,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             // Update agent balance if successful
             if ($pdo->status) {
-                updateAgentBalance($cart['owner_id'], $cart['price']);
+                saveEarnedCommisions($cart, $pdo);
             }
         }
 

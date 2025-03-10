@@ -77,6 +77,14 @@
                                         View
                                     </button>
                                 </td>
+                                <td class="text-center">
+                                    <button type="button"
+                                        class="btn btn-sm btn-rounded btn-pill text-uppercase ml-4 text-white bg-warning edit-user-btn"
+                                        data-id="<?= $userdata['id'] ?>" data-bs-toggle="modal"
+                                        data-bs-target="#editUserModal" title="Edit User Details">
+                                        Edit
+                                    </button>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -95,7 +103,8 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row mb-3">
-                                <div class="col-md-4"><strong><img id="userImage" class="img-thumbnail" src="" alt=""/></strong></div>
+                                <div class="col-md-4"><strong><img id="userImage" class="img-thumbnail" src=""
+                                            alt="" /></strong></div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4"><strong>Full Name:</strong></div>
@@ -115,6 +124,41 @@
                             </div>
                             <!-- Add more fields as needed -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit User Modal -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalLabel">Edit User Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editUserForm">
+                            <input type="hidden" id="editUserId" name="id">
+                            <div class="mb-3">
+                                <label for="editUserFullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="editUserFullName" name="fullname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editUserEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editUserEmail" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editUserAccessLevel" class="form-label">Access Level</label>
+                                <select class="form-control" id="editUserAccessLevel" name="access">
+                                    <option value="guest">Guest</option>
+                                    <option value="secured">Secured</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -167,7 +211,7 @@
     </nav>
 </div>
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.view-user-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const userId = this.getAttribute('data-id');
@@ -183,11 +227,57 @@
                             document.getElementById('userAccessLevel').textContent = data.user.access;
                             document.getElementById('userYear').textContent = data.user.created_date;
                         } else {
-                            alert('Error fetching user details.');
+                            Swal.fire('Error!', `Error fetching user details.`, 'error');
+
                         }
                     })
                     .catch(error => console.error('Error:', error));
             });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.edit-user-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                // Fetch user details via AJAX
+                fetch(`user-details?id=${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Populate the edit form with user details
+                            document.getElementById('editUserId').value = userId;
+                            document.getElementById('editUserFullName').value = data.user.fullname;
+                            document.getElementById('editUserEmail').value = data.user.email;
+                            document.getElementById('editUserAccessLevel').value = data.user.access;
+                        } else {
+                            Swal.fire('Error!', `Error fetching user details.`, 'error');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
+        document.getElementById('editUserForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            // Update user details via AJAX
+            fetch('update-user', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("user data: ", data.success);
+                    if (data.success) {
+                        Swal.fire('Updated!', `User details updated successfully.`, 'success');
+                        location.reload();
+                    } else {
+                        Swal.fire('Error!', `Error fetching user details.`, 'error');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 </script>

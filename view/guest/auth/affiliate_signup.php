@@ -27,7 +27,6 @@
                   </div>
 
                   <?php
-                  session_start(); // Ensure sessions are started
 
                   // Check for a flash message in the session
                   if (isset($_SESSION['flash_message'])) {

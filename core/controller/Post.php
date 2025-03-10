@@ -1,4 +1,5 @@
 <?php
+require_once 'core/utils.php';
 
 $title = 'Create Post' . '|' . SITE_TITLE;
 
@@ -47,11 +48,10 @@ if(!empty(Session::get('loggedin'))){
         $lastInsertId = $pdo->lastInsertId(); 
         
         if ($pdo->status) {
-            require_once __DIR__. '/Notifications.php';
             // Notify all users about new post
             $users = $pdo->select("SELECT id FROM users WHERE is_verified = '1'")->fetchAll(PDO::FETCH_ASSOC);
             foreach ($users as $user) {
-                Notifications::create(
+                create(
                     $user['id'],
                     'news',
                     'New Post Published',
@@ -76,9 +76,8 @@ if(!empty(Session::get('loggedin'))){
         $pdo->update('UPDATE posts SET publish =? WHERE id=?', [$status,$id]);
 
         if($pdo->status){
-            require_once __DIR__. '/Notifications.php';
             // Notify admin and post author
-            Notifications::create(
+            create(
                 $currentPost->author,
                 'post_status',
                 $status ? 'Post Published' : 'Post Unpublished',

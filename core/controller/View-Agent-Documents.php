@@ -1,5 +1,5 @@
 <?php
-
+require_once 'core/utils.php';
 $title = 'View Uploaded Past Questions' . '|' . SITE_TITLE;
 
 if (isset($_POST['logout'])) {
@@ -51,9 +51,8 @@ if (!empty(Session::get('loggedin'))) {
         $pdo->update('UPDATE `document` SET published =? WHERE id=?', [$status, $id]);
 
         if ($pdo->status) {
-            require_once __DIR__ . '/Notifications.php';
             // Create notification for document owner
-            Notifications::create(
+            create(
                 $currentQuestion['user_id'],
                 'document_status',
                 $status ? 'Document Published' : 'Document Unpublished',

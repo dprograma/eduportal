@@ -16,7 +16,7 @@
                         <input type="text" 
                                class="form-control form-control-sm" 
                                id="affiliateLink" 
-                               value="<?= APP_URL ?>/signup?ref=<?= $currentUser->affiliate_code ?>" 
+                               value="<?= APP_URL ?>signup?ref=<?= $currentUser->affiliate_code ?>" 
                                readonly>
                         <button class="btn btn-sm btn-primary" 
                                 onclick="copyAffiliateLink()" 

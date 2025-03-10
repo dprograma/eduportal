@@ -32,7 +32,7 @@ class DB
             $this->conn = new PDO("mysql:host=$this->serverName;dbname=$this->db", $this->userName, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-          
+
 
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -53,6 +53,30 @@ class DB
             echo $e->getMessage() . $e->getLine();
         }
 
+    }
+
+    public function selectWithLimit($sql, $params = [])
+    {
+        try {
+            $stmt = $this->conn->prepare($sql);
+
+            // Bind parameters with explicit types
+            foreach ($params as $key => $value) {
+                if (is_int($value)) {
+                    $stmt->bindValue($key + 1, $value, PDO::PARAM_INT); // Bind as integer
+                } else {
+                    $stmt->bindValue($key + 1, $value); // Bind as string (default)
+                }
+            }
+
+            $stmt->execute();
+            $this->status = true;
+
+            return $stmt;
+        } catch (Exception $e) {
+            echo $e->getMessage() . $e->getLine();
+            return null; // Return null in case of error
+        }
     }
 
     public function insert($sql, $params = [])
@@ -99,4 +123,4 @@ class DB
 
 
 $pdo = new DB('localhost', 'root', '', 'eduportal_eduportal');
-// $pdo = new DB('$host', '$username', '$password', '$database');
+// $pdo = new DB($host, $username, $password, $database);

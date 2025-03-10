@@ -57,7 +57,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                            <div class="form-check">
                               <input class="form-check-input" type="checkbox" name="remember" id="remember" />
-                              <label class="form-check-label" for="rememberMeCheckbox">Remember me</label>
+                              <label class="form-check-label" for="remember">Remember me</label>
                            </div>
 
                            <div><a href="forgot-password" class="text-primary">Forgot Password</a></div>

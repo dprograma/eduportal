@@ -5,16 +5,16 @@ require_once 'ENVLoader.php';
 // ini_set("include_path", '/home/preprcom/php:' . ini_get("include_path") );
 // require_once 'controller/qservers_mail.php';
 use GuzzleHttp\Client;
-// use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\PHPMailer;
 require 'core/Mailer.php';
 
 function fetchBankCodes()
 {
     // Now you can access the environment variables
-    $secretKey   = $_ENV['PAYSTACK_SECRET_KEY'];
+    $secretKey = $_ENV['PAYSTACK_SECRET_KEY'];
     $bankListUrl = $_ENV['PAYSTACK_BANKLIST_URL'];
-    $client      = new Client();
-    $response    = $client->get($bankListUrl, [
+    $client = new Client();
+    $response = $client->get($bankListUrl, [
         'headers' => [
             'Authorization' => 'Bearer ' . $secretKey,
         ],
@@ -35,8 +35,8 @@ function fetchBankCodes()
 function isWithinReferralPeriod($referralDate)
 {
     $referralDateTime = new DateTime($referralDate);
-    $currentDateTime  = new DateTime();
-    $interval         = $referralDateTime->diff($currentDateTime);
+    $currentDateTime = new DateTime();
+    $interval = $referralDateTime->diff($currentDateTime);
 
     // Check if within 3 months (90 days)
     return $interval->days <= 90;
@@ -47,32 +47,165 @@ function isWithinReferralPeriod($referralDate)
  */
 function calculateCommission($amount, $type = 'product')
 {
-    $productCommissionRate  = 0.70; // 70% for product owner
+    $productCommissionRate = 0.70; // 70% for product owner
     $referralCommissionRate = 0.65; // 65% for referrer
 
     return $amount * ($type === 'product' ? $productCommissionRate : $referralCommissionRate);
 }
 
 /**
- * Complete user registration process
+ * Record agent and affiliate earnings
  */
-
- function completeRegistration($userData, $pdo)
+function saveEarnedCommisions($cartItems, $pdo)
 {
-    try {
-        $verificationToken = generateRandomString(16);
-        $hashedPass        = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $affiliateCode     = $userData['affiliate'] ? generateAffiliateCode($userData['UserName']) : null;
+    $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC));
+    // Create an order Id
+    $orderId = generateRandomString(16);
+    // After successful payment processing
+    if ($cartItems) {
+        foreach ($cartItems as $item) {
+            // 1. Process product owner commission (70%)
+            $productOwnerCommission = calculateCommission($item['price'], 'product');
 
-        // Check for referral
-        $referredBy = null;
-        if (isset($_GET['ref'])) {
-            $referrerCode = $_GET['ref'];
-            $affiliate    = $pdo->select("SELECT id FROM users WHERE affiliate_code = ?", [$referrerCode])->fetch(PDO::FETCH_ASSOC);
-            if ($affiliate) {
-                $referredBy = $affiliate['id'];
+            $pdo->insert(
+                "INSERT INTO commissions (
+                affiliate_id,
+                referred_user_id,
+                order_id,
+                sku,
+                amount,
+                commission_amount,
+                commission_type,
+                product_owner_id,
+                status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')",
+                [
+                    $item['owner_id'], // Product owner gets commission
+                    $currentUser->id,  // Buyer
+                    $orderId,
+                    $item['sku'],
+                    $item['price'],
+                    $productOwnerCommission,
+                    'product',
+                    $item['owner_id'],
+                ]
+            );
+
+            // 2. Process referral commission if applicable (65%)
+            if ($currentUser->referred_by && isWithinReferralPeriod($currentUser->signup_date)) {
+                $referralCommission = calculateCommission($item['price'], 'referral');
+
+                $pdo->insert(
+                    "INSERT INTO commissions (
+                    affiliate_id,
+                    referred_user_id,
+                    order_id,
+                    sku,
+                    amount,
+                    commission_amount,
+                    commission_type,
+                    product_owner_id,
+                    status
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')",
+                    [
+                        $currentUser->referred_by, // Referrer gets commission
+                        $currentUser->id,          // Buyer
+                        $orderId,
+                        $item['sku'],
+                        $item['price'],
+                        $referralCommission,
+                        'referral',
+                        $item['owner_id'],
+                    ]
+                );
+            }
+
+            // Get the seller/owner of the item
+            $seller = $pdo->select("SELECT user_id FROM document WHERE id = ?", [$item['id']])->fetch(PDO::FETCH_ASSOC);
+
+            if ($seller) {
+                create(
+                    $seller['user_id'],
+                    'sale',
+                    'New Purchase!',
+                    "Your {$item['title']} has been purchased by a customer.",
+                    "order-details?id=" . $orderId
+                );
             }
         }
+    }
+
+}
+
+/**
+ * Save Earned Commission from Affilate's N3,000 registrations
+ */
+function saveEarnedCommisionsonAffiliateReg($item, $pdo)
+{
+    $currentUser = toJson($pdo->select("SELECT * FROM users WHERE id=?", [Session::get('loggedin')])->fetch(PDO::FETCH_ASSOC));
+    // Create an order Id
+    $orderId = generateRandomString(16);
+    $productOwnerCommission = calculateCommission($item['amount'], 'referral');
+
+    $pdo->insert(
+        "INSERT INTO commissions (
+        affiliate_id,
+        referred_user_id,
+        order_id,
+        sku,
+        amount,
+        commission_amount,
+        commission_type,
+        product_owner_id,
+        status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')",
+        [
+            $item['ownerId'], // Product owner gets commission
+            $currentUser->id,  // Buyer
+            $orderId,
+            '',
+            $item['amount'],
+            $productOwnerCommission,
+            'referral',
+            $item['ownerId'],
+        ]
+    );
+
+}
+
+/**
+ * Add to notifications
+ */
+function create($userId, $type, $title, $message, $link = null)
+    {
+        global $pdo;
+        $pdo->insert(
+            "INSERT INTO notifications (user_id, type, title, message, link)
+            VALUES (?, ?, ?, ?, ?)",
+            [$userId, $type, $title, $message, $link]
+        );
+    }
+
+/**
+ * Complete user registration process
+ */
+function completeRegistration($userData, $pdo)
+{
+    try {
+        error_log("User Data: " . print_r($userData, true));
+        $verificationToken = generateRandomString(16);
+        $hashedPass = password_hash($userData['password'], PASSWORD_DEFAULT);
+        $affiliateCode = $userData['affiliate'] ? generateAffiliateCode($userData['UserName']) : null;
+
+        // Check for referral
+        // $referredBy = null;
+        // if (isset($_GET['ref'])) {
+        //     $referrerCode = $_GET['ref'];
+        //     $affiliate    = $pdo->select("SELECT id FROM users WHERE affiliate_code = ?", [$referrerCode])->fetch(PDO::FETCH_ASSOC);
+        //     if ($affiliate) {
+        //         $referredBy = $affiliate['id'];
+        //     }
+        // }
 
         // Insert the user
         $pdo->insert(
@@ -100,7 +233,7 @@ function calculateCommission($amount, $type = 'product')
                 $userData['affiliate'],
                 $userData['termsofuse'],
                 $affiliateCode,
-                $referredBy,
+                $userData['referred_by'],
             ]
         );
 
@@ -109,7 +242,7 @@ function calculateCommission($amount, $type = 'product')
 
         $successMessage = "Registration successful! Please check your email to verify your account.";
         if ($affiliateCode) {
-            $successMessage .= " Your affiliate link is: " . APP_URL . "/signup?ref=" . $affiliateCode;
+            $successMessage .= " Your affiliate link is: " . APP_URL . "signup?ref=" . $affiliateCode;
         }
 
         // Verify user was created by checking the database
@@ -118,12 +251,15 @@ function calculateCommission($amount, $type = 'product')
             [$userData['Email'], $userData['UserName']]
         )->fetch(PDO::FETCH_ASSOC);
 
-        if (! $newUser) {
+        if (!$newUser) {
             throw new Exception("User creation verification failed");
         }
+        $earnings = $_SESSION['affiliate_earnings'];
+        saveEarnedCommisionsonAffiliateReg($earnings, $pdo);
+        unset($_SESSION['affiliate_earnings']);
 
         // Corrected redirect URL
-        SessionRedirect(APP_URL . ($userData['affiliate'] ? "/affiliate-signup?ref=affiliate" : "/signup"), $successMessage, "success");
+        SessionRedirect(APP_URL . ($userData['affiliate'] ? "affiliate-signup?ref=affiliate" : "signup"), $successMessage, "success");
         exit;
 
     } catch (Exception $e) {
@@ -164,7 +300,7 @@ function sendVerificationEmail($userData, $verificationToken)
     global $mail;
 
     try {
-        if (! isset($mail) || ! ($mail instanceof PHPMailer\PHPMailer\PHPMailer)) {
+        if (!isset($mail) || !($mail instanceof PHPMailer\PHPMailer\PHPMailer)) {
             error_log("Mailer not properly initialized");
             return false;
         }
@@ -173,7 +309,7 @@ function sendVerificationEmail($userData, $verificationToken)
         $mail->clearAddresses();
         $mail->clearAttachments();
 
-        $verificationLink = APP_URL . "/verify?token=" . $verificationToken;
+        $verificationLink = APP_URL . "verify?token=" . $verificationToken;
 
         // Create HTML message
         $welcomeMsg = <<<HTML
@@ -191,20 +327,20 @@ HTML;
         // Set email parameters
         $mail->addAddress($userData['Email']);
         $mail->Subject = 'EduPortal - Email Verification';
-        $mail->Body    = $welcomeMsg;
+        $mail->Body = $welcomeMsg;
         $mail->AltBody = strip_tags(str_replace(['<br>', '</p>'], ["\n", "\n\n"], $welcomeMsg));
 
         error_log("Attempting to send email to: " . $userData['Email']);
 
         // Send the email
-        if (! $mail->send()) {
+        if (!$mail->send()) {
             error_log("Email sending failed. Mailer Error: " . $mail->ErrorInfo);
 
             // Try with SSL as fallback
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = 465;
+            $mail->Port = 465;
 
-            if (! $mail->send()) {
+            if (!$mail->send()) {
                 error_log("Email sending failed again with SSL. Mailer Error: " . $mail->ErrorInfo);
                 return false;
             }
