@@ -73,6 +73,33 @@
             }
         }
 
+        async function updateUnreadCount() {
+            try {
+                const response = await fetch('notificationsapi?count=true');
+                const text = await response.text(); // First get the raw text
+
+                // Log the raw response for debugging
+                console.log('Raw response:', text);
+
+                // Try to parse the JSON
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    console.error('Failed to parse JSON:', e);
+                    return;
+                }
+
+                // Update the notification counter in the header
+                const notificationCounter = document.querySelector('.notification-counter');
+                if (notificationCounter && typeof data.count !== 'undefined') {
+                    notificationCounter.textContent = data.count;
+                    notificationCounter.style.display = data.count > 0 ? 'block' : 'none';
+                }
+            } catch (error) {
+                console.error('Error updating notification count:', error);
+            }
+        }
 
         function updatePagination(pagination) {
             const container = document.getElementById('notificationsPagination');
@@ -115,37 +142,42 @@
             }
 
             container.innerHTML = notifications.map(notification => `
-            <div class="notification-item p-3 border-bottom ${!notification.is_read ? 'bg-light' : ''}"
-                 onclick="showNotificationDetail(${JSON.stringify(notification)})">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-1">${notification.title}</h6>
-                    <small class="text-muted">${formatDate(notification.created_at)}</small>
-                </div>
-                <p class="mb-0 text-truncate">${notification.message}</p>
+        <div class="notification-item p-3 border-bottom ${!notification.is_read ? 'bg-light' : ''}"
+             onclick='showNotificationDetail(${JSON.stringify(notification).replace(/'/g, "&#39;")})'>
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-1">${notification.title}</h6>
+                <small class="text-muted">${formatDate(notification.created_at)}</small>
             </div>
-        `).join('');
+            <p class="mb-0 text-truncate">${notification.message}</p>
+        </div>
+    `).join('');
         }
 
         function showNotificationDetail(notification) {
-            document.getElementById('notificationTitle').textContent = notification.title;
-            document.getElementById('notificationMessage').textContent = notification.message;
+            // Parse the notification if it's a string
+            const notificationData = typeof notification === 'string'
+                ? JSON.parse(notification)
+                : notification;
+
+            document.getElementById('notificationTitle').textContent = notificationData.title;
+            document.getElementById('notificationMessage').textContent = notificationData.message;
 
             const linkBtn = document.getElementById('notificationLink');
-            if (notification.link) {
-                linkBtn.href = notification.link;
+            if (notificationData.link) {
+                linkBtn.href = notificationData.link;
                 linkBtn.style.display = 'block';
             } else {
                 linkBtn.style.display = 'none';
             }
 
-            if (!notification.is_read) {
-                markAsRead(notification.id);
+            if (!notificationData.is_read) {
+                markAsRead(notificationData.id);
             }
 
             new bootstrap.Modal(document.getElementById('notificationModal')).show();
         }
 
-        
+
 
         async function markAsRead(notificationId) {
             try {
@@ -173,16 +205,19 @@
             });
         }
 
-        // Load initial notifications
-        loadNotifications(1);
-
-        // Set up real-time updates
-        setInterval(async () => {
-            if (currentPage === 1) {
-                await loadNotifications(1);
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial load
+            loadNotifications(1);
             updateUnreadCount();
-        }, 30000); 
+
+            // Set up real-time updates
+            setInterval(async () => {
+                if (currentPage === 1) {
+                    await loadNotifications(1);
+                }
+                updateUnreadCount();
+            }, 30000);
+        });
     </script>
 </body>
 

@@ -49,7 +49,7 @@ class NotificationsAPI
 
 
         $total = $this->pdo->select(
-            "SELECT COUNT(*) as count FROM notifications WHERE user_id = ?",
+            "SELECT COUNT(*) as count FROM notifications WHERE user_id = ? OR type='news'",
             [$this->currentUser->id]
         )->fetch(PDO::FETCH_ASSOC)['count'];
 
@@ -65,14 +65,27 @@ class NotificationsAPI
 
     private function getUnreadCount()
     {
-        $count = $this->pdo->select(
-            "SELECT COUNT(*) as count FROM notifications
-            WHERE user_id = ? AND is_read = 0",
-            [$this->currentUser->id]
-        )->fetch(PDO::FETCH_ASSOC)['count'];
-
-        header('Content-Type: application/json');
-        echo json_encode(['count' => $count]);
+        try {
+            $count = $this->pdo->select(
+                "SELECT COUNT(*) as count FROM notifications 
+                WHERE (user_id = ? OR type='news') AND is_read = 0",
+                [$this->currentUser->id]
+            )->fetch(PDO::FETCH_ASSOC)['count'];
+    
+            // Clear any previous output
+            if (ob_get_length()) ob_clean();
+            
+            header('Content-Type: application/json');
+            echo json_encode(['count' => (int)$count]);
+            exit;
+        } catch (\Exception $e) {
+            // Clear any previous output
+            if (ob_get_length()) ob_clean();
+            
+            header('Content-Type: application/json');
+            echo json_encode(['error' => $e->getMessage()]);
+            exit;
+        }
     }
 
     private function markAsRead($notificationId)

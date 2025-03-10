@@ -1,3 +1,29 @@
+<style>
+.notification-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    display: none;
+}
+
+.notification-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #e9ecef;
+}
+</style>
 <header>
         <nav class="navbar navbar-expand-lg navbar-light w-100">
             <div class="container px-3">
@@ -27,6 +53,7 @@
                                     aria-expanded="false"></a> -->
                             </li>
                             <li class="nav-item dropdown">
+                            <span class="notification-counter">0</span>
                                 <a class="nav-link" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-bell"></i>
                                     <span class="badge bg-danger rounded-pill notification-badge" style="display: none;"></span>
